@@ -1,0 +1,81 @@
+import React from 'react';
+import config from '../config';
+
+interface ChatDone01IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name ChatDone01Icon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/chat-done01)
+ * @see {@link https://clicons.dev/icon/chat-done01} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const ChatDone01Icon = React.forwardRef<SVGSVGElement, ChatDone01IconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M12.0045 11H12.0135M8.00903 11H8.018", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", key: "0" }],
+  ["path", { d: "M12 3C10.5209 3 9.09517 3.0309 7.7562 3.08819C5.3157 3.1926 4.09545 3.24481 3.13007 4.21745C2.16469 5.19009 2.12282 6.37683 2.03909 8.7503C2.01346 9.47679 2 10.2292 2 11C2 11.7708 2.01346 12.5232 2.03909 13.2497C2.12282 15.6232 2.16469 16.8099 3.13007 17.7825C4.09545 18.7552 5.31569 18.8074 7.75619 18.9118C7.83715 18.9153 7.91842 18.9186 8 18.9219V21.2701C8 21.6732 8.32679 22 8.72991 22C8.90419 22 9.07273 21.9376 9.20503 21.8242L11.3845 19.9553C11.9325 19.4855 12.2064 19.2506 12.532 19.1266C12.8576 19.0026 13.2282 18.9955 13.9693 18.9815C14.7498 18.9667 15.5098 18.9432 16.2437 18.9118C18.6843 18.8074 19.9046 18.7552 20.8699 17.7826C21.8353 16.8099 21.8772 15.6232 21.9609 13.2497C21.9865 12.5232 22 11.7708 22 11C22 10.2292 21.9865 9.47679 21.9609 8.7503C21.9372 8.07936 21.9169 7.50325 21.8781 7", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }],
+  ["path", { d: "M15 5.33333C15 5.33333 16 5.33333 17 7C17 7 19.1765 2.83333 22 2", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "2" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+ChatDone01Icon.displayName = 'ChatDone01Icon';
+export default ChatDone01Icon;

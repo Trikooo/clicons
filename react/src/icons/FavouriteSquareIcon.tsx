@@ -1,0 +1,80 @@
+import React from 'react';
+import config from '../config';
+
+interface FavouriteSquareIconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name FavouriteSquareIcon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/favourite-square)
+ * @see {@link https://clicons.dev/icon/favourite-square} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const FavouriteSquareIcon = React.forwardRef<SVGSVGElement, FavouriteSquareIconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M2 12C2 7.75736 2 5.63604 3.31802 4.31802C4.63604 3 6.75736 3 11 3C15.2426 3 17.364 3 18.682 4.31802C20 5.63604 20 7.75736 20 12C20 16.2426 20 18.364 18.682 19.682C17.364 21 15.2426 21 11 21C6.75736 21 4.63604 21 3.31802 19.682C2 18.364 2 16.2426 2 12Z", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
+  ["path", { d: "M11 16.5C11 16.5 6 13.3235 6 10.25C6 8.73122 7.05263 7.5 8.5 7.5C9.25 7.5 10 7.76471 11 8.82353C12 7.76471 12.75 7.5 13.5 7.5C14.9474 7.5 16 8.73122 16 10.25C16 13.3235 11 16.5 11 16.5Z", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+FavouriteSquareIcon.displayName = 'FavouriteSquareIcon';
+export default FavouriteSquareIcon;

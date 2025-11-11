@@ -1,0 +1,83 @@
+import React from 'react';
+import config from '../config';
+
+interface Fan02IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name Fan02Icon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/fan02)
+ * @see {@link https://clicons.dev/icon/fan02} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const Fan02Icon = React.forwardRef<SVGSVGElement, Fan02IconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M9.57978 12.6289C8.04139 13.4886 7 15.1426 7 17.0418C7 19.1298 8.25861 20.9213 10.0525 21.687C10.754 21.9864 11.1047 22.1361 11.5524 21.837C12 21.5379 12 21.0476 12 20.067V14.4999C10.8365 14.4999 9.85868 13.7052 9.57978 12.6289Z", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
+  ["path", { d: "M9.5 12H3.93298C2.95237 12 2.46206 12 2.16297 11.5524C1.86387 11.1047 2.01357 10.754 2.31298 10.0525C3.07868 8.25861 4.87018 7 6.95811 7C8.85734 7 10.5113 8.04139 11.371 9.57979C10.2948 9.85869 9.5 10.8365 9.5 12Z", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }],
+  ["path", { d: "M12 9.5V3.93298C12 2.95237 12 2.46206 12.4476 2.16297C12.8953 1.86387 13.246 2.01357 13.9475 2.31298C15.7414 3.07868 17 4.87018 17 6.95811C17 8.85734 15.9586 10.5113 14.4202 11.371C14.1413 10.2948 13.1635 9.5 12 9.5Z", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "2" }],
+  ["path", { d: "M12.629 14.4202C13.7052 14.1413 14.5 13.1635 14.5 12H20.067C21.0476 12 21.5379 12 21.837 12.4476C22.1361 12.8953 21.9864 13.246 21.687 13.9475C20.9213 15.7414 19.1298 17 17.0419 17C15.1427 17 13.4887 15.9586 12.629 14.4202Z", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "3" }],
+  ["path", { d: "M14.4998 11.9993C14.4998 13.38 13.3805 14.4993 11.9998 14.4993C10.6191 14.4993 9.49979 13.38 9.49979 11.9993C9.49979 10.6186 10.6191 9.49927 11.9998 9.49927C13.3805 9.49927 14.4998 10.6186 14.4998 11.9993Z", stroke: "currentColor", strokeWidth: "1.5", key: "4" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+Fan02Icon.displayName = 'Fan02Icon';
+export default Fan02Icon;

@@ -1,0 +1,84 @@
+import React from 'react';
+import config from '../config';
+
+interface WazeIconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name WazeIcon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/waze)
+ * @see {@link https://clicons.dev/icon/waze} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const WazeIcon = React.forwardRef<SVGSVGElement, WazeIconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M17.5 9V9.01", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", key: "0" }],
+  ["path", { d: "M10.5 9V9.01", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", key: "1" }],
+  ["path", { d: "M10.5 13C10.5 13 11.5 15 14 15C16.5 15 17.5 13 17.5 13", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "2" }],
+  ["path", { d: "M11 20C11 21.1046 10.1046 22 9 22C7.89543 22 7 21.1046 7 20C7 18.8954 7.89543 18 9 18C10.1046 18 11 18.8954 11 20Z", stroke: "currentColor", strokeWidth: "1.5", key: "3" }],
+  ["path", { d: "M10.9992 19.9446C11.6843 19.9866 12.3573 20 13 20C17.9706 20 22 15.9706 22 11C22 6.02944 17.9706 2 13 2C8.02944 2 4 6.02944 4 11C4 12.039 4 14 2 15C3.05768 17.3798 4.97354 18.6409 7.12557 19.3009", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "4" }],
+  ["path", { d: "M17 22.0003C18.1046 22.0003 19 21.1049 19 20.0003C19 19.3295 18.6698 18.7359 18.163 18.373C17.2278 19.0291 16.1621 19.5118 15.0126 19.7744C15.0043 19.8486 15 19.9239 15 20.0003C15 21.1049 15.8954 22.0003 17 22.0003Z", stroke: "currentColor", strokeWidth: "1.5", key: "5" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+WazeIcon.displayName = 'WazeIcon';
+export default WazeIcon;

@@ -1,0 +1,82 @@
+import React from 'react';
+import config from '../config';
+
+interface StructureAddIconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name StructureAddIcon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/structure-add)
+ * @see {@link https://clicons.dev/icon/structure-add} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const StructureAddIcon = React.forwardRef<SVGSVGElement, StructureAddIconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M15.002 5C15.002 3.58579 15.002 2.87868 15.5144 2.43934C16.0267 2 16.8515 2 18.5008 2C20.1502 2 20.975 2 21.4873 2.43934C21.9997 2.87868 21.9997 3.58579 21.9997 5C21.9997 6.41421 21.9997 7.12132 21.4873 7.56066C20.975 8 20.1502 8 18.5008 8C16.8515 8 16.0267 8 15.5144 7.56066C15.002 7.12132 15.002 6.41421 15.002 5Z", stroke: "currentColor", strokeWidth: "1.5", key: "0" }],
+  ["path", { d: "M15.002 19C15.002 17.5858 15.002 16.8787 15.5144 16.4393C16.0267 16 16.8515 16 18.5008 16C20.1502 16 20.975 16 21.4873 16.4393C21.9997 16.8787 21.9997 17.5858 21.9997 19C21.9997 20.4142 21.9997 21.1213 21.4873 21.5607C20.975 22 20.1502 22 18.5008 22C16.8515 22 16.0267 22 15.5144 21.5607C15.002 21.1213 15.002 20.4142 15.002 19Z", stroke: "currentColor", strokeWidth: "1.5", key: "1" }],
+  ["path", { d: "M7.0224 9.99988L7.0224 14M9.01297 12L4.98828 12", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "2" }],
+  ["path", { d: "M7.02803 17.0364C9.80494 17.0364 12.0561 14.7846 12.0561 12.0068C12.0561 9.22901 9.80494 6.97717 7.02803 6.97717M7.02803 17.0364C4.25113 17.0364 2 14.7846 2 12.0068C2 9.22901 4.25113 6.97717 7.02803 6.97717M7.02803 17.0364C6.95809 19.1663 8.56235 19.9524 9.67527 19.9932H12.0021M7.02803 6.97717C6.95737 4.8171 8.54755 4.05751 9.67528 4.00977H12.0021", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "3" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+StructureAddIcon.displayName = 'StructureAddIcon';
+export default StructureAddIcon;

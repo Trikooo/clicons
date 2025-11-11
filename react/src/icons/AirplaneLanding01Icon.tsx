@@ -1,0 +1,80 @@
+import React from 'react';
+import config from '../config';
+
+interface AirplaneLanding01IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name AirplaneLanding01Icon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/airplane-landing01)
+ * @see {@link https://clicons.dev/icon/airplane-landing01} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const AirplaneLanding01Icon = React.forwardRef<SVGSVGElement, AirplaneLanding01IconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M6.00146 19.9982H22.0015", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
+  ["path", { d: "M3.69749 4.0419C3.07958 4.21042 3.00748 4.9179 2.82748 5.5179C2.67702 6.08216 2.3591 7.33035 2.14285 8.1831C1.98148 8.9379 1.95988 9.2379 2.05588 9.7179C2.28148 10.6179 3.06148 10.9719 4.74148 11.4399C5.58616 11.6559 6.18148 11.8371 7.08148 12.0771C7.23596 12.1265 7.71601 12.2476 8.10148 12.3519C8.46148 12.4779 8.76148 12.4419 8.69428 12.7179C8.64746 12.8276 8.10388 13.4379 7.59988 13.9779C7.26148 14.3979 7.03348 14.4998 7.03348 14.8179C7.03348 14.8179 7.02148 15.2979 7.69425 15.3579C7.80148 15.4179 9.24148 15.7779 9.78148 15.9339C10.5015 16.1139 11.0415 15.8979 11.4855 15.5979L13.6815 14.1579C14.1615 13.9419 14.2815 14.0331 14.8215 14.1771L19.6215 15.4779C20.4615 15.7779 21.1815 15.0579 20.9703 14.2179C20.7015 12.7179 20.2215 11.8179 19.4415 10.8579C18.1815 9.3579 16.6453 8.7727 15.5415 8.5779C15.0378 8.48901 13.144 8.33923 11.3415 8.2059C9.49393 8.06924 7.74222 7.94901 7.68148 7.8579C6.36148 7.5579 6.76948 5.6199 6.20548 4.7739C5.98148 4.4379 5.58148 4.3779 4.98148 4.1979C4.47299 4.06773 4.09616 3.93317 3.69749 4.0419Z", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "1.5", key: "1" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+AirplaneLanding01Icon.displayName = 'AirplaneLanding01Icon';
+export default AirplaneLanding01Icon;

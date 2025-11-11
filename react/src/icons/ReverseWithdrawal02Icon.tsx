@@ -1,0 +1,82 @@
+import React from 'react';
+import config from '../config';
+
+interface ReverseWithdrawal02IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name ReverseWithdrawal02Icon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/reverse-withdrawal02)
+ * @see {@link https://clicons.dev/icon/reverse-withdrawal02} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const ReverseWithdrawal02Icon = React.forwardRef<SVGSVGElement, ReverseWithdrawal02IconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M12 10.999C10.8954 10.999 10 11.6699 10 12.4975C10 13.3251 10.8954 13.996 12 13.996C13.1046 13.996 14 14.667 14 15.4946C14 16.3221 13.1046 16.9931 12 16.9931M12 10.999C12.8708 10.999 13.6116 11.416 13.8862 11.998M12 10.999V10M12 16.9931C11.1292 16.9931 10.3884 16.5761 10.1138 15.9941M12 16.9931L12.0028 18", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "1.5", key: "0" }],
+  ["path", { d: "M21 11C21.1568 10.9209 21.2931 10.8212 21.4142 10.6955C22 10.0875 22 9.10893 22 7.15176C22 5.1946 22 4.21602 21.4142 3.60801C20.8284 3 19.8856 3 18 3L6 3C4.11438 3 3.17157 3 2.58579 3.60801C2 4.21602 2 5.1946 2 7.15176C2 9.10893 2 10.0875 2.58579 10.6955C2.70688 10.8212 2.84322 10.9209 3 11", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "1.5", key: "1" }],
+  ["circle", { cx: "12", cy: "14", r: "7", stroke: "currentColor", strokeWidth: "1.5", key: "2" }],
+  ["path", { d: "M5 7H19", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "3" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+ReverseWithdrawal02Icon.displayName = 'ReverseWithdrawal02Icon';
+export default ReverseWithdrawal02Icon;

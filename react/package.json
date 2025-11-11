@@ -1,0 +1,56 @@
+{
+  "name": "clicons-react",
+  "version": "1.0.0",
+  "description": "Clicons React Icon Library",
+  "homepage": "https://github.com/yourusername/clicons",
+  "license": "MIT",
+  "amdName": "clicons-react",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "author": "Yacine Zendaoui",
+  "scripts": {
+    "generate": "node ./generate-icons.mjs",
+    "build": "pnpm generate && pnpm typecheck && tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist src/icons src/index.ts",
+    "publish:beta": "pnpm build && npm publish --tag beta --no-git-checks",
+    "publish:prod": "pnpm build && npm publish --no-git-checks"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0"
+  },
+  "keywords": [
+    "icons",
+    "react-icons",
+    "ui-components",
+    "design-system",
+    "vector-icons",
+    "react-component-library",
+    "web-icons",
+    "scalable-icons",
+    "customizable-icons",
+    "icon-library"
+  ]
+}

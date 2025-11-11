@@ -1,0 +1,80 @@
+import React from 'react';
+import config from '../config';
+
+interface CursorAddSelection01IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name CursorAddSelection01Icon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/cursor-add-selection01)
+ * @see {@link https://clicons.dev/icon/cursor-add-selection01} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const CursorAddSelection01Icon = React.forwardRef<SVGSVGElement, CursorAddSelection01IconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [["path", { d: "M10 3.36303C8.7384 2.26661 7.90919 1.75936 7.04807 2.10979C5.94481 2.55876 5.85017 3.98379 5.67232 6.66186L5.10772 14.3857C4.9732 16.2065 4.90595 17.1169 5.26831 17.574C5.51701 17.8877 5.88085 18.0871 6.27746 18.1269C6.85532 18.1851 7.57763 17.6337 9.02224 16.5308C9.63074 16.0663 9.935 15.834 10.239 15.8187C10.4503 15.8081 10.6595 15.8662 10.8355 15.9844C11.0887 16.1545 11.2317 16.5111 11.5177 17.2241L13.0004 20.9204C13.1717 21.3475 13.2574 21.561 13.3939 21.7015C13.5778 21.8907 13.8292 21.9982 14.0921 22C14.2873 22.0013 14.4993 21.915 14.9232 21.7425C15.3471 21.57 15.5591 21.4837 15.6986 21.3462C15.8865 21.1609 15.9932 20.9078 15.995 20.6429C15.9963 20.4464 15.9107 20.2328 15.7394 19.8058L14.2567 16.1095C13.9707 15.3964 13.8277 15.0399 13.8925 14.7404C13.9376 14.5321 14.0479 14.344 14.2073 14.2038C14.4365 14.0021 14.8156 13.9563 15.5737 13.8647C17.3734 13.6473 18.2733 13.5385 18.6489 13.0924C18.9067 12.7862 19.0309 12.3882 18.9934 11.9885C18.9563 11.592 18.6309 11.1836 18 10.5796", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
+  ["path", { d: "M15 3V9M18 6L12 6", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }]];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+CursorAddSelection01Icon.displayName = 'CursorAddSelection01Icon';
+export default CursorAddSelection01Icon;
