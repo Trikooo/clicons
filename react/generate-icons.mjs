@@ -2,7 +2,7 @@
 
 /**
  * Icon Generator Script
- * Converts HugeIcons core-free-icons data into individual React components
+ * Converts SVG files into individual React components
  * Usage: node generate-icons.mjs
  */
 
@@ -13,7 +13,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const CORE_ICONS_DIR = path.join(__dirname, "..", "core-icons", "dist", "esm");
+const SVG_ICONS_DIR = path.join(__dirname, "..", "svg-icons");
 const REACT_SRC_DIR = path.join(__dirname, "src", "icons");
 const OUTPUT_INDEX = path.join(__dirname, "src", "index.ts");
 
@@ -28,16 +28,13 @@ if (!fs.existsSync(REACT_SRC_DIR)) {
 }
 
 /**
- * Parse an icon file to extract the icon data
+ * Parse an SVG file to extract its content
  */
-function parseIconFile(filePath) {
+function parseSVGFile(filePath) {
   const content = fs.readFileSync(filePath, "utf-8");
-  const match = content.match(
-    /const\s+(\w+)\s*=\s*\/\*#__PURE__\*\/\s*\[([\s\S]*?)\];/
-  );
+  const match = content.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
   if (!match) return null;
-  const [, iconName, iconDataStr] = match;
-  return { iconName, iconDataStr };
+  return match[1].trim();
 }
 
 /**
@@ -52,11 +49,49 @@ function toKebabCase(str) {
 }
 
 /**
- * Generate React component from icon data
+ * Parse SVG elements into structured data
  */
-function generateComponent(iconName, iconDataStr) {
+function parseSVGElements(svgContent) {
+  const elements = [];
+  const elementRegex = /<(\w+)([^>]*?)\/>/g;
+  let match;
+
+  while ((match = elementRegex.exec(svgContent)) !== null) {
+    const tag = match[1];
+    const attrsString = match[2];
+
+    const attrs = {};
+    const attrRegex = /(\w+(?:-\w+)*)="([^"]*)"/g;
+    let attrMatch;
+
+    while ((attrMatch = attrRegex.exec(attrsString)) !== null) {
+      const attrName = attrMatch[1];
+      const attrValue = attrMatch[2];
+
+      // Convert hyphenated attributes to camelCase for React
+      const camelCaseAttr = attrName.replace(/-([a-z])/g, (g) =>
+        g[1].toUpperCase()
+      );
+      attrs[camelCaseAttr] = attrValue;
+    }
+
+    elements.push([tag, attrs]);
+  }
+
+  return elements;
+}
+
+/**
+ * Generate React component from SVG content
+ */
+function generateComponent(iconName, svgContent) {
   const kebabName = toKebabCase(iconName);
   const iconUrl = `https://clicons.dev/icon/${kebabName}`;
+
+  const elements = parseSVGElements(svgContent);
+  const iconDataStr = JSON.stringify(elements, null, 2)
+    .replace(/"(\w+)":/g, "$1:")
+    .replace(/"/g, "'");
 
   const componentCode = `import React from 'react';
 import config from '../config';
@@ -96,7 +131,7 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? ${DEFAULT_ABSOLUTE_STROKE_WIDTH};
     const finalColor = color ?? config.defaultColor ?? '${DEFAULT_COLOR}';
 
-    const iconData = [${iconDataStr.trim()}];
+    const iconData = ${iconDataStr};
 
     return (
       <svg
@@ -146,7 +181,7 @@ export default ${iconName};
  * Get the proper component name from filename
  */
 function getComponentName(filename) {
-  return filename.replace(".js", "");
+  return filename.replace(".svg", "");
 }
 
 /**
@@ -154,13 +189,13 @@ function getComponentName(filename) {
  */
 async function generateIcons() {
   console.log("🚀 Starting icon generation...");
-  console.log(`📂 Reading from: ${CORE_ICONS_DIR}`);
+  console.log(`📂 Reading from: ${SVG_ICONS_DIR}`);
   console.log(`📝 Writing to: ${REACT_SRC_DIR}`);
 
   try {
     const files = fs
-      .readdirSync(CORE_ICONS_DIR)
-      .filter((f) => f.endsWith("Icon.js") && !f.endsWith(".map"))
+      .readdirSync(SVG_ICONS_DIR)
+      .filter((f) => f.endsWith("Icon.svg"))
       .sort();
 
     console.log(`\n📊 Found ${files.length} icons to generate\n`);
@@ -171,21 +206,18 @@ async function generateIcons() {
 
     for (let i = 0; i < files.length; i++) {
       const filename = files[i];
-      const filepath = path.join(CORE_ICONS_DIR, filename);
+      const filepath = path.join(SVG_ICONS_DIR, filename);
       const componentName = getComponentName(filename);
 
-      const parsed = parseIconFile(filepath);
-      if (!parsed) {
+      const svgContent = parseSVGFile(filepath);
+      if (!svgContent) {
         console.log(`⚠️  Skipped: ${componentName} (could not parse)`);
         skipCount++;
         continue;
       }
 
       try {
-        const componentCode = generateComponent(
-          componentName,
-          parsed.iconDataStr
-        );
+        const componentCode = generateComponent(componentName, svgContent);
         const componentPath = path.join(REACT_SRC_DIR, `${componentName}.tsx`);
         fs.writeFileSync(componentPath, componentCode);
 
