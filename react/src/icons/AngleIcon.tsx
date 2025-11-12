@@ -40,7 +40,7 @@ const AngleIcon = React.forwardRef<SVGSVGElement, AngleIconProps>(
   [
     'path',
     {
-      d: 'M12 22V2M12 2L22 17M12 2L2 17',
+      d: 'M21 20H6.47347C4.36707 20 3.31387 20 3.05177 19.3827C2.78966 18.7654 3.53439 18.0388 5.02384 16.5858L17.9249 4',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -50,17 +50,7 @@ const AngleIcon = React.forwardRef<SVGSVGElement, AngleIconProps>(
   [
     'path',
     {
-      d: 'M16 8C14.8554 9.2634 13.4798 10 12 10C10.5202 10 9.14458 9.2634 8 8',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
-    }
-  ],
-  [
-    'path',
-    {
-      d: 'M12 14C9.78035 14 7.71687 13.2634 6 12',
+      d: 'M11 20C11 17.3517 9.77371 15.0655 8 14',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',

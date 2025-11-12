@@ -1,0 +1,129 @@
+import React from 'react';
+import config from '../config';
+
+interface TreeIconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name TreeIcon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/tree)
+ * @see {@link https://clicons.dev/icon/tree} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const TreeIcon = React.forwardRef<SVGSVGElement, TreeIconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M12 22V9',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M9 17.4185C6.06817 16.2317 4 13.3574 4 10C4 5.58172 7.58172 2 12 2C16.4183 2 20 5.58172 20 10C20 13.3574 17.9318 16.2317 15 17.4185',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M12 15L14.5 12.5',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M12 13L9.5 10.5',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M10 22H14',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+TreeIcon.displayName = 'TreeIcon';
+export default TreeIcon;

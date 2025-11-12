@@ -38,19 +38,20 @@ const DatabaseSyncIcon = React.forwardRef<SVGSVGElement, DatabaseSyncIconProps>(
 
     const iconData = [
   [
-    'path',
+    'ellipse',
     {
-      d: 'M12.9999 17L14.0226 17.5944C14.5372 15.7277 16.5112 14.6199 18.4317 15.1201C19.4148 15.3761 20.1933 16.0039 20.65 16.806M21.9999 20L20.9773 19.4056C20.4627 21.2723 18.4887 22.3801 16.5682 21.8799C15.608 21.6298 14.8429 21.0251 14.3823 20.2496',
+      cx: '10',
+      cy: '4.99982',
+      rx: '8',
+      ry: '3',
       stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M21 13V11.5C21 7.02166 21 4.78249 19.6088 3.39124C18.2175 2 15.9783 2 11.5 2C7.02166 2 4.78249 2 3.39124 3.39124C2 4.78249 2 7.02166 2 11.5C2 15.9783 2 18.2175 3.39124 19.6088C4.61763 20.8351 6.50289 20.9805 10 20.9977H11',
+      d: 'M5 10.8419C5.60158 11.0227 6.27434 11.1716 7 11.2818',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeWidth: '1.5'
@@ -59,7 +60,16 @@ const DatabaseSyncIcon = React.forwardRef<SVGSVGElement, DatabaseSyncIconProps>(
   [
     'path',
     {
-      d: 'M2 11.5H21',
+      d: 'M5 17.8419C5.60158 18.0227 6.27434 18.1716 7 18.2818',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M12 15.4996L13.1363 16.965C13.708 14.8316 15.9014 13.5656 18.0352 14.1373C19.1275 14.4299 19.9925 15.1473 20.5 16.064M22 20.4984L20.8637 19.035C20.2919 21.1684 18.0986 22.4344 15.9647 21.8627C14.8978 21.5769 14.0477 20.8858 13.5359 19.9995',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -69,7 +79,7 @@ const DatabaseSyncIcon = React.forwardRef<SVGSVGElement, DatabaseSyncIconProps>(
   [
     'path',
     {
-      d: 'M12.5 6.5L16.5 6.5',
+      d: 'M18 4.99982V11.008M2 4.99982V19.019C2 20.5509 5.05369 21.815 9 21.9998',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -77,26 +87,11 @@ const DatabaseSyncIcon = React.forwardRef<SVGSVGElement, DatabaseSyncIconProps>(
     }
   ],
   [
-    'circle',
+    'path',
     {
-      cx: '7.75',
-      cy: '6.5',
-      r: '1.25',
+      d: 'M2 11.9998C2 13.5416 5.05369 14.8138 9 14.9998',
       stroke: 'currentColor',
       strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
-    }
-  ],
-  [
-    'circle',
-    {
-      cx: '7.75',
-      cy: '16.5',
-      r: '1.25',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ]

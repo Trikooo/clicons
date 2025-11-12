@@ -40,7 +40,7 @@ const PackageIcon = React.forwardRef<SVGSVGElement, PackageIconProps>(
   [
     'path',
     {
-      d: 'M12 22C11.1818 22 10.4002 21.6698 8.83693 21.0095C4.94564 19.3657 3 18.5438 3 17.1613C3 16.7742 3 10.0645 3 7M12 22C12.8182 22 13.5998 21.6698 15.1631 21.0095C19.0544 19.3657 21 18.5438 21 17.1613V7M12 22L12 11.3548',
+      d: 'M2.5 7.5V13.5C2.5 17.2712 2.5 19.1569 3.67157 20.3284C4.84315 21.5 6.72876 21.5 10.5 21.5H13.5C17.2712 21.5 19.1569 21.5 20.3284 20.3284C21.5 19.1569 21.5 17.2712 21.5 13.5V7.5',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -50,7 +50,7 @@ const PackageIcon = React.forwardRef<SVGSVGElement, PackageIconProps>(
   [
     'path',
     {
-      d: 'M8.32592 9.69138L5.40472 8.27785C3.80157 7.5021 3 7.11423 3 6.5C3 5.88577 3.80157 5.4979 5.40472 4.72215L8.32592 3.30862C10.1288 2.43621 11.0303 2 12 2C12.9697 2 13.8712 2.4362 15.6741 3.30862L18.5953 4.72215C20.1984 5.4979 21 5.88577 21 6.5C21 7.11423 20.1984 7.5021 18.5953 8.27785L15.6741 9.69138C13.8712 10.5638 12.9697 11 12 11C11.0303 11 10.1288 10.5638 8.32592 9.69138Z',
+      d: 'M3.86909 5.31461L2.5 7.5H21.5L20.2478 5.41303C19.3941 3.99021 18.9673 3.2788 18.2795 2.8894C17.5918 2.5 16.7621 2.5 15.1029 2.5H8.95371C7.32998 2.5 6.51812 2.5 5.84013 2.8753C5.16215 3.2506 4.73113 3.93861 3.86909 5.31461Z',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -60,7 +60,7 @@ const PackageIcon = React.forwardRef<SVGSVGElement, PackageIconProps>(
   [
     'path',
     {
-      d: 'M6 12L8 13',
+      d: 'M12 7.5V2.5',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -70,7 +70,7 @@ const PackageIcon = React.forwardRef<SVGSVGElement, PackageIconProps>(
   [
     'path',
     {
-      d: 'M17 4L7 9',
+      d: 'M10 10.5H14',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',

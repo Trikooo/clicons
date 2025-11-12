@@ -1,0 +1,110 @@
+import React from 'react';
+import config from '../config';
+
+interface Login2IconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name Login2Icon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/login2)
+ * @see {@link https://clicons.dev/icon/login2} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const Login2Icon = React.forwardRef<SVGSVGElement, Login2IconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M20.6073 4.00087C21 4.61597 21 5.41166 21 7.00304V16.997C21 18.5883 21 19.384 20.6073 19.9991C20.5372 20.109 20.4586 20.2132 20.3722 20.3108C19.8886 20.8572 19.1233 21.0758 17.5929 21.513C16.0586 21.9513 15.2914 22.1704 14.736 21.8417C14.6396 21.7847 14.55 21.7171 14.4687 21.6402C14 21.1965 14 20.3988 14 18.8034V5.19662C14 3.60122 14 2.80351 14.4687 2.35982C14.55 2.28288 14.6396 2.21527 14.736 2.15827C15.2914 1.82956 16.0586 2.0487 17.5929 2.48699C19.1233 2.92418 19.8886 3.14278 20.3722 3.68925C20.4586 3.78684 20.5372 3.89103 20.6073 4.00087Z',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M14 4H11.9829C10.0812 4 9.13039 4 8.5396 4.58579C8.21023 4.91238 8.06449 5.34994 8 6M14 20H11.9829C10.0812 20 9.13039 20 8.5396 19.4142C8.21023 19.0876 8.06449 18.6501 8 18',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M10 12H3M8.50005 9.49994C8.50005 9.49994 11 11.3412 11 12C11 12.6588 8.50003 14.4999 8.50003 14.4999',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+Login2Icon.displayName = 'Login2Icon';
+export default Login2Icon;

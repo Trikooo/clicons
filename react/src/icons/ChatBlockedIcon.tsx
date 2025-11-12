@@ -66,6 +66,16 @@ const ChatBlockedIcon = React.forwardRef<SVGSVGElement, ChatBlockedIconProps>(
       strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
+  ],
+  [
+    'path',
+    {
+      d: 'M17 10.5H17.009M7.00903 10.5H7.018',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2'
+    }
   ]
 ];
 

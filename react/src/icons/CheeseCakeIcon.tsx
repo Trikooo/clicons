@@ -1,0 +1,129 @@
+import React from 'react';
+import config from '../config';
+
+interface CheeseCakeIconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name CheeseCakeIcon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/cheese-cake)
+ * @see {@link https://clicons.dev/icon/cheese-cake} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const CheeseCakeIcon = React.forwardRef<SVGSVGElement, CheeseCakeIconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M3.53857 17H11.0506',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M18.5625 17H21.0665',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M12.5349 5C13.9155 5 15.0347 6.11929 15.0347 7.5C15.0347 8.88071 13.9155 10 12.5349 10C11.1543 10 10.0352 8.88071 10.0352 7.5C10.0352 6.11929 11.1543 5 12.5349 5ZM12.5349 5C12.7016 4.5 13.4348 3.4 15.0347 3',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M10.0211 8.01515C4.0718 10.2637 1.67243 11.3016 2.03618 12.0464C4.0153 12.9815 7.65111 12.7408 11.3713 12.6013C12.395 12.5629 13.4057 13.0702 13.6378 14.0777C13.8018 14.7892 13.8451 15.4095 14.1685 15.8037C14.3539 16.0297 14.6692 16.1064 14.9506 16.0328C15.7109 15.8339 16.0253 14.9842 16.4006 13.4934C16.4739 13.2023 16.5778 12.8898 16.8591 12.7922C18.1194 12.3548 21.9985 13.3195 21.9985 11.5425C21.9359 9.69223 21.2623 8.5396 19.0996 6.82532C18.4038 6.2738 17.5249 6.00007 16.6431 6.07086C15.7179 6.14513 15.2869 6.26557 15.0117 6.50345',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M2.01318 11.9929L2.98852 16.2983C3.48803 18.5523 3.73778 19.6792 4.56049 20.3396C5.38321 21 6.5374 21 8.84578 21H17.4232C19.1456 21 20.0069 21 20.5784 20.482C21.15 19.964 21.2344 19.1069 21.4035 17.3926L21.994 11.6337',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+CheeseCakeIcon.displayName = 'CheeseCakeIcon';
+export default CheeseCakeIcon;

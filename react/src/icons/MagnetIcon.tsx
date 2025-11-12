@@ -40,8 +40,9 @@ const MagnetIcon = React.forwardRef<SVGSVGElement, MagnetIconProps>(
   [
     'path',
     {
-      d: 'M3.925 2.5H9.15C9.15 2.5 8.2 7.7 8.2 10.1C8.2 13.1 10.1 15.5 12 15.5C13.9 15.5 15.8 13.1 15.8 10.1C15.8 7.7 14.85 2.5 14.85 2.5H20.075C20.075 2.5 21.5 7.13842 21.5 11.5C21.5 17 17.7 21.5 12 21.5C6.3 21.5 2.5 17 2.5 11.5C2.5 7.13842 3.925 2.5 3.925 2.5Z',
+      d: 'M16 12V11C16 10.0572 16 9.58579 16.2929 9.29289C16.5858 9 17.0572 9 18 9C18.9428 9 19.4142 9 19.7071 9.29289C20 9.58579 20 10.0572 20 11V12M16 12V14C16 16.2091 14.2091 18 12 18C9.79086 18 8 16.2091 8 14V12M16 12H20M20 12V14C20 18.4183 16.4183 22 12 22C7.58172 22 4 18.4183 4 14V12M8 12V11C8 10.0572 8 9.58579 7.70711 9.29289C7.41421 9 6.94281 9 6 9C5.05719 9 4.58579 9 4.29289 9.29289C4 9.58579 4 10.0572 4 11V12M8 12L4 12',
       stroke: 'currentColor',
+      strokeLinecap: 'round',
       strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
@@ -49,9 +50,20 @@ const MagnetIcon = React.forwardRef<SVGSVGElement, MagnetIconProps>(
   [
     'path',
     {
-      d: 'M2.97266 7.25H8.19766M15.7977 7.25L21.0227 7.25',
+      d: 'M18 2V6M20 4H16',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M8 4H4',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ]

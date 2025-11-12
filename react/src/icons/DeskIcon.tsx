@@ -40,45 +40,50 @@ const DeskIcon = React.forwardRef<SVGSVGElement, DeskIconProps>(
   [
     'path',
     {
-      d: 'M3 8H21V12C21 14.357 21 15.5355 20.2678 16.2678C19.5355 17 18.357 17 16 17H8C5.64298 17 4.46447 17 3.73223 16.2678C3 15.5355 3 14.357 3 12V8Z',
+      d: 'M22 4H2',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M7 6C7 4.11438 7 3.17157 7.58579 2.58579C8.17157 2 9.11438 2 11 2H13C14.8856 2 15.8284 2 16.4142 2.58579C17 3.17157 17 4.11438 17 6V8H7V6Z',
+      d: 'M21 8H3',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M5 17V22M19 17V22',
+      d: 'M21 12H14',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M8 17V20M16 17V20',
+      d: 'M14 8L14 18C14 18.9428 14 19.4142 14.2929 19.7071C14.5858 20 15.0572 20 16 20H19C19.9428 20 20.4142 20 20.7071 19.7071C21 19.4142 21 18.9428 21 18V8',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M2 8L3.81818 8M20.1818 8L22 8',
+      d: 'M3 4V20M21 4V8',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ]

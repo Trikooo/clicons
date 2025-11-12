@@ -40,7 +40,7 @@ const TextAlignRightIcon = React.forwardRef<SVGSVGElement, TextAlignRightIconPro
   [
     'path',
     {
-      d: 'M3 3H21',
+      d: 'M5 4.5H15',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -50,7 +50,7 @@ const TextAlignRightIcon = React.forwardRef<SVGSVGElement, TextAlignRightIconPro
   [
     'path',
     {
-      d: 'M13 9H21',
+      d: 'M10 9.5H15',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -60,7 +60,7 @@ const TextAlignRightIcon = React.forwardRef<SVGSVGElement, TextAlignRightIconPro
   [
     'path',
     {
-      d: 'M3 15H21',
+      d: 'M5 14.5H15',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -70,7 +70,17 @@ const TextAlignRightIcon = React.forwardRef<SVGSVGElement, TextAlignRightIconPro
   [
     'path',
     {
-      d: 'M13 21H21',
+      d: 'M10 19.5H15',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M19 3V21',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',

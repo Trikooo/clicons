@@ -1,0 +1,110 @@
+import React from 'react';
+import config from '../config';
+
+interface MessageIncomingIconProps extends React.SVGAttributes<SVGSVGElement> {
+  /** Size of the icon in pixels */
+  size?: number;
+  /** Color of the icon */
+  color?: string;
+  /** Stroke width of the icon */
+  strokeWidth?: number;
+  /** Use absolute stroke width, ignores scaling */
+  absoluteStrokeWidth?: boolean;
+}
+
+/**
+ * @name MessageIncomingIcon
+ * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @preview ![img](https://clicons.dev/icon/message-incoming)
+ * @see {@link https://clicons.dev/icon/message-incoming} - Icon preview
+ * @see {@link https://clicons.dev} - Clicons documentation
+ */
+const MessageIncomingIcon = React.forwardRef<SVGSVGElement, MessageIncomingIconProps>(
+  (
+    {
+      size,
+      color,
+      strokeWidth,
+      absoluteStrokeWidth,
+      className = '',
+      ...rest
+    },
+    ref
+  ) => {
+    const finalSize = size ?? config.defaultSize ?? 16;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+    const finalColor = color ?? config.defaultColor ?? 'currentColor';
+
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M21.7109 9.3871C21.8404 9.895 21.9249 10.4215 21.9598 10.9621C22.0134 11.7929 22.0134 12.6533 21.9598 13.4842C21.6856 17.7299 18.3536 21.1118 14.1706 21.3901C12.7435 21.485 11.2536 21.4848 9.8294 21.3901C9.33896 21.3574 8.8044 21.2403 8.34401 21.0505C7.83177 20.8394 7.5756 20.7338 7.44544 20.7498C7.31527 20.7659 7.1264 20.9052 6.74868 21.184C6.08268 21.6755 5.24367 22.0285 3.99943 21.9982C3.37026 21.9829 3.05568 21.9752 2.91484 21.7349C2.77401 21.4946 2.94941 21.1619 3.30021 20.4966C3.78674 19.5739 4.09501 18.5176 3.62791 17.6712C2.82343 16.4623 2.1401 15.0305 2.04024 13.4842C1.98659 12.6533 1.98659 11.7929 2.04024 10.9621C2.31441 6.71638 5.64639 3.33448 9.8294 3.05621C10.2156 3.03051 10.6067 3.01177 11 3',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M8.5 15H15.5M8.5 10H12',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M14 4.5L22 4.5M14 4.5C14 3.79977 15.9943 2.49153 16.5 2M14 4.5C14 5.20023 15.9943 6.50847 16.5 7',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
+
+    return (
+      <svg
+        ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        width={finalSize}
+        height={finalSize}
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+        {...rest}
+      >
+        {iconData.map(([tag, attrs]: any, index: number) => {
+          const { key, ...restAttrs } = attrs;
+
+          const mergedAttrs = {
+            ...restAttrs,
+            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
+              ? {
+                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
+                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+                  strokeWidth: finalAbsoluteStrokeWidth
+                    ? finalStrokeWidth
+                    : typeof finalStrokeWidth !== 'undefined'
+                      ? finalStrokeWidth
+                      : restAttrs.strokeWidth,
+                }
+              : {}),
+          };
+
+          const Element = tag as any;
+          return <Element key={index} {...mergedAttrs} />;
+        })}
+      </svg>
+    );
+  }
+);
+
+MessageIncomingIcon.displayName = 'MessageIncomingIcon';
+export default MessageIncomingIcon;

@@ -40,7 +40,7 @@ const HeadingIcon = React.forwardRef<SVGSVGElement, HeadingIconProps>(
   [
     'path',
     {
-      d: 'M6 4V20',
+      d: 'M4 5V19',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -50,7 +50,7 @@ const HeadingIcon = React.forwardRef<SVGSVGElement, HeadingIconProps>(
   [
     'path',
     {
-      d: 'M18 4V20',
+      d: 'M14 5V19',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -60,7 +60,17 @@ const HeadingIcon = React.forwardRef<SVGSVGElement, HeadingIconProps>(
   [
     'path',
     {
-      d: 'M6 12H18',
+      d: 'M17 19H18.5M20 19H18.5M18.5 19V11L17 12',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M4 12L14 12',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',

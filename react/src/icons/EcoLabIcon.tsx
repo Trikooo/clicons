@@ -60,7 +60,7 @@ const EcoLabIcon = React.forwardRef<SVGSVGElement, EcoLabIconProps>(
   [
     'path',
     {
-      d: 'M16.8148 22H7.18524C6.53065 22 6 21.4693 6 20.8148C6 20.6085 6.05383 20.4058 6.15616 20.2267L10 13.5V9H14V13.5L17.8438 20.2267C17.9462 20.4058 18 20.6085 18 20.8148C18 21.4693 17.4693 22 16.8148 22Z',
+      d: 'M15 9V19C15 20.6569 13.6569 22 12 22C10.3431 22 9 20.6569 9 19V9H15Z',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -70,7 +70,7 @@ const EcoLabIcon = React.forwardRef<SVGSVGElement, EcoLabIconProps>(
   [
     'path',
     {
-      d: 'M9 9H15',
+      d: 'M8 9H16',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',

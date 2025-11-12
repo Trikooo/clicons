@@ -38,12 +38,9 @@ const DatabaseIcon = React.forwardRef<SVGSVGElement, DatabaseIconProps>(
 
     const iconData = [
   [
-    'ellipse',
+    'path',
     {
-      cx: '12',
-      cy: '5',
-      rx: '8',
-      ry: '3',
+      d: 'M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z',
       stroke: 'currentColor',
       strokeWidth: '1.5'
     }
@@ -51,34 +48,54 @@ const DatabaseIcon = React.forwardRef<SVGSVGElement, DatabaseIconProps>(
   [
     'path',
     {
-      d: 'M7 10.842C7.60158 11.0229 8.27434 11.1718 9 11.282',
+      d: 'M2.5 12H21.5',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M20 12C20 13.6569 16.4183 15 12 15C7.58172 15 4 13.6569 4 12',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
-    }
-  ],
-  [
-    'path',
-    {
-      d: 'M7 17.842C7.60158 18.0229 8.27434 18.1718 9 18.282',
+      d: 'M13 7L17 7',
       stroke: 'currentColor',
       strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'circle',
+    {
+      cx: '8.25',
+      cy: '7',
+      r: '1.25',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'circle',
+    {
+      cx: '8.25',
+      cy: '17',
+      r: '1.25',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ],
   [
     'path',
     {
-      d: 'M20 5V19C20 20.6569 16.4183 22 12 22C7.58172 22 4 20.6569 4 19V5',
+      d: 'M13 17L17 17',
       stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
       strokeWidth: '1.5'
     }
   ]

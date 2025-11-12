@@ -40,11 +40,11 @@ const ChatIcon = React.forwardRef<SVGSVGElement, ChatIconProps>(
   [
     'path',
     {
-      d: 'M12.0045 10.5H12.0135M16 10.5H16.009M8.009 10.5H8.01797',
+      d: 'M7.5 8.5H16.5M7.5 12.5H13',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
-      strokeWidth: '2'
+      strokeWidth: '1.5'
     }
   ],
   [

@@ -40,7 +40,7 @@ const ScissorIcon = React.forwardRef<SVGSVGElement, ScissorIconProps>(
   [
     'path',
     {
-      d: 'M21 6C21 7.65685 19.6569 9 18 9C16.3431 9 15 7.65685 15 6C15 4.34315 16.3431 3 18 3C19.6569 3 21 4.34315 21 6Z',
+      d: 'M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z',
       stroke: 'currentColor',
       strokeWidth: '1.5'
     }
@@ -48,35 +48,7 @@ const ScissorIcon = React.forwardRef<SVGSVGElement, ScissorIconProps>(
   [
     'path',
     {
-      d: 'M21 18C21 19.6569 19.6569 21 18 21C16.3431 21 15 19.6569 15 18C15 16.3431 16.3431 15 18 15C19.6569 15 21 16.3431 21 18Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
-    }
-  ],
-  [
-    'path',
-    {
-      d: 'M15 8L3 19',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
-    }
-  ],
-  [
-    'path',
-    {
-      d: 'M15.0003 16L11 12',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
-    }
-  ],
-  [
-    'path',
-    {
-      d: 'M3 5.00011L8.5 10',
+      d: 'M13.4368 9.55807L10.6 12M10.6 12L7 15M10.6 12L13.4949 14.3865M10.6 12L7 9M16 8.5C16 9.32843 15.3284 10 14.5 10C13.6716 10 13 9.32843 13 8.5C13 7.67157 13.6716 7 14.5 7C15.3284 7 16 7.67157 16 8.5ZM16 15.5C16 16.3284 15.3284 17 14.5 17C13.6716 17 13 16.3284 13 15.5C13 14.6716 13.6716 14 14.5 14C15.3284 14 16 14.6716 16 15.5Z',
       stroke: 'currentColor',
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
