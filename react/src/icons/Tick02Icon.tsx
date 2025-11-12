@@ -36,7 +36,18 @@ const Tick02Icon = React.forwardRef<SVGSVGElement, Tick02IconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M5 14L8.5 17.5L19 6.5", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M5 14L8.5 17.5L19 6.5',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

@@ -36,7 +36,18 @@ const Progress01Icon = React.forwardRef<SVGSVGElement, Progress01IconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["circle", { cx: "12", cy: "12", r: "10", stroke: "currentColor", strokeWidth: "1.5", key: "0" }]];
+    const iconData = [
+  [
+    'circle',
+    {
+      cx: '12',
+      cy: '12',
+      r: '10',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

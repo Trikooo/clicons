@@ -36,7 +36,19 @@ const RecordIcon = React.forwardRef<SVGSVGElement, RecordIconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["circle", { cx: "12", cy: "12", r: "8", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }]];
+    const iconData = [
+  [
+    'circle',
+    {
+      cx: '12',
+      cy: '12',
+      r: '8',
+      stroke: 'currentColor',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

@@ -36,7 +36,18 @@ const Cancel01Icon = React.forwardRef<SVGSVGElement, Cancel01IconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M18 6L6.00081 17.9992M17.9992 18L6 6.00085", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M18 6L6.00081 17.9992M17.9992 18L6 6.00085',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

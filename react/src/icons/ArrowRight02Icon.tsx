@@ -36,8 +36,28 @@ const ArrowRight02Icon = React.forwardRef<SVGSVGElement, ArrowRight02IconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M18.5 12L4.99997 12", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
-  ["path", { d: "M13 18C13 18 19 13.5811 19 12C19 10.4188 13 6 13 6", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M18.5 12L4.99997 12',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M13 18C13 18 19 13.5811 19 12C19 10.4188 13 6 13 6',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

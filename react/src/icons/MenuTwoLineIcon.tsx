@@ -36,8 +36,28 @@ const MenuTwoLineIcon = React.forwardRef<SVGSVGElement, MenuTwoLineIconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M4 9L20 9", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
-  ["path", { d: "M4 15L14 15", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M4 9L20 9',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M4 15L14 15',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

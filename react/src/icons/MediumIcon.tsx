@@ -36,9 +36,40 @@ const MediumIcon = React.forwardRef<SVGSVGElement, MediumIconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["circle", { cx: "6.5", cy: "12", r: "4.5", stroke: "currentColor", strokeWidth: "1.5", key: "0" }],
-  ["ellipse", { cx: "15.5", cy: "12", rx: "2.5", ry: "4.5", stroke: "currentColor", strokeWidth: "1.5", key: "1" }],
-  ["ellipse", { cx: "21", cy: "12", rx: "1", ry: "4.5", stroke: "currentColor", strokeWidth: "1.5", key: "2" }]];
+    const iconData = [
+  [
+    'circle',
+    {
+      cx: '6.5',
+      cy: '12',
+      r: '4.5',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'ellipse',
+    {
+      cx: '15.5',
+      cy: '12',
+      rx: '2.5',
+      ry: '4.5',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'ellipse',
+    {
+      cx: '21',
+      cy: '12',
+      rx: '1',
+      ry: '4.5',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

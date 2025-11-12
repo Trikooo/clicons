@@ -36,15 +36,98 @@ const More01Icon = React.forwardRef<SVGSVGElement, More01IconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M11.9959 18H12.0049", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "0" }],
-  ["path", { d: "M17.9998 18H18.0088", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "1" }],
-  ["path", { d: "M5.99981 18H6.00879", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "2" }],
-  ["path", { d: "M11.9959 12H12.0049", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "3" }],
-  ["path", { d: "M11.9998 6H12.0088", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "4" }],
-  ["path", { d: "M17.9998 12H18.0088", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "5" }],
-  ["path", { d: "M17.9998 6H18.0088", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "6" }],
-  ["path", { d: "M5.99981 12H6.00879", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "7" }],
-  ["path", { d: "M5.99981 6H6.00879", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "8" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M11.9959 18H12.0049',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M17.9998 18H18.0088',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M5.99981 18H6.00879',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M11.9959 12H12.0049',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M11.9998 6H12.0088',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M17.9998 12H18.0088',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M17.9998 6H18.0088',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M5.99981 12H6.00879',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M5.99981 6H6.00879',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ]
+];
 
     return (
       <svg

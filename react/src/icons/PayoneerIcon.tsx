@@ -36,7 +36,20 @@ const PayoneerIcon = React.forwardRef<SVGSVGElement, PayoneerIconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["circle", { cx: "11.9999", cy: "12", r: "9.5", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }]];
+    const iconData = [
+  [
+    'circle',
+    {
+      cx: '11.9999',
+      cy: '12',
+      r: '9.5',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

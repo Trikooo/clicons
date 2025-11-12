@@ -36,10 +36,50 @@ const TrampolineIcon = React.forwardRef<SVGSVGElement, TrampolineIconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M2 10V18", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
-  ["path", { d: "M12 16L12 20", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "1" }],
-  ["path", { d: "M22 10V18", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "2" }],
-  ["ellipse", { cx: "12", cy: "10", rx: "10", ry: "6", stroke: "currentColor", strokeLinejoin: "round", strokeWidth: "1.5", key: "3" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M2 10V18',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M12 16L12 20',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M22 10V18',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'ellipse',
+    {
+      cx: '12',
+      cy: '10',
+      rx: '10',
+      ry: '6',
+      stroke: 'currentColor',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

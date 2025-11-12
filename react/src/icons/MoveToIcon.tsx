@@ -36,12 +36,65 @@ const MoveToIcon = React.forwardRef<SVGSVGElement, MoveToIconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M8.99997 5H19", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "1.5", key: "0" }],
-  ["path", { d: "M4.99997 5H5.00895", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", key: "1" }],
-  ["path", { d: "M4.99997 11.0039H5.00895", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", key: "2" }],
-  ["path", { d: "M4.99997 17.0073H5.00895", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", key: "3" }],
-  ["path", { d: "M8.99997 11.0039H19", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "1.5", key: "4" }],
-  ["path", { d: "M8.99997 17.0074H19M19 17.0074C19.0035 16.7467 18.8202 16.4896 18.5964 16.2998L16.9939 15.0259M19 17.0074C18.9965 17.2588 18.8142 17.5135 18.5964 17.7149L16.9939 19.0002", stroke: "currentColor", strokeLinecap: "round", strokeWidth: "1.5", key: "5" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M8.99997 5H19',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M4.99997 5H5.00895',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M4.99997 11.0039H5.00895',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M4.99997 17.0073H5.00895',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M8.99997 11.0039H19',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M8.99997 17.0074H19M19 17.0074C19.0035 16.7467 18.8202 16.4896 18.5964 16.2998L16.9939 15.0259M19 17.0074C18.9965 17.2588 18.8142 17.5135 18.5964 17.7149L16.9939 19.0002',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

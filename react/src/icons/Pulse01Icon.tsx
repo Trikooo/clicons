@@ -36,7 +36,18 @@ const Pulse01Icon = React.forwardRef<SVGSVGElement, Pulse01IconProps>(
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M2 12H6L7.5 8L9.5 15L13 6L15.5 18L18 12H22", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M2 12H6L7.5 8L9.5 15L13 6L15.5 18L18 12H22',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

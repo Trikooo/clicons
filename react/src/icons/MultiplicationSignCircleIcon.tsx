@@ -36,8 +36,28 @@ const MultiplicationSignCircleIcon = React.forwardRef<SVGSVGElement, Multiplicat
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M15.5 8.5L12 12M12 12L8.5 15.5M12 12L15.5 15.5M12 12L8.5 8.5", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5", key: "0" }],
-  ["circle", { cx: "12", cy: "12", r: "10", stroke: "currentColor", strokeWidth: "1.5", key: "1" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M15.5 8.5L12 12M12 12L8.5 15.5M12 12L15.5 15.5M12 12L8.5 8.5',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'circle',
+    {
+      cx: '12',
+      cy: '12',
+      r: '10',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg

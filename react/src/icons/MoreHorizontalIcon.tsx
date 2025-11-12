@@ -36,9 +36,38 @@ const MoreHorizontalIcon = React.forwardRef<SVGSVGElement, MoreHorizontalIconPro
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["path", { d: "M11.9959 12H12.0049", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "0" }],
-  ["path", { d: "M17.9998 12H18.0088", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "1" }],
-  ["path", { d: "M5.99981 12H6.00879", stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2.5", key: "2" }]];
+    const iconData = [
+  [
+    'path',
+    {
+      d: 'M11.9959 12H12.0049',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M17.9998 12H18.0088',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M5.99981 12H6.00879',
+      stroke: 'currentColor',
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: '2.5'
+    }
+  ]
+];
 
     return (
       <svg

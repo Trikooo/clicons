@@ -36,9 +36,44 @@ const MoreVerticalSquare01Icon = React.forwardRef<SVGSVGElement, MoreVerticalSqu
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
 
-    const iconData = [["rect", { x: "10.5", y: "3", width: "3", height: "3", rx: "1", stroke: "currentColor", strokeWidth: "1.5", key: "0" }],
-  ["rect", { x: "10.5", y: "10.5", width: "3", height: "3", rx: "1", stroke: "currentColor", strokeWidth: "1.5", key: "1" }],
-  ["rect", { x: "10.5", y: "18", width: "3", height: "3", rx: "1", stroke: "currentColor", strokeWidth: "1.5", key: "2" }]];
+    const iconData = [
+  [
+    'rect',
+    {
+      x: '10.5',
+      y: '3',
+      width: '3',
+      height: '3',
+      rx: '1',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'rect',
+    {
+      x: '10.5',
+      y: '10.5',
+      width: '3',
+      height: '3',
+      rx: '1',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ],
+  [
+    'rect',
+    {
+      x: '10.5',
+      y: '18',
+      width: '3',
+      height: '3',
+      rx: '1',
+      stroke: 'currentColor',
+      strokeWidth: '1.5'
+    }
+  ]
+];
 
     return (
       <svg
