@@ -2,7 +2,7 @@
   "name": "clicons-react",
   "version": "1.0.3",
   "description": "Clicons React Icon Library",
-  "homepage": "https://github.com/yourusername/clicons",
+  "homepage": "https://github.com/trikooo/clicons",
   "license": "MIT",
   "amdName": "clicons-react",
   "main": "./dist/index.js",
