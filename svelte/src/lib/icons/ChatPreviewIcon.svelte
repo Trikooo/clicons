@@ -1,0 +1,54 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component ChatPreviewIcon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/chat-preview)
+   * @see {@link https://clicons.dev/icon/chat-preview} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M12.0045 11H12.0135M8.00903 11H8.018" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+  <path d="M21.9609 9C21.9865 9.72648 22 10.2302 22 11.001C22 11.7718 21.9865 12.5242 21.9609 13.2507C21.8772 15.6242 21.8353 16.8109 20.8699 17.7836C19.9046 18.7562 18.6843 18.8084 16.2437 18.9128C15.5098 18.9442 14.7498 18.9677 13.9693 18.9825C13.2282 18.9965 12.8576 19.0036 12.532 19.1276C12.2064 19.2516 11.9325 19.4865 11.3845 19.9563L9.20503 21.8252C9.07273 21.9386 8.90419 22.001 8.72991 22.001C8.32679 22.001 8 21.6742 8 21.2711V18.9229C7.91842 18.9196 7.83715 18.9163 7.75619 18.9128C5.31569 18.8084 4.09545 18.7562 3.13007 17.7836C2.16469 16.8109 2.12282 15.6242 2.03909 13.2507C2.01346 12.5242 2 11.7718 2 11.001C2 10.2302 2.01346 9.47779 2.03909 8.75131C2.12282 6.37784 2.16469 5.1911 3.13007 4.21846C4.09545 3.24582 5.3157 3.19361 7.7562 3.08919C8.48051 3.0582 9.2302 3.01483 10 3" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M22 5C22 5 19.958 8 17 8C14.042 8 12 5 12 5C12 5 14 2 17 2C20 2 22 5 22 5Z" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M16.991 5H17" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+</svg>

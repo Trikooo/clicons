@@ -1,0 +1,52 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component ChatFeedbackIcon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/chat-feedback)
+   * @see {@link https://clicons.dev/icon/chat-feedback} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M7.5 8.5H16.5M7.5 12.5H13" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M22 10.5C22 9.72921 21.9865 8.97679 21.9609 8.2503C21.8772 5.87683 21.8353 4.69009 20.8699 3.71745C19.9046 2.74481 18.6843 2.6926 16.2438 2.58819C14.9048 2.5309 13.4791 2.5 12 2.5C10.5209 2.5 9.09517 2.5309 7.7562 2.58819C5.3157 2.6926 4.09545 2.74481 3.13007 3.71745C2.16469 4.69009 2.12282 5.87683 2.03909 8.2503C2.01346 8.97679 2 9.72921 2 10.5C2 11.2708 2.01346 12.0232 2.03909 12.7497C2.12282 15.1232 2.16469 16.3099 3.13007 17.2826C4.09545 18.2552 5.31573 18.3074 7.7563 18.4118C8.4902 18.4432 9.25016 18.4667 10.0307 18.4815C10.7718 18.4955 11.1424 18.5026 11.468 18.6266C11.7936 18.7506 12.0675 18.9855 12.6155 19.4553L14.795 21.3242C14.9273 21.4376 15.0958 21.5 15.2701 21.5C15.6732 21.5 16 21.1732 16 20.7701V18.4219C16.0816 18.4186 16.1629 18.4153 16.2438 18.4118C18.6843 18.3074 19.9046 18.2552 20.8699 17.2825C21.8353 16.3099 21.8772 15.1232 21.9609 12.7497C21.9865 12.0232 22 11.2708 22 10.5Z" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+</svg>

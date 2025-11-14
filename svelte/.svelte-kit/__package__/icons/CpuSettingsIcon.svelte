@@ -1,0 +1,59 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component CpuSettingsIcon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/cpu-settings)
+   * @see {@link https://clicons.dev/icon/cpu-settings} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M20 10C19.9641 7.52043 19.7801 6.11466 18.8365 5.17157C17.6643 4 15.7776 4 12.0043 4C8.23106 4 6.34442 4 5.17221 5.17157C4 6.34315 4 8.22876 4 12C4 15.7712 4 17.6569 5.17221 18.8284C6.23545 19.8911 7.88646 19.9899 11 19.9991" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M18 19.7143V21M18 19.7143C16.8432 19.7143 15.8241 19.1461 15.2263 18.2833M18 19.7143C19.1568 19.7143 20.1759 19.1461 20.7737 18.2833M18 13.2857C19.1569 13.2857 20.1761 13.854 20.7738 14.7169M18 13.2857C16.8431 13.2857 15.8239 13.854 15.2262 14.7169M18 13.2857V12M22 13.9286L20.7738 14.7169M14.0004 19.0714L15.2263 18.2833M14 13.9286L15.2262 14.7169M21.9996 19.0714L20.7737 18.2833M20.7738 14.7169C21.1273 15.2271 21.3333 15.8403 21.3333 16.5C21.3333 17.1597 21.1272 17.773 20.7737 18.2833M15.2262 14.7169C14.8727 15.2271 14.6667 15.8403 14.6667 16.5C14.6667 17.1597 14.8728 17.773 15.2263 18.2833" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeWidth="1.5" />
+  <path d="M9.5 2V4" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M14.5 2V4" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M9.5 20V22" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M4 9.5L2 9.5" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M4 14.5L2 14.5" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M22 9.5L20 9.5" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M12 8H8" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+</svg>

@@ -1,0 +1,52 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component FileCloudIcon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/file-cloud)
+   * @see {@link https://clicons.dev/icon/file-cloud} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M4 11.9949L4 14.5404C4 17.7871 4 19.4104 4.88607 20.5099C5.06508 20.732 5.26731 20.9344 5.48933 21.1135C6.58831 22 8.21082 22 11.4558 22C12.1614 22 12.5141 22 12.8372 21.8859C12.9044 21.8622 12.9702 21.8349 13.0345 21.8042C13.3436 21.6563 13.593 21.4067 14.0919 20.9076L18.8284 16.1686C19.4065 15.5903 19.6955 15.3011 19.8478 14.9334C20 14.5656 20 14.1567 20 13.3388V9.99394C20 6.2208 20 4.33423 18.8284 3.16206C17.8971 2.23022 16.5144 2.03917 14.0919 2M13 21.4997V20.9995C13 18.1696 13 16.7547 13.8787 15.8756C14.7574 14.9965 16.1716 14.9965 19 14.9965H19.5" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M4 6.66667C4 7.95533 5.00736 9 6.25 9H10.975C12.0934 9 13 8.0598 13 6.9C13 5.7402 12.0833 4.80003 10.9649 4.80003C11.0897 3.36433 9.97992 2 8.5 2C7.20546 2 6.14305 3.03069 6.03419 4.34393C4.89279 4.45657 4 5.45349 4 6.66667Z" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+</svg>

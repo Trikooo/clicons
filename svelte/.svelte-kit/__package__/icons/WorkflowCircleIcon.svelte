@@ -1,0 +1,54 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component WorkflowCircleIcon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/workflow-circle)
+   * @see {@link https://clicons.dev/icon/workflow-circle} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M9 9C9 10.6569 7.65685 12 6 12C4.34315 12 3 10.6569 3 9C3 7.34315 4.34315 6 6 6C7.65685 6 9 7.34315 9 9Z" stroke={"currentColor".replace('currentColor', finalColor)} strokeWidth="1.5" />
+  <path d="M21 18C21 19.6569 19.6569 21 18 21C16.3431 21 15 19.6569 15 18C15 16.3431 16.3431 15 18 15C19.6569 15 21 16.3431 21 18Z" stroke={"currentColor".replace('currentColor', finalColor)} strokeWidth="1.5" />
+  <path d="M9 9H14C15.8856 9 16.8284 9 17.4142 9.58579C18 10.1716 18 11.1144 18 13V15" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M6 12V22M6 6V2" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+</svg>

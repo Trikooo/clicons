@@ -1,0 +1,52 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component RotateLeft2Icon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/rotate-left2)
+   * @see {@link https://clicons.dev/icon/rotate-left2} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M13.6394 8.72685L14.1363 11.35L6.02118 6.72095C5.21674 6.26208 4.18811 6.53439 3.72366 7.32917C3.25922 8.12396 3.53484 9.14025 4.33928 9.59912L8.70898 12.0917L7.67067 14.7754C6.98467 16.4988 6.64167 17.3604 6.65396 18.1122C6.67425 19.354 7.12381 20.5016 8.35033 21.2012C9.20462 21.6886 9.89966 21.8069 11.7359 22.1781C12.901 22.4137 13.4836 22.5315 14.0237 22.4897C14.9128 22.4209 15.7501 22.0488 16.3921 21.4372C16.782 21.0657 17.0793 20.5569 17.674 19.5393L18.1781 18.6767C18.9686 17.3238 19.3639 16.6474 19.4646 15.9019C19.4826 15.7682 19.4935 15.6336 19.497 15.4988C19.5169 14.7469 19.2348 14.0173 18.6706 12.5579L16.844 7.83366C16.5633 7.10768 15.8084 6.67325 15.0308 6.79026C14.0961 6.9309 13.4654 7.80872 13.6394 8.72685Z" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M8.86287 4.46465C9.25977 4.8603 10.9864 4.74616 11.6233 4.66671M8.86287 4.46465C8.46598 4.06901 8.45462 2.13697 8.53431 1.50208M8.86287 4.46465C9.88394 2.69642 13.9435 -0.124125 17.9719 2.69642C19.9185 4.05942 20.1932 4.91838 20.5011 5.49381" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+</svg>

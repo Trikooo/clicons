@@ -1,0 +1,55 @@
+<script lang="ts">
+  import config from '../config';
+
+  /**
+   * @component MoonCloudLittleSnowIcon
+   * @description SVG icon component from Clicons, renders SVG Element with children.
+   * @preview ![img](https://clicons.dev/icon/moon-cloud-little-snow)
+   * @see {@link https://clicons.dev/icon/moon-cloud-little-snow} - Icon preview
+   * @see {@link https://clicons.dev} - Clicons documentation
+   */
+
+  interface Props {
+    /** Size of the icon in pixels */
+    size?: number;
+    /** Color of the icon */
+    color?: string;
+    /** Stroke width of the icon */
+    strokeWidth?: number;
+    /** Use absolute stroke width, ignores scaling */
+    absoluteStrokeWidth?: boolean;
+    /** CSS class name */
+    class?: string;
+    [key: string]: any;
+  }
+
+  let {
+    size,
+    color,
+    strokeWidth,
+    absoluteStrokeWidth,
+    class: className = '',
+    ...restProps
+  }: Props = $props();
+
+  let finalSize = $derived(size ?? config.defaultSize ?? 16);
+  let finalStrokeWidth = $derived(strokeWidth ?? config.defaultStrokeWidth ?? 1.8);
+  let finalAbsoluteStrokeWidth = $derived(absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false);
+  let finalColor = $derived(color ?? config.defaultColor ?? 'currentColor');
+</script>
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={finalSize}
+  height={finalSize}
+  viewBox="0 0 24 24"
+  fill="none"
+  class={className}
+  {...restProps}
+>
+  <path d="M17.4776 10.9869C17.485 10.9868 17.4925 10.9868 17.5 10.9868C19.9853 10.9868 22 12.9971 22 15.4768C22 17.2398 20.9817 18.7654 19.5 19.5001M17.4776 10.9869C17.4924 10.8225 17.5 10.6561 17.5 10.4879C17.5 7.45709 15.0376 5.00012 12 5.00012C9.12324 5.00012 6.76233 7.20384 6.52042 10.0117M17.4776 10.9869C17.395 11.9015 16.9769 12.6885 16.5 13.4182M6.52042 10.0117C3.98398 10.2525 2 12.384 2 14.9779C2 16.8245 3.0055 18.4368 4.5 19.2994M6.52042 10.0117C6.67826 9.99669 6.83823 9.98903 7 9.98903C8.12582 9.98903 9.16474 10.3603 10.0005 10.9868" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M11 16L13 18M13 16L11 18" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M15 20L17 22M17 20L15 22" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M7 20L9 22M9 20L7 22" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+  <path d="M10 5.13829C9.91652 4.70849 9.76249 4.28506 9.53351 3.88456C8.98606 2.92704 8.11203 2.27864 7.13552 2C7.28642 3.22635 6.71543 4.48154 5.58897 5.13829C4.46251 5.79504 3.10057 5.66681 2.1243 4.92166C1.87501 5.91497 1.99406 7.00354 2.54151 7.96107C3.48512 9.61151 5.39904 10.3436 7.13552 9.84664" stroke={"currentColor".replace('currentColor', finalColor)} strokeLinejoin="round" strokeWidth="1.5" />
+</svg>
