@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Icon Generator Script
+ * Icon Generator Script for React
  * Converts SVG files into individual React components
- * Usage: node generate-icons.mjs
+ * Usage: node generate-icons-react.mjs
  */
 
 import fs from "fs";
@@ -22,19 +22,29 @@ const DEFAULT_STROKE_WIDTH = 1.8;
 const DEFAULT_ABSOLUTE_STROKE_WIDTH = false;
 const DEFAULT_COLOR = "currentColor";
 
-// Ensure output directory exists
 if (!fs.existsSync(REACT_SRC_DIR)) {
   fs.mkdirSync(REACT_SRC_DIR, { recursive: true });
 }
 
 /**
- * Parse an SVG file to extract its content
+ * Parse an SVG file to extract its content and viewBox
  */
 function parseSVGFile(filePath) {
   const content = fs.readFileSync(filePath, "utf-8");
-  const match = content.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
-  if (!match) return null;
-  return match[1].trim();
+
+  const svgMatch = content.match(/<svg[^>]*>/);
+  if (!svgMatch) return null;
+
+  const viewBoxMatch = svgMatch[0].match(/viewBox="([^"]*)"/);
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : "0 0 24 24";
+
+  const contentMatch = content.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
+  if (!contentMatch) return null;
+
+  return {
+    content: contentMatch[1].trim(),
+    viewBox,
+  };
 }
 
 /**
@@ -50,12 +60,9 @@ function toKebabCase(str) {
 
 /**
  * Parse SVG elements into structured data
- * Handles both self-closing and normal tags
  */
 function parseSVGElements(svgContent) {
   const elements = [];
-
-  // Match both self-closing tags and normal opening tags
   const elementRegex = /<(\w+)([^>]*?)(\/?)>/g;
   let match;
 
@@ -73,6 +80,11 @@ function parseSVGElements(svgContent) {
       const attrName = attrMatch[1];
       const attrValue = attrMatch[2];
 
+      // Skip invalid/custom data attributes
+      if (attrName.startsWith("data--") || attrName.includes("bstatus")) {
+        continue;
+      }
+
       // Convert hyphenated attributes to camelCase for React
       const camelCaseAttr = attrName.replace(/-([a-z])/g, (g) =>
         g[1].toUpperCase()
@@ -80,7 +92,6 @@ function parseSVGElements(svgContent) {
       attrs[camelCaseAttr] = attrValue;
     }
 
-    // If not self-closing, find the closing tag and extract content
     let children = null;
     if (!isSelfClosing) {
       const closingTagRegex = new RegExp(`</${tag}>`);
@@ -94,12 +105,10 @@ function parseSVGElements(svgContent) {
           children = innerContent;
         }
 
-        // Skip past the closing tag
         elementRegex.lastIndex = contentEnd + closingMatch[0].length;
       }
     }
 
-    // Only include children in array if they exist
     if (children) {
       elements.push([tag, attrs, children]);
     } else {
@@ -111,13 +120,34 @@ function parseSVGElements(svgContent) {
 }
 
 /**
+ * Check if icon uses stroke or fill
+ */
+function analyzeIconType(elements) {
+  let hasStroke = false;
+  let hasFill = false;
+  let hasStrokeWidth = false;
+
+  for (const element of elements) {
+    const attrs = element[1];
+    if (attrs.stroke) hasStroke = true;
+    if (attrs.fill) hasFill = true;
+    if (attrs.strokeWidth) hasStrokeWidth = true;
+  }
+
+  return { hasStroke, hasFill, hasStrokeWidth };
+}
+
+/**
  * Generate React component from SVG content
  */
-function generateComponent(iconName, svgContent) {
+function generateComponent(iconName, svgData) {
+  const { content: svgContent, viewBox } = svgData;
   const kebabName = toKebabCase(iconName);
   const iconUrl = `https://clicons.dev/icon/${kebabName}`;
 
   const elements = parseSVGElements(svgContent);
+  const { hasStroke, hasFill, hasStrokeWidth } = analyzeIconType(elements);
+
   const iconDataStr = JSON.stringify(elements, null, 2)
     .replace(/"(\w+)":/g, "$1:")
     .replace(/"/g, "'");
@@ -129,11 +159,15 @@ interface ${iconName}Props extends React.SVGAttributes<SVGSVGElement> {
   /** Size of the icon in pixels */
   size?: number;
   /** Color of the icon */
-  color?: string;
+  color?: string;${
+    hasStrokeWidth
+      ? `
   /** Stroke width of the icon */
   strokeWidth?: number;
   /** Use absolute stroke width, ignores scaling */
-  absoluteStrokeWidth?: boolean;
+  absoluteStrokeWidth?: boolean;`
+      : ""
+  }
 }
 
 /**
@@ -147,17 +181,25 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
   (
     {
       size,
-      color,
+      color,${
+        hasStrokeWidth
+          ? `
       strokeWidth,
-      absoluteStrokeWidth,
+      absoluteStrokeWidth,`
+          : ""
+      }
       className = '',
       ...rest
     },
     ref
   ) => {
-    const finalSize = size ?? config.defaultSize ?? ${DEFAULT_SIZE};
+    const finalSize = size ?? config.defaultSize ?? ${DEFAULT_SIZE};${
+    hasStrokeWidth
+      ? `
     const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? ${DEFAULT_STROKE_WIDTH};
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? ${DEFAULT_ABSOLUTE_STROKE_WIDTH};
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? ${DEFAULT_ABSOLUTE_STROKE_WIDTH};`
+      : ""
+  }
     const finalColor = color ?? config.defaultColor ?? '${DEFAULT_COLOR}';
 
     const iconData = ${iconDataStr};
@@ -168,7 +210,7 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
         xmlns="http://www.w3.org/2000/svg"
         width={finalSize}
         height={finalSize}
-        viewBox="0 0 24 24"
+        viewBox="${viewBox}"
         fill="none"
         className={className}
         {...rest}
@@ -182,14 +224,31 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
           const mergedAttrs = {
             ...restAttrs,
             ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
+              ? {${
+                hasStroke
+                  ? `
+                  stroke: restAttrs.stroke?.replace('currentColor', finalColor),`
+                  : ""
+              }${
+    hasFill
+      ? `
+                  fill: restAttrs.fill?.replace('currentColor', finalColor),`
+      : ""
+  }${
+    !hasStroke && !hasFill
+      ? `
+                  fill: finalColor,`
+      : ""
+  }${
+    hasStrokeWidth
+      ? `
                   strokeWidth: finalAbsoluteStrokeWidth
                     ? finalStrokeWidth
                     : typeof finalStrokeWidth !== 'undefined'
                       ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
+                      : restAttrs.strokeWidth,`
+      : ""
+  }
                 }
               : {}),
           };
@@ -241,15 +300,15 @@ async function generateIcons() {
       const filepath = path.join(SVG_ICONS_DIR, filename);
       const componentName = getComponentName(filename);
 
-      const svgContent = parseSVGFile(filepath);
-      if (!svgContent) {
+      const svgData = parseSVGFile(filepath);
+      if (!svgData) {
         console.log(`⚠️  Skipped: ${componentName} (could not parse)`);
         skipCount++;
         continue;
       }
 
       try {
-        const componentCode = generateComponent(componentName, svgContent);
+        const componentCode = generateComponent(componentName, svgData);
         const componentPath = path.join(REACT_SRC_DIR, `${componentName}.tsx`);
         fs.writeFileSync(componentPath, componentCode);
 
@@ -301,7 +360,6 @@ function generateIndexFile(exports) {
   console.log(`✅ Created ${OUTPUT_INDEX}`);
 }
 
-// Run the generator
 generateIcons().catch((error) => {
   console.error("Fatal error:", error);
   process.exit(1);
