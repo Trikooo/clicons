@@ -50,15 +50,20 @@ function toKebabCase(str) {
 
 /**
  * Parse SVG elements into structured data
+ * Handles both self-closing and normal tags
  */
 function parseSVGElements(svgContent) {
   const elements = [];
-  const elementRegex = /<(\w+)([^>]*?)\/>/g;
+
+  // Match both self-closing tags and normal opening tags
+  const elementRegex = /<(\w+)([^>]*?)(\/?)>/g;
   let match;
 
   while ((match = elementRegex.exec(svgContent)) !== null) {
     const tag = match[1];
     const attrsString = match[2];
+    const isSelfClosing = match[3] === "/";
+    const matchEnd = match.index + match[0].length;
 
     const attrs = {};
     const attrRegex = /(\w+(?:-\w+)*)="([^"]*)"/g;
@@ -75,7 +80,31 @@ function parseSVGElements(svgContent) {
       attrs[camelCaseAttr] = attrValue;
     }
 
-    elements.push([tag, attrs]);
+    // If not self-closing, find the closing tag and extract content
+    let children = null;
+    if (!isSelfClosing) {
+      const closingTagRegex = new RegExp(`</${tag}>`);
+      const closingMatch = closingTagRegex.exec(svgContent.slice(matchEnd));
+      if (closingMatch) {
+        const contentStart = matchEnd;
+        const contentEnd = matchEnd + closingMatch.index;
+        const innerContent = svgContent.slice(contentStart, contentEnd).trim();
+
+        if (innerContent) {
+          children = innerContent;
+        }
+
+        // Skip past the closing tag
+        elementRegex.lastIndex = contentEnd + closingMatch[0].length;
+      }
+    }
+
+    // Only include children in array if they exist
+    if (children) {
+      elements.push([tag, attrs, children]);
+    } else {
+      elements.push([tag, attrs]);
+    }
   }
 
   return elements;
@@ -144,7 +173,10 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
+        {iconData.map((item: any, index: number) => {
+          const tag = item[0];
+          const attrs = item[1];
+          const children = item[2];
           const { key, ...restAttrs } = attrs;
 
           const mergedAttrs = {
@@ -163,7 +195,7 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
           };
 
           const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
+          return children ? <Element key={index} {...mergedAttrs}>{children}</Element> : <Element key={index} {...mergedAttrs} />;
         })}
       </svg>
     );
