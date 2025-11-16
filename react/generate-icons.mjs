@@ -1,11 +1,4 @@
 #!/usr/bin/env node
-
-/**
- * Icon Generator Script for React
- * Converts SVG files into individual React components
- * Usage: node generate-icons-react.mjs
- */
-
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -17,39 +10,385 @@ const SVG_ICONS_DIR = path.join(__dirname, "..", "svg-icons");
 const REACT_SRC_DIR = path.join(__dirname, "src", "icons");
 const OUTPUT_INDEX = path.join(__dirname, "src", "index.ts");
 
-const DEFAULT_SIZE = 16;
-const DEFAULT_STROKE_WIDTH = 1.8;
+const DEFAULT_SIZE = 24;
+const DEFAULT_STROKE_WIDTH = 1.5;
 const DEFAULT_ABSOLUTE_STROKE_WIDTH = false;
 const DEFAULT_COLOR = "currentColor";
 
+// Create directories
 if (!fs.existsSync(REACT_SRC_DIR)) {
   fs.mkdirSync(REACT_SRC_DIR, { recursive: true });
 }
 
-/**
- * Parse an SVG file to extract its content and viewBox
- */
 function parseSVGFile(filePath) {
   const content = fs.readFileSync(filePath, "utf-8");
-
   const svgMatch = content.match(/<svg[^>]*>/);
   if (!svgMatch) return null;
 
-  const viewBoxMatch = svgMatch[0].match(/viewBox="([^"]*)"/);
+  const svgTag = svgMatch[0];
+
+  // Extract attributes from root SVG
+  const viewBoxMatch = svgTag.match(/viewBox="([^"]*)"/);
   const viewBox = viewBoxMatch ? viewBoxMatch[1] : "0 0 24 24";
 
+  const strokeMatch = svgTag.match(/stroke="([^"]*)"/);
+  const fillMatch = svgTag.match(/fill="([^"]*)"/);
+  const strokeWidthMatch = svgTag.match(/stroke-width="([^"]*)"/);
+  const strokeLinecapMatch = svgTag.match(/stroke-linecap="([^"]*)"/);
+  const strokeLinejoinMatch = svgTag.match(/stroke-linejoin="([^"]*)"/);
+
+  // Extract content between svg tags
   const contentMatch = content.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
-  if (!contentMatch) return null;
+  const svgContent = contentMatch ? contentMatch[1].trim() : "";
 
   return {
-    content: contentMatch[1].trim(),
+    content: svgContent,
     viewBox,
+    rootAttrs: {
+      stroke: strokeMatch ? strokeMatch[1] : null,
+      fill: fillMatch ? fillMatch[1] : null,
+      strokeWidth: strokeWidthMatch ? strokeWidthMatch[1] : null,
+      strokeLinecap: strokeLinecapMatch ? strokeLinecapMatch[1] : null,
+      strokeLinejoin: strokeLinejoinMatch ? strokeLinejoinMatch[1] : null,
+    },
   };
 }
 
-/**
- * Convert icon name to kebab-case for URL
- */
+function parseAttributes(attrsString) {
+  const attrs = {};
+  const attrRegex = /(\w+(?:-\w+)*)="([^"]*)"/g;
+  let match;
+
+  while ((match = attrRegex.exec(attrsString)) !== null) {
+    const attrName = match[1];
+    const attrValue = match[2];
+
+    // Skip data attributes, class attributes, and attributes containing 'bstatus'
+    if (
+      attrName.startsWith("data-") ||
+      attrName === "class" ||
+      attrName.includes("bstatus")
+    ) {
+      continue;
+    }
+
+    // Convert kebab-case to camelCase
+    const camelName = attrName.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+    attrs[camelName] = attrValue;
+  }
+
+  return attrs;
+}
+
+function parseSVGElements(svgContent) {
+  const elements = [];
+  let position = 0;
+
+  while (position < svgContent.length) {
+    // Find next opening tag
+    const tagMatch = svgContent.slice(position).match(/<(\w+)([^>]*?)(\/?)>/);
+    if (!tagMatch) break;
+
+    const fullMatch = tagMatch[0];
+    const tagName = tagMatch[1];
+    const attrsString = tagMatch[2];
+    const isSelfClosing = tagMatch[3] === "/";
+
+    position +=
+      svgContent.slice(position).indexOf(fullMatch) + fullMatch.length;
+
+    const attrs = parseAttributes(attrsString);
+
+    if (isSelfClosing) {
+      elements.push([tagName, attrs]);
+    } else {
+      // Find closing tag
+      const closingTag = `</${tagName}>`;
+      const closingIndex = svgContent.indexOf(closingTag, position);
+
+      if (closingIndex !== -1) {
+        const innerContent = svgContent.slice(position, closingIndex).trim();
+        position = closingIndex + closingTag.length;
+
+        // Check if inner content has nested elements
+        if (innerContent.includes("<")) {
+          const nestedElements = parseSVGElements(innerContent);
+          elements.push([tagName, attrs, nestedElements]);
+        } else if (innerContent) {
+          elements.push([tagName, attrs, innerContent]);
+        } else {
+          elements.push([tagName, attrs]);
+        }
+      } else {
+        // No closing tag found, treat as self-closing
+        elements.push([tagName, attrs]);
+      }
+    }
+  }
+
+  return elements;
+}
+
+function isValidStrokeOrFill(value) {
+  if (!value) return false;
+  if (value === "none") return false;
+  if (value === "0") return false;
+  return true;
+}
+
+function analyzeIconCapabilities(elements, rootAttrs) {
+  let hasStroke = false;
+  let hasFill = false;
+  let hasStrokeWidth = false;
+  let detectedStrokeLinecap = null;
+  let detectedStrokeLinejoin = null;
+  let maxStrokeWidth = 0;
+  let hasAnyExplicitStyling = false;
+  let strokeCount = 0;
+  let fillCount = 0;
+
+  // Check root strokeWidth first to determine if stroke should be ignored
+  let rootStrokeWidth = 0;
+  if (rootAttrs.strokeWidth) {
+    rootStrokeWidth = parseFloat(rootAttrs.strokeWidth);
+  }
+
+  // Check root attributes - ignore stroke if strokeWidth is 0
+  if (isValidStrokeOrFill(rootAttrs.stroke) && rootStrokeWidth !== 0) {
+    hasStroke = true;
+    hasAnyExplicitStyling = true;
+  }
+  if (isValidStrokeOrFill(rootAttrs.fill)) {
+    hasFill = true;
+    hasAnyExplicitStyling = true;
+  }
+  if (rootStrokeWidth > 0) {
+    hasStrokeWidth = true;
+    maxStrokeWidth = Math.max(maxStrokeWidth, rootStrokeWidth);
+  }
+  if (rootAttrs.strokeLinecap) detectedStrokeLinecap = rootAttrs.strokeLinecap;
+  if (rootAttrs.strokeLinejoin)
+    detectedStrokeLinejoin = rootAttrs.strokeLinejoin;
+
+  // Recursively check all elements
+  function checkElement(el) {
+    const attrs = el[1];
+
+    // Check strokeWidth for this element
+    let elemStrokeWidth = 0;
+    if (attrs.strokeWidth) {
+      elemStrokeWidth = parseFloat(attrs.strokeWidth);
+    }
+
+    if (isValidStrokeOrFill(attrs.stroke) && elemStrokeWidth !== 0) {
+      hasStroke = true;
+      hasAnyExplicitStyling = true;
+      strokeCount++;
+    }
+    if (isValidStrokeOrFill(attrs.fill)) {
+      hasFill = true;
+      hasAnyExplicitStyling = true;
+      fillCount++;
+    }
+    if (elemStrokeWidth > 0) {
+      hasStrokeWidth = true;
+      maxStrokeWidth = Math.max(maxStrokeWidth, elemStrokeWidth);
+    }
+    if (attrs.strokeLinecap && !detectedStrokeLinecap)
+      detectedStrokeLinecap = attrs.strokeLinecap;
+    if (attrs.strokeLinejoin && !detectedStrokeLinejoin)
+      detectedStrokeLinejoin = attrs.strokeLinejoin;
+
+    // Check nested elements
+    if (el[2] && Array.isArray(el[2])) {
+      el[2].forEach(checkElement);
+    }
+  }
+
+  elements.forEach(checkElement);
+
+  // If no explicit styling found anywhere, default to fill
+  if (!hasAnyExplicitStyling) {
+    hasFill = true;
+  }
+
+  // Detect mixed styling (some elements have stroke, others have fill)
+  const hasMixedStyling = strokeCount > 0 && fillCount > 0;
+
+  return {
+    hasStroke,
+    hasFill,
+    hasStrokeWidth,
+    strokeLinecap: detectedStrokeLinecap,
+    strokeLinejoin: detectedStrokeLinejoin,
+    defaultStrokeWidth: maxStrokeWidth || DEFAULT_STROKE_WIDTH,
+    hasMixedStyling,
+  };
+}
+
+function shouldPreserveAttribute(attrName, attrValue, capabilities) {
+  // Preserve fillRule, clipRule, and other non-color attributes
+  const preserveAttrs = [
+    "fillRule",
+    "clipRule",
+    "clipPath",
+    "opacity",
+    "strokeDasharray",
+    "strokeDashoffset",
+    "strokeMiterlimit",
+  ];
+  if (preserveAttrs.includes(attrName)) return true;
+
+  // For mixed styling icons, preserve original stroke/fill to maintain element-specific styling
+  if (
+    capabilities.hasMixedStyling &&
+    (attrName === "stroke" || attrName === "fill")
+  ) {
+    return true;
+  }
+
+  // For stroke and fill, only preserve if they're NOT currentColor (keep custom colors)
+  if (attrName === "stroke" || attrName === "fill") {
+    return attrValue !== "currentColor";
+  }
+
+  return false;
+}
+
+function cleanAttributes(elements, capabilities) {
+  function cleanElement(el) {
+    const tag = el[0];
+    const attrs = { ...el[1] };
+    const children = el[2];
+
+    // Remove attributes that will be uniformly applied
+    const attrsToCheck = [
+      "stroke",
+      "fill",
+      "strokeWidth",
+      "strokeLinecap",
+      "strokeLinejoin",
+    ];
+
+    attrsToCheck.forEach((attr) => {
+      if (
+        attrs[attr] &&
+        !shouldPreserveAttribute(attr, attrs[attr], capabilities)
+      ) {
+        delete attrs[attr];
+      }
+    });
+
+    if (children && Array.isArray(children)) {
+      return [tag, attrs, children.map(cleanElement)];
+    } else if (children) {
+      return [tag, attrs, children];
+    } else {
+      return [tag, attrs];
+    }
+  }
+
+  return elements.map(cleanElement);
+}
+
+function generateRenderLogic(capabilities) {
+  const {
+    hasStroke,
+    hasFill,
+    hasStrokeWidth,
+    strokeLinecap,
+    strokeLinejoin,
+    hasMixedStyling,
+  } = capabilities;
+
+  const parts = [];
+
+  parts.push(`    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {`);
+
+  if (hasMixedStyling) {
+    // For mixed styling, only apply color to existing attributes, don't add new ones
+    parts.push(
+      `        // Mixed styling: preserve element-specific stroke/fill`
+    );
+    parts.push(
+      `        if (processedAttrs.stroke === 'currentColor') processedAttrs.stroke = finalColor;`
+    );
+    parts.push(
+      `        if (processedAttrs.fill === 'currentColor') processedAttrs.fill = finalColor;`
+    );
+  } else {
+    // Uniform styling: apply to all elements
+    // Handle stroke
+    if (hasStroke) {
+      parts.push(
+        `        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;`
+      );
+    }
+
+    // Handle fill
+    if (hasFill) {
+      parts.push(
+        `        if (!processedAttrs.fill) processedAttrs.fill = finalColor;`
+      );
+    } else if (hasStroke) {
+      parts.push(
+        `        if (!processedAttrs.fill) processedAttrs.fill = 'none';`
+      );
+    }
+  }
+
+  // Handle strokeWidth
+  if (hasStrokeWidth) {
+    parts.push(`
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }`);
+  }
+
+  // Handle strokeLinecap
+  if (strokeLinecap) {
+    parts.push(
+      `        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = '${strokeLinecap}';`
+    );
+  }
+
+  // Handle strokeLinejoin
+  if (strokeLinejoin) {
+    parts.push(
+      `        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = '${strokeLinejoin}';`
+    );
+  }
+
+  parts.push(`      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };`);
+
+  return parts.join("\n");
+}
+
 function toKebabCase(str) {
   return str
     .replace(/Icon$/, "")
@@ -58,151 +397,74 @@ function toKebabCase(str) {
     .toLowerCase();
 }
 
-/**
- * Parse SVG elements into structured data
- */
-function parseSVGElements(svgContent) {
-  const elements = [];
-  const elementRegex = /<(\w+)([^>]*?)(\/?)>/g;
-  let match;
-
-  while ((match = elementRegex.exec(svgContent)) !== null) {
-    const tag = match[1];
-    const attrsString = match[2];
-    const isSelfClosing = match[3] === "/";
-    const matchEnd = match.index + match[0].length;
-
-    const attrs = {};
-    const attrRegex = /(\w+(?:-\w+)*)="([^"]*)"/g;
-    let attrMatch;
-
-    while ((attrMatch = attrRegex.exec(attrsString)) !== null) {
-      const attrName = attrMatch[1];
-      const attrValue = attrMatch[2];
-
-      // Skip invalid/custom data attributes
-      if (attrName.startsWith("data--") || attrName.includes("bstatus")) {
-        continue;
-      }
-
-      // Convert hyphenated attributes to camelCase for React
-      const camelCaseAttr = attrName.replace(/-([a-z])/g, (g) =>
-        g[1].toUpperCase()
-      );
-      attrs[camelCaseAttr] = attrValue;
-    }
-
-    let children = null;
-    if (!isSelfClosing) {
-      const closingTagRegex = new RegExp(`</${tag}>`);
-      const closingMatch = closingTagRegex.exec(svgContent.slice(matchEnd));
-      if (closingMatch) {
-        const contentStart = matchEnd;
-        const contentEnd = matchEnd + closingMatch.index;
-        const innerContent = svgContent.slice(contentStart, contentEnd).trim();
-
-        if (innerContent) {
-          children = innerContent;
-        }
-
-        elementRegex.lastIndex = contentEnd + closingMatch[0].length;
-      }
-    }
-
-    if (children) {
-      elements.push([tag, attrs, children]);
-    } else {
-      elements.push([tag, attrs]);
-    }
-  }
-
-  return elements;
-}
-
-/**
- * Check if icon uses stroke or fill
- */
-function analyzeIconType(elements) {
-  let hasStroke = false;
-  let hasFill = false;
-  let hasStrokeWidth = false;
-
-  for (const element of elements) {
-    const attrs = element[1];
-    if (attrs.stroke) hasStroke = true;
-    if (attrs.fill) hasFill = true;
-    if (attrs.strokeWidth) hasStrokeWidth = true;
-  }
-
-  return { hasStroke, hasFill, hasStrokeWidth };
-}
-
-/**
- * Generate React component from SVG content
- */
 function generateComponent(iconName, svgData) {
-  const { content: svgContent, viewBox } = svgData;
+  const { content: svgContent, viewBox, rootAttrs } = svgData;
   const kebabName = toKebabCase(iconName);
   const iconUrl = `https://clicons.dev/icon/${kebabName}`;
 
   const elements = parseSVGElements(svgContent);
-  const { hasStroke, hasFill, hasStrokeWidth } = analyzeIconType(elements);
+  const capabilities = analyzeIconCapabilities(elements, rootAttrs);
 
-  const iconDataStr = JSON.stringify(elements, null, 2)
+  const { hasStrokeWidth, defaultStrokeWidth } = capabilities;
+
+  // Clean attributes while preserving important non-color attributes
+  const cleanedElements = cleanAttributes(elements, capabilities);
+
+  // Generate icon data string
+  const iconDataStr = JSON.stringify(cleanedElements, null, 2)
     .replace(/"(\w+)":/g, "$1:")
     .replace(/"/g, "'");
 
-  const componentCode = `import React from 'react';
+  // Build interface
+  const interfaceProps = ["size?: number", "color?: string"];
+  if (hasStrokeWidth) {
+    interfaceProps.push(
+      "strokeWidth?: number",
+      "absoluteStrokeWidth?: boolean"
+    );
+  }
+
+  // Build component props destructuring
+  const componentProps = ["size", "color"];
+  if (hasStrokeWidth) {
+    componentProps.push("strokeWidth", "absoluteStrokeWidth");
+  }
+
+  // Build prop assignments
+  const propAssignments = [
+    `    const finalSize = size ?? config.defaultSize ?? ${DEFAULT_SIZE};`,
+    `    const finalColor = color ?? config.defaultColor ?? '${DEFAULT_COLOR}';`,
+  ];
+
+  if (hasStrokeWidth) {
+    propAssignments.push(
+      `    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? ${defaultStrokeWidth};`,
+      `    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? ${DEFAULT_ABSOLUTE_STROKE_WIDTH};`
+    );
+  }
+
+  const renderLogic = generateRenderLogic(capabilities);
+
+  return `import React from 'react';
 import config from '../config';
 
 interface ${iconName}Props extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
-  size?: number;
-  /** Color of the icon */
-  color?: string;${
-    hasStrokeWidth
-      ? `
-  /** Stroke width of the icon */
-  strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
-  absoluteStrokeWidth?: boolean;`
-      : ""
-  }
+  ${interfaceProps.join(";\n  ")};
 }
 
 /**
  * @name ${iconName}
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](${iconUrl})
- * @see {@link ${iconUrl}} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link ${iconUrl}}
  */
 const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
-  (
-    {
-      size,
-      color,${
-        hasStrokeWidth
-          ? `
-      strokeWidth,
-      absoluteStrokeWidth,`
-          : ""
-      }
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? ${DEFAULT_SIZE};${
-    hasStrokeWidth
-      ? `
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? ${DEFAULT_STROKE_WIDTH};
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? ${DEFAULT_ABSOLUTE_STROKE_WIDTH};`
-      : ""
-  }
-    const finalColor = color ?? config.defaultColor ?? '${DEFAULT_COLOR}';
+  ({ ${componentProps.join(", ")}, className = '', ...rest }, ref) => {
+${propAssignments.join("\n")}
 
     const iconData = ${iconDataStr};
+
+${renderLogic}
 
     return (
       <svg
@@ -215,47 +477,7 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
         className={className}
         {...rest}
       >
-        {iconData.map((item: any, index: number) => {
-          const tag = item[0];
-          const attrs = item[1];
-          const children = item[2];
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {${
-                hasStroke
-                  ? `
-                  stroke: restAttrs.stroke?.replace('currentColor', finalColor),`
-                  : ""
-              }${
-    hasFill
-      ? `
-                  fill: restAttrs.fill?.replace('currentColor', finalColor),`
-      : ""
-  }${
-    !hasStroke && !hasFill
-      ? `
-                  fill: finalColor,`
-      : ""
-  }${
-    hasStrokeWidth
-      ? `
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,`
-      : ""
-  }
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return children ? <Element key={index} {...mergedAttrs}>{children}</Element> : <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }
@@ -264,103 +486,87 @@ const ${iconName} = React.forwardRef<SVGSVGElement, ${iconName}Props>(
 ${iconName}.displayName = '${iconName}';
 export default ${iconName};
 `;
-
-  return componentCode;
 }
 
-/**
- * Get the proper component name from filename
- */
 function getComponentName(filename) {
   return filename.replace(".svg", "");
 }
 
-/**
- * Main generator function
- */
 async function generateIcons() {
-  console.log("🚀 Starting icon generation...");
-  console.log(`📂 Reading from: ${SVG_ICONS_DIR}`);
-  console.log(`📝 Writing to: ${REACT_SRC_DIR}`);
+  // Check if directory exists
+  if (!fs.existsSync(SVG_ICONS_DIR)) {
+    console.error(`❌ Directory not found: ${SVG_ICONS_DIR}`);
+    process.exit(1);
+  }
 
-  try {
-    const files = fs
-      .readdirSync(SVG_ICONS_DIR)
-      .filter((f) => f.endsWith("Icon.svg"))
-      .sort();
+  const files = fs
+    .readdirSync(SVG_ICONS_DIR)
+    .filter((f) => f.endsWith(".svg"))
+    .sort();
 
-    console.log(`\n📊 Found ${files.length} icons to generate\n`);
+  if (files.length === 0) {
+    console.error(`❌ No SVG files found in ${SVG_ICONS_DIR}`);
+    process.exit(1);
+  }
 
-    const exports = [];
-    let successCount = 0;
-    let skipCount = 0;
+  const exportsArr = [];
+  let successCount = 0;
+  let skipCount = 0;
+  const errors = [];
 
-    for (let i = 0; i < files.length; i++) {
-      const filename = files[i];
-      const filepath = path.join(SVG_ICONS_DIR, filename);
-      const componentName = getComponentName(filename);
+  for (const filename of files) {
+    const componentName = getComponentName(filename);
 
-      const svgData = parseSVGFile(filepath);
+    try {
+      const svgData = parseSVGFile(path.join(SVG_ICONS_DIR, filename));
+
       if (!svgData) {
-        console.log(`⚠️  Skipped: ${componentName} (could not parse)`);
         skipCount++;
+        errors.push(`${filename}: Failed to parse SVG structure`);
         continue;
       }
 
-      try {
-        const componentCode = generateComponent(componentName, svgData);
-        const componentPath = path.join(REACT_SRC_DIR, `${componentName}.tsx`);
-        fs.writeFileSync(componentPath, componentCode);
+      const componentCode = generateComponent(componentName, svgData);
+      const outputPath = path.join(REACT_SRC_DIR, `${componentName}.tsx`);
 
-        exports.push({
-          name: componentName,
-          path: `./icons/${componentName}`,
-        });
+      fs.writeFileSync(outputPath, componentCode);
 
-        successCount++;
-        if ((i + 1) % 100 === 0) {
-          console.log(
-            `✅ Progress: ${i + 1}/${files.length} components generated`
-          );
-        }
-      } catch (error) {
-        console.error(`❌ Error generating ${componentName}:`, error.message);
-        skipCount++;
-      }
+      exportsArr.push({
+        name: componentName,
+        baseName: componentName.replace(/Icon$/, ""),
+        path: `./icons/${componentName}`,
+      });
+
+      successCount++;
+    } catch (err) {
+      skipCount++;
+      errors.push(`${filename}: ${err.message}`);
     }
-
-    console.log("\n📦 Generating index file...");
-    generateIndexFile(exports);
-
-    console.log(`\n✨ Generation complete!`);
-    console.log(`   ✅ Generated: ${successCount} components`);
-    console.log(`   ⏭️  Skipped: ${skipCount} components`);
-    console.log(`   📦 Total exports: ${exports.length}`);
-  } catch (error) {
-    console.error("❌ Error during generation:", error);
-    process.exit(1);
   }
-}
 
-/**
- * Generate the index.ts file with all exports
- */
-function generateIndexFile(exports) {
-  const indexContent = exports
+  // Generate index file with intentional duplicate exports
+  const indexContent = exportsArr
     .map(
-      ({ name, path: importPath }) =>
-        `export { default as ${name} } from '${importPath}';\nexport { default as ${name.replace(
-          /Icon$/,
-          ""
-        )} } from '${importPath}';`
+      ({ name, baseName, path }) =>
+        `export { default as ${name} } from '${path}';\nexport { default as ${baseName} } from '${path}';`
     )
     .join("\n");
 
   fs.writeFileSync(OUTPUT_INDEX, indexContent + "\n");
-  console.log(`✅ Created ${OUTPUT_INDEX}`);
+
+  console.log(`\n✅ Generated: ${successCount} components`);
+  console.log(`⏭️  Skipped: ${skipCount} files`);
+
+  if (errors.length > 0) {
+    console.log(`\n⚠️  Errors:`);
+    errors.forEach((err) => console.log(`   ${err}`));
+  }
+
+  console.log(`\n📦 Output: ${REACT_SRC_DIR}`);
+  console.log(`📄 Index: ${OUTPUT_INDEX}`);
 }
 
-generateIcons().catch((error) => {
-  console.error("Fatal error:", error);
+generateIcons().catch((err) => {
+  console.error("❌ Fatal error:", err);
   process.exit(1);
 });
