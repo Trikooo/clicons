@@ -2,56 +2,38 @@ import React from 'react';
 import config from '../config';
 
 interface TwoFactorAccessIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name TwoFactorAccessIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/two-factor-access)
- * @see {@link https://clicons.dev/icon/two-factor-access} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/two-factor-access}
  */
 const TwoFactorAccessIcon = React.forwardRef<SVGSVGElement, TwoFactorAccessIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
       d: 'M9.5 9.5H7.5C5.15442 9.5 3.98164 9.5 3.17372 10.1199C2.96572 10.2795 2.77954 10.4657 2.61994 10.6737C2 11.4816 2 12.6544 2 15C2 17.3456 2 18.5184 2.61994 19.3263C2.77954 19.5343 2.96572 19.7205 3.17372 19.8801C3.98164 20.5 5.15442 20.5 7.5 20.5H9.5C11.8456 20.5 13.0184 20.5 13.8263 19.8801C14.0343 19.7205 14.2205 19.5343 14.3801 19.3263C15 18.5184 15 17.3456 15 15C15 12.6544 15 11.4816 14.3801 10.6737C14.2205 10.4657 14.0343 10.2795 13.8263 10.1199C13.0184 9.5 11.8456 9.5 9.5 9.5Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
     'path',
     {
       d: 'M11.75 9.5V6.75C11.75 4.95507 10.2949 3.5 8.5 3.5C6.70507 3.5 5.25 4.95507 5.25 6.75V9.5',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
@@ -65,13 +47,47 @@ const TwoFactorAccessIcon = React.forwardRef<SVGSVGElement, TwoFactorAccessIconP
     'path',
     {
       d: 'M6 15C6 15 7 15.5 7.5 17C7.5 17 9 14 11 13',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        // Mixed styling: preserve element-specific stroke/fill
+        if (processedAttrs.stroke === 'currentColor') processedAttrs.stroke = finalColor;
+        if (processedAttrs.fill === 'currentColor') processedAttrs.fill = finalColor;
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -84,27 +100,7 @@ const TwoFactorAccessIcon = React.forwardRef<SVGSVGElement, TwoFactorAccessIconP
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

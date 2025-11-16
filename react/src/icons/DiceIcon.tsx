@@ -2,76 +2,87 @@ import React from 'react';
 import config from '../config';
 
 interface DiceIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name DiceIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/dice)
- * @see {@link https://clicons.dev/icon/dice} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/dice}
  */
 const DiceIcon = React.forwardRef<SVGSVGElement, DiceIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 2;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M10.341 13.159C9.68198 12.5 8.62132 12.5 6.5 12.5C4.37868 12.5 3.31802 12.5 2.65901 13.159M10.341 13.159C11 13.818 11 14.8787 11 17C11 19.1213 11 20.182 10.341 20.841M10.341 13.159V13.159ZM2.65901 13.159C2 13.818 2 14.8787 2 17C2 19.1213 2 20.182 2.65901 20.841M2.65901 13.159V13.159ZM2.65901 20.841C3.31802 21.5 4.37868 21.5 6.5 21.5C8.62132 21.5 9.68198 21.5 10.341 20.841M2.65901 20.841V20.841ZM10.341 20.841V20.841Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      d: 'M10.341 13.159C9.68198 12.5 8.62132 12.5 6.5 12.5C4.37868 12.5 3.31802 12.5 2.65901 13.159M10.341 13.159C11 13.818 11 14.8787 11 17C11 19.1213 11 20.182 10.341 20.841M10.341 13.159V13.159ZM2.65901 13.159C2 13.818 2 14.8787 2 17C2 19.1213 2 20.182 2.65901 20.841M2.65901 13.159V13.159ZM2.65901 20.841C3.31802 21.5 4.37868 21.5 6.5 21.5C8.62132 21.5 9.68198 21.5 10.341 20.841M2.65901 20.841V20.841ZM10.341 20.841V20.841Z'
     }
   ],
   [
     'path',
     {
-      d: 'M15.2218 4.77817C16.7406 6.29696 17.5 7.05635 17.5 8C17.5 8.94365 16.7406 9.70304 15.2218 11.2218C13.703 12.7406 12.9436 13.5 12 13.5C11.0563 13.5 10.297 12.7406 8.77817 11.2218C7.25939 9.70304 6.5 8.94365 6.5 8C6.5 7.05635 7.25939 6.29696 8.77817 4.77817C10.297 3.25939 11.0563 2.5 12 2.5C12.9437 2.5 13.703 3.25939 15.2218 4.77817Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      d: 'M15.2218 4.77817C16.7406 6.29696 17.5 7.05635 17.5 8C17.5 8.94365 16.7406 9.70304 15.2218 11.2218C13.703 12.7406 12.9436 13.5 12 13.5C11.0563 13.5 10.297 12.7406 8.77817 11.2218C7.25939 9.70304 6.5 8.94365 6.5 8C6.5 7.05635 7.25939 6.29696 8.77817 4.77817C10.297 3.25939 11.0563 2.5 12 2.5C12.9437 2.5 13.703 3.25939 15.2218 4.77817Z'
     }
   ],
   [
     'path',
     {
-      d: 'M21.341 13.159C20.682 12.5 19.6213 12.5 17.5 12.5C15.3787 12.5 14.318 12.5 13.659 13.159M21.341 13.159C22 13.818 22 14.8787 22 17C22 19.1213 22 20.182 21.341 20.841M21.341 13.159V13.159ZM13.659 13.159C13 13.818 13 14.8787 13 17C13 19.1213 13 20.182 13.659 20.841M13.659 13.159V13.159ZM13.659 20.841C14.318 21.5 15.3787 21.5 17.5 21.5C19.6213 21.5 20.682 21.5 21.341 20.841M13.659 20.841V20.841ZM21.341 20.841V20.841Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      d: 'M21.341 13.159C20.682 12.5 19.6213 12.5 17.5 12.5C15.3787 12.5 14.318 12.5 13.659 13.159M21.341 13.159C22 13.818 22 14.8787 22 17C22 19.1213 22 20.182 21.341 20.841M21.341 13.159V13.159ZM13.659 13.159C13 13.818 13 14.8787 13 17C13 19.1213 13 20.182 13.659 20.841M13.659 13.159V13.159ZM13.659 20.841C14.318 21.5 15.3787 21.5 17.5 21.5C19.6213 21.5 20.682 21.5 21.341 20.841M13.659 20.841V20.841ZM21.341 20.841V20.841Z'
     }
   ],
   [
     'path',
     {
-      d: 'M12.0082 8L11.9992 8',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '2'
+      d: 'M12.0082 8L11.9992 8'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -84,27 +95,7 @@ const DiceIcon = React.forwardRef<SVGSVGElement, DiceIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

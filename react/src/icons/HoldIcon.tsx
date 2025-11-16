@@ -2,52 +2,69 @@ import React from 'react';
 import config from '../config';
 
 interface HoldIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name HoldIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/hold)
- * @see {@link https://clicons.dev/icon/hold} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/hold}
  */
 const HoldIcon = React.forwardRef<SVGSVGElement, HoldIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M14 5.5C14 4.67157 14.6716 4 15.5 4C16.3284 4 17 4.67157 17 5.5V12M14 5.5V3.5C14 2.67157 13.3284 2 12.5 2C11.6716 2 11 2.67157 11 3.5L11.0002 5M14 5.5V11M11.0002 5C10.9999 4.17187 10.3284 3.50064 9.50021 3.50064C8.67178 3.50064 8.00021 4.17221 8.00021 5.00064L8 13.4624L6.3797 11.837C5.66877 11.1239 4.49772 11.1889 3.86965 11.9765C3.38907 12.5791 3.3758 13.4315 3.83738 14.0489L7.43707 18.6471C8.12579 19.5269 8.5 20.8829 8.5 22.0002M11.0002 5V10M18 22.0002V20.8356C18 20.3038 18.2148 19.7964 18.5652 19.3964C18.9703 18.9339 19.4769 18.2939 19.6689 17.792C20 16.9269 20 15.8402 20 13.6668L20.0004 12.1943L20 7.5C20 6.67157 19.3284 6 18.5 6C17.6716 6 17 6.67157 17 7.5',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M14 5.5C14 4.67157 14.6716 4 15.5 4C16.3284 4 17 4.67157 17 5.5V12M14 5.5V3.5C14 2.67157 13.3284 2 12.5 2C11.6716 2 11 2.67157 11 3.5L11.0002 5M14 5.5V11M11.0002 5C10.9999 4.17187 10.3284 3.50064 9.50021 3.50064C8.67178 3.50064 8.00021 4.17221 8.00021 5.00064L8 13.4624L6.3797 11.837C5.66877 11.1239 4.49772 11.1889 3.86965 11.9765C3.38907 12.5791 3.3758 13.4315 3.83738 14.0489L7.43707 18.6471C8.12579 19.5269 8.5 20.8829 8.5 22.0002M11.0002 5V10M18 22.0002V20.8356C18 20.3038 18.2148 19.7964 18.5652 19.3964C18.9703 18.9339 19.4769 18.2939 19.6689 17.792C20 16.9269 20 15.8402 20 13.6668L20.0004 12.1943L20 7.5C20 6.67157 19.3284 6 18.5 6C17.6716 6 17 6.67157 17 7.5'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -60,27 +77,7 @@ const HoldIcon = React.forwardRef<SVGSVGElement, HoldIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

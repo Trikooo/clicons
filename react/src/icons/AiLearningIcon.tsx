@@ -2,58 +2,38 @@ import React from 'react';
 import config from '../config';
 
 interface AiLearningIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name AiLearningIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/ai-learning)
- * @see {@link https://clicons.dev/icon/ai-learning} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/ai-learning}
  */
 const AiLearningIcon = React.forwardRef<SVGSVGElement, AiLearningIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
       d: 'M12 15.5L12 20.5',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
     'path',
     {
       d: 'M5.98056 3.28544C4.2879 2.96315 3.44157 2.80201 2.72078 3.41964C2 4.03727 2 5.04022 2 7.04612V14.255C2 16.0891 2 17.0061 2.4626 17.5787C2.9252 18.1512 3.94365 18.3451 5.98056 18.733C7.79633 19.0787 9.21344 19.6295 10.2392 20.1831C11.2484 20.7277 11.753 21 12 21C12.247 21 12.7516 20.7277 13.7608 20.1831C14.7866 19.6295 16.2037 19.0787 18.0194 18.733C20.0564 18.3451 21.0748 18.1512 21.5374 17.5787C22 17.0061 22 16.0891 22 14.255V7.04612C22 5.04022 22 4.03727 21.2792 3.41964C20.5584 2.80201 19.7121 2.96315 18.0194 3.28544',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
@@ -64,6 +44,43 @@ const AiLearningIcon = React.forwardRef<SVGSVGElement, AiLearningIconProps>(
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        // Mixed styling: preserve element-specific stroke/fill
+        if (processedAttrs.stroke === 'currentColor') processedAttrs.stroke = finalColor;
+        if (processedAttrs.fill === 'currentColor') processedAttrs.fill = finalColor;
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -76,27 +93,7 @@ const AiLearningIcon = React.forwardRef<SVGSVGElement, AiLearningIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

@@ -2,82 +2,87 @@ import React from 'react';
 import config from '../config';
 
 interface BrokenBoneIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name BrokenBoneIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/broken-bone)
- * @see {@link https://clicons.dev/icon/broken-bone} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/broken-bone}
  */
 const BrokenBoneIcon = React.forwardRef<SVGSVGElement, BrokenBoneIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M6.28272 19.233C6.11917 19.7294 5.81349 20.1328 5.43094 20.4088M5.43094 20.4088C4.87517 20.8099 4.15714 20.9424 3.47692 20.7015C2.32849 20.2948 1.72271 18.978 2.12388 17.7603C2.43203 16.8249 3.24468 16.2201 4.12547 16.1742C4.57361 16.1509 5.04518 15.9411 5.18559 15.5149L6.67298 11L8.00006 13L10.0001 12L8.49208 16.7315C8.36092 17.1431 8.59538 17.575 8.92477 17.8544C9.6212 18.4451 9.92365 19.4585 9.6098 20.4111C9.20863 21.6289 7.95243 22.2863 6.804 21.8797C6.12378 21.6388 5.63394 21.0786 5.43094 20.4088Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M6.28272 19.233C6.11917 19.7294 5.81349 20.1328 5.43094 20.4088M5.43094 20.4088C4.87517 20.8099 4.15714 20.9424 3.47692 20.7015C2.32849 20.2948 1.72271 18.978 2.12388 17.7603C2.43203 16.8249 3.24468 16.2201 4.12547 16.1742C4.57361 16.1509 5.04518 15.9411 5.18559 15.5149L6.67298 11L8.00006 13L10.0001 12L8.49208 16.7315C8.36092 17.1431 8.59538 17.575 8.92477 17.8544C9.6212 18.4451 9.92365 19.4585 9.6098 20.4111C9.20863 21.6289 7.95243 22.2863 6.804 21.8797C6.12378 21.6388 5.63394 21.0786 5.43094 20.4088Z'
     }
   ],
   [
     'path',
     {
-      d: 'M18.5436 5.32421C18.9979 5.07331 19.502 4.98221 19.9822 5.03295M19.9822 5.03295C20.68 5.10666 21.3278 5.47972 21.7004 6.09705C22.3294 7.13929 21.936 8.48309 20.8217 9.0985C19.9518 9.57893 18.8997 9.47344 18.1807 8.90821C17.8389 8.63947 17.3636 8.49844 16.9864 8.7147L13.0001 11V9L11.0001 7.98057L15.1148 5.70815C15.5121 5.48872 15.6281 4.97807 15.5636 4.52878C15.4402 3.66842 15.8707 2.77446 16.7212 2.30477C17.8355 1.68936 19.2488 2.03537 19.8779 3.07761C20.2505 3.69494 20.2644 4.41805 19.9822 5.03295Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M18.5436 5.32421C18.9979 5.07331 19.502 4.98221 19.9822 5.03295M19.9822 5.03295C20.68 5.10666 21.3278 5.47972 21.7004 6.09705C22.3294 7.13929 21.936 8.48309 20.8217 9.0985C19.9518 9.57893 18.8997 9.47344 18.1807 8.90821C17.8389 8.63947 17.3636 8.49844 16.9864 8.7147L13.0001 11V9L11.0001 7.98057L15.1148 5.70815C15.5121 5.48872 15.6281 4.97807 15.5636 4.52878C15.4402 3.66842 15.8707 2.77446 16.7212 2.30477C17.8355 1.68936 19.2488 2.03537 19.8779 3.07761C20.2505 3.69494 20.2644 4.41805 19.9822 5.03295Z'
     }
   ],
   [
     'path',
     {
-      d: 'M7.00006 8L5.00006 8M9.00006 6L9.00006 4',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M7.00006 8L5.00006 8M9.00006 6L9.00006 4'
     }
   ],
   [
     'path',
     {
-      d: 'M13.0001 16L13.0001 18M15.0001 14L17.0001 14',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M13.0001 16L13.0001 18M15.0001 14L17.0001 14'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -90,27 +95,7 @@ const BrokenBoneIcon = React.forwardRef<SVGSVGElement, BrokenBoneIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

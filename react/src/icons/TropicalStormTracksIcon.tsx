@@ -2,48 +2,30 @@ import React from 'react';
 import config from '../config';
 
 interface TropicalStormTracksIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name TropicalStormTracksIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/tropical-storm-tracks)
- * @see {@link https://clicons.dev/icon/tropical-storm-tracks} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/tropical-storm-tracks}
  */
 const TropicalStormTracksIcon = React.forwardRef<SVGSVGElement, TropicalStormTracksIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M18.1649 15.3478L18.6279 14.1905C18.6279 14.1905 19.2789 14.8144 20.0122 15.5181C20.8638 16.3354 21.2896 16.744 21.6142 16.5584C21.9388 16.3728 21.8076 15.8193 21.545 14.7124C21.1458 13.0294 20.535 11.4 19.7246 9.86371C18.7709 8.05838 17.2258 6.63559 15.3481 5.83366L14.1904 5.37071C14.1904 5.37071 14.7811 4.75416 15.4628 4.04374C16.3007 3.17052 16.7197 2.73392 16.5354 2.40972C16.3511 2.08552 15.7797 2.21794 14.6369 2.48276C12.6305 2.94773 10.3703 3.74969 8.57135 5.13267C7.35643 6.03539 6.40993 7.25159 5.83324 8.65101L5.37037 9.80835C5.37037 9.80835 4.75494 9.2189 4.04536 8.53818C3.17093 7.69932 2.73371 7.2799 2.40955 7.4642C2.08538 7.64851 2.21798 8.22053 2.48318 9.36456C2.9566 11.4068 3.77916 13.7115 5.20826 15.5252C6.10132 16.695 7.28946 17.6063 8.65084 18.1655L9.80903 18.6289C9.80903 18.6289 9.18487 19.2799 8.48107 20.0131C7.66462 20.8637 7.2564 21.289 7.44197 21.6136C7.62754 21.9383 8.18048 21.8072 9.28635 21.545C10.9527 21.15 12.5669 20.548 14.0906 19.7506C15.9161 18.7971 17.3556 17.2416 18.1649 15.3478Z',
-      stroke: 'currentColor',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M18.1649 15.3478L18.6279 14.1905C18.6279 14.1905 19.2789 14.8144 20.0122 15.5181C20.8638 16.3354 21.2896 16.744 21.6142 16.5584C21.9388 16.3728 21.8076 15.8193 21.545 14.7124C21.1458 13.0294 20.535 11.4 19.7246 9.86371C18.7709 8.05838 17.2258 6.63559 15.3481 5.83366L14.1904 5.37071C14.1904 5.37071 14.7811 4.75416 15.4628 4.04374C16.3007 3.17052 16.7197 2.73392 16.5354 2.40972C16.3511 2.08552 15.7797 2.21794 14.6369 2.48276C12.6305 2.94773 10.3703 3.74969 8.57135 5.13267C7.35643 6.03539 6.40993 7.25159 5.83324 8.65101L5.37037 9.80835C5.37037 9.80835 4.75494 9.2189 4.04536 8.53818C3.17093 7.69932 2.73371 7.2799 2.40955 7.4642C2.08538 7.64851 2.21798 8.22053 2.48318 9.36456C2.9566 11.4068 3.77916 13.7115 5.20826 15.5252C6.10132 16.695 7.28946 17.6063 8.65084 18.1655L9.80903 18.6289C9.80903 18.6289 9.18487 19.2799 8.48107 20.0131C7.66462 20.8637 7.2564 21.289 7.44197 21.6136C7.62754 21.9383 8.18048 21.8072 9.28635 21.545C10.9527 21.15 12.5669 20.548 14.0906 19.7506C15.9161 18.7971 17.3556 17.2416 18.1649 15.3478Z'
     }
   ],
   [
@@ -51,12 +33,45 @@ const TropicalStormTracksIcon = React.forwardRef<SVGSVGElement, TropicalStormTra
     {
       cx: '12',
       cy: '12',
-      r: '3',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      r: '3'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -69,27 +84,7 @@ const TropicalStormTracksIcon = React.forwardRef<SVGSVGElement, TropicalStormTra
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

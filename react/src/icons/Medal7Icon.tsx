@@ -2,39 +2,24 @@ import React from 'react';
 import config from '../config';
 
 interface Medal7IconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name Medal7Icon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/medal7)
- * @see {@link https://clicons.dev/icon/medal7} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/medal7}
  */
 const Medal7Icon = React.forwardRef<SVGSVGElement, Medal7IconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
@@ -42,29 +27,19 @@ const Medal7Icon = React.forwardRef<SVGSVGElement, Medal7IconProps>(
     {
       cx: '12',
       cy: '16.5',
-      r: '5.5',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      r: '5.5'
     }
   ],
   [
     'path',
     {
-      d: 'M11 11L6.19145 8.93919C5.24455 8.53338 4.7711 8.33047 4.46382 7.96189C4.3681 7.84708 4.28556 7.7219 4.21773 7.58869C4 7.16107 4 6.64597 4 5.61577C4 4.10079 4 3.34331 4.38928 2.81443C4.50876 2.6521 4.6521 2.50876 4.81443 2.38928C5.34331 2 6.10079 2 7.61577 2H16.3842C17.8992 2 18.6567 2 19.1856 2.38928C19.3479 2.50876 19.4912 2.6521 19.6107 2.81443C20 3.34331 20 4.10079 20 5.61577C20 6.64597 20 7.16107 19.7823 7.58869C19.7144 7.7219 19.6319 7.84708 19.5362 7.96189C19.2289 8.33047 18.7555 8.53338 17.8085 8.93919L13 11',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M11 11L6.19145 8.93919C5.24455 8.53338 4.7711 8.33047 4.46382 7.96189C4.3681 7.84708 4.28556 7.7219 4.21773 7.58869C4 7.16107 4 6.64597 4 5.61577C4 4.10079 4 3.34331 4.38928 2.81443C4.50876 2.6521 4.6521 2.50876 4.81443 2.38928C5.34331 2 6.10079 2 7.61577 2H16.3842C17.8992 2 18.6567 2 19.1856 2.38928C19.3479 2.50876 19.4912 2.6521 19.6107 2.81443C20 3.34331 20 4.10079 20 5.61577C20 6.64597 20 7.16107 19.7823 7.58869C19.7144 7.7219 19.6319 7.84708 19.5362 7.96189C19.2289 8.33047 18.7555 8.53338 17.8085 8.93919L13 11'
     }
   ],
   [
     'path',
     {
-      d: 'M12 11V2',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M12 11V2'
     }
   ],
   [
@@ -72,12 +47,46 @@ const Medal7Icon = React.forwardRef<SVGSVGElement, Medal7IconProps>(
     {
       cx: '12',
       cy: '16.5',
-      r: '1.5',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      r: '1.5'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -90,27 +99,7 @@ const Medal7Icon = React.forwardRef<SVGSVGElement, Medal7IconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

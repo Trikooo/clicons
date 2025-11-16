@@ -2,69 +2,45 @@ import React from 'react';
 import config from '../config';
 
 interface VideoCameraAiIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name VideoCameraAiIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/video-camera-ai)
- * @see {@link https://clicons.dev/icon/video-camera-ai} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/video-camera-ai}
  */
 const VideoCameraAiIcon = React.forwardRef<SVGSVGElement, VideoCameraAiIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
       d: 'M17.0001 15.5V13.5L19.6001 10.0333C19.8519 9.69759 20.2471 9.5 20.6667 9.5C21.4031 9.5 22.0001 10.097 22.0001 10.8333V18.1667C22.0001 18.903 21.4031 19.5 20.6667 19.5C20.2471 19.5 19.8519 19.3024 19.6001 18.9667L17.0001 15.5Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
     'path',
     {
       d: 'M10.4694 6.02506C10.4762 5.99165 10.5239 5.99165 10.5308 6.02506C10.8853 7.75942 12.2406 9.11481 13.975 9.4693C14.0084 9.47613 14.0084 9.52387 13.975 9.5307C12.2406 9.88519 10.8853 11.2406 10.5308 12.9749C10.5239 13.0084 10.4762 13.0084 10.4694 12.9749C10.1149 11.2406 8.75948 9.88519 7.02512 9.5307C6.99171 9.52387 6.99171 9.47613 7.02512 9.4693C8.75948 9.11481 10.1149 7.75942 10.4694 6.02506Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
     'path',
     {
       d: 'M5.55169 6.99951C4.64946 7.11727 3.99393 7.34391 3.46243 7.78011C3.25989 7.94632 3.07418 8.13204 2.90796 8.33458C2 9.44093 2 11.0848 2 14.3723C2 17.6598 2.00005 19.4314 2.908 20.5377C3.07422 20.7402 3.25994 20.926 3.46247 21.0922C4.56882 22.0001 6.21257 22.0001 9.50005 22.0001C12.7875 22.0001 14.4313 22.0001 15.5376 21.0922C15.7402 20.926 15.9259 20.7402 16.0921 20.5377C17 19.4314 17 17.7876 17 14.5001C17 12.3181 17 10.8601 16.7345 9.80283',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
@@ -75,6 +51,43 @@ const VideoCameraAiIcon = React.forwardRef<SVGSVGElement, VideoCameraAiIconProps
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        // Mixed styling: preserve element-specific stroke/fill
+        if (processedAttrs.stroke === 'currentColor') processedAttrs.stroke = finalColor;
+        if (processedAttrs.fill === 'currentColor') processedAttrs.fill = finalColor;
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -87,27 +100,7 @@ const VideoCameraAiIcon = React.forwardRef<SVGSVGElement, VideoCameraAiIconProps
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

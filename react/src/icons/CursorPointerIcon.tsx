@@ -2,49 +2,31 @@ import React from 'react';
 import config from '../config';
 
 interface CursorPointerIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name CursorPointerIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/cursor-pointer)
- * @see {@link https://clicons.dev/icon/cursor-pointer} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/cursor-pointer}
  */
 const CursorPointerIcon = React.forwardRef<SVGSVGElement, CursorPointerIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
       d: 'M12.0033 19.4056L9.88486 13.3197L9.88485 13.3197C9.08816 11.031 8.68981 9.88664 9.28857 9.28834C9.88733 8.69005 11.0326 9.08809 13.3231 9.88417L19.401 11.9966C20.6716 12.4382 21.3069 12.659 21.4441 13.0867C21.4819 13.2045 21.4949 13.329 21.4824 13.4521C21.4369 13.8989 20.8612 14.2464 19.7097 14.9415C18.9714 15.3872 18.6023 15.61 18.5039 15.9462C18.476 16.0414 18.4641 16.1405 18.4686 16.2396C18.4845 16.5896 18.7902 16.8935 19.4018 17.5012L21.4116 19.4988L21.4117 19.4988C21.7125 19.7979 21.863 19.9474 21.932 20.1147C22.0223 20.3335 22.0227 20.5792 21.9329 20.7983C21.8644 20.9657 21.7143 21.1157 21.4142 21.4155L21.4142 21.4156C21.1148 21.7147 20.9652 21.8642 20.7979 21.9328C20.5791 22.0224 20.3337 22.0224 20.1149 21.9328C19.9476 21.8642 19.7979 21.7147 19.4986 21.4156L19.4986 21.4155L17.4812 19.3998L17.4812 19.3998C16.8797 18.7987 16.5789 18.4982 16.2338 18.4802C16.1293 18.4747 16.0247 18.4875 15.9246 18.5179C15.594 18.6185 15.3745 18.9825 14.9355 19.7106L14.9355 19.7106C14.2491 20.8492 13.9059 21.4185 13.4653 21.4686C13.3353 21.4833 13.2037 21.4696 13.0796 21.4284C12.6588 21.2887 12.4403 20.661 12.0033 19.4056Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
@@ -63,6 +45,43 @@ const CursorPointerIcon = React.forwardRef<SVGSVGElement, CursorPointerIconProps
   ]
 ];
 
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        // Mixed styling: preserve element-specific stroke/fill
+        if (processedAttrs.stroke === 'currentColor') processedAttrs.stroke = finalColor;
+        if (processedAttrs.fill === 'currentColor') processedAttrs.fill = finalColor;
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
+
     return (
       <svg
         ref={ref}
@@ -74,27 +93,7 @@ const CursorPointerIcon = React.forwardRef<SVGSVGElement, CursorPointerIconProps
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

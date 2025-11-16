@@ -2,51 +2,68 @@ import React from 'react';
 import config from '../config';
 
 interface TumblrIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name TumblrIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/tumblr)
- * @see {@link https://clicons.dev/icon/tumblr} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/tumblr}
  */
 const TumblrIcon = React.forwardRef<SVGSVGElement, TumblrIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M7.90012 11.0183H7.01078C6.17867 11.0183 5.99989 10.8498 6 10.0181L6.00024 8.26617C6.00033 7.61097 5.98766 7.61186 6.65257 7.29099C8.35896 6.46753 9.86003 4.88315 10.2616 2.99294C10.3706 2.48002 10.4251 2.22356 10.5643 2.11178C10.7035 2 10.9282 2 11.3775 2H12.7521C13.2286 2 13.4668 2 13.6148 2.14645C13.7629 2.29289 13.7629 2.5286 13.7629 3V6.56483C13.7629 7.39637 13.9416 7.56483 14.7736 7.56483H16.6332C17.4653 7.56483 17.6441 7.73332 17.644 8.56496L17.6438 10.0184C17.6437 10.8499 17.4649 11.0183 16.633 11.0183H14.7733C13.9412 11.0183 13.7624 11.1868 13.7625 12.0184L13.7629 16.2597C13.7629 18.0202 15.3229 18.6002 16.6945 17.9926C17.1718 17.7811 17.1788 17.7952 17.3247 18.2389L17.9001 19.9882C18.0893 20.5636 18.0369 20.7786 17.5063 21.0836C13.5744 23.3432 8.91128 21.3694 8.91128 15.768L8.91091 12.0182C8.91083 11.1867 8.73205 11.0183 7.90012 11.0183Z',
-      stroke: 'currentColor',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M7.90012 11.0183H7.01078C6.17867 11.0183 5.99989 10.8498 6 10.0181L6.00024 8.26617C6.00033 7.61097 5.98766 7.61186 6.65257 7.29099C8.35896 6.46753 9.86003 4.88315 10.2616 2.99294C10.3706 2.48002 10.4251 2.22356 10.5643 2.11178C10.7035 2 10.9282 2 11.3775 2H12.7521C13.2286 2 13.4668 2 13.6148 2.14645C13.7629 2.29289 13.7629 2.5286 13.7629 3V6.56483C13.7629 7.39637 13.9416 7.56483 14.7736 7.56483H16.6332C17.4653 7.56483 17.6441 7.73332 17.644 8.56496L17.6438 10.0184C17.6437 10.8499 17.4649 11.0183 16.633 11.0183H14.7733C13.9412 11.0183 13.7624 11.1868 13.7625 12.0184L13.7629 16.2597C13.7629 18.0202 15.3229 18.6002 16.6945 17.9926C17.1718 17.7811 17.1788 17.7952 17.3247 18.2389L17.9001 19.9882C18.0893 20.5636 18.0369 20.7786 17.5063 21.0836C13.5744 23.3432 8.91128 21.3694 8.91128 15.768L8.91091 12.0182C8.91083 11.1867 8.73205 11.0183 7.90012 11.0183Z'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -59,27 +76,7 @@ const TumblrIcon = React.forwardRef<SVGSVGElement, TumblrIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

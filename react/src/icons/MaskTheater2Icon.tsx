@@ -2,61 +2,75 @@ import React from 'react';
 import config from '../config';
 
 interface MaskTheater2IconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name MaskTheater2Icon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/mask-theater2)
- * @see {@link https://clicons.dev/icon/mask-theater2} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/mask-theater2}
  */
 const MaskTheater2Icon = React.forwardRef<SVGSVGElement, MaskTheater2IconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M5.44505 14.7749C5.60832 14.4695 5.88358 14.2462 6.22227 14.1851C6.56095 14.124 6.89427 14.2375 7.14978 14.4674M11.2356 17.7768C10.909 18.3876 10.3585 18.8342 9.68113 18.9564C9.00377 19.0786 8.33713 18.8516 7.82611 18.3919M10.5592 13.8523C10.7225 13.5469 10.9978 13.3235 11.3365 13.2624C11.6751 13.2013 12.0085 13.3149 12.264 13.5447M13.0697 7.64205C11.9191 8.7281 10.171 9.59181 8.13072 9.95991C6.09043 10.328 4.15906 10.1281 2.7148 9.51019C2.62237 9.47065 2.52281 9.45715 2.42629 9.47456C2.14172 9.5259 1.95507 9.82308 2.0094 10.1383L2.94728 15.5805C3.64672 19.6391 7.04654 21.5881 8.62355 22.2854C9.14604 22.5165 9.72177 22.546 10.2823 22.4449C10.8429 22.3437 11.374 22.1145 11.7877 21.7146C13.0366 20.5074 15.5798 17.4863 14.8804 13.4276L13.9425 7.98545C13.8882 7.6702 13.6135 7.45627 13.3289 7.50761C13.2324 7.52502 13.1433 7.57255 13.0697 7.64205Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M5.44505 14.7749C5.60832 14.4695 5.88358 14.2462 6.22227 14.1851C6.56095 14.124 6.89427 14.2375 7.14978 14.4674M11.2356 17.7768C10.909 18.3876 10.3585 18.8342 9.68113 18.9564C9.00377 19.0786 8.33713 18.8516 7.82611 18.3919M10.5592 13.8523C10.7225 13.5469 10.9978 13.3235 11.3365 13.2624C11.6751 13.2013 12.0085 13.3149 12.264 13.5447M13.0697 7.64205C11.9191 8.7281 10.171 9.59181 8.13072 9.95991C6.09043 10.328 4.15906 10.1281 2.7148 9.51019C2.62237 9.47065 2.52281 9.45715 2.42629 9.47456C2.14172 9.5259 1.95507 9.82308 2.0094 10.1383L2.94728 15.5805C3.64672 19.6391 7.04654 21.5881 8.62355 22.2854C9.14604 22.5165 9.72177 22.546 10.2823 22.4449C10.8429 22.3437 11.374 22.1145 11.7877 21.7146C13.0366 20.5074 15.5798 17.4863 14.8804 13.4276L13.9425 7.98545C13.8882 7.6702 13.6135 7.45627 13.3289 7.50761C13.2324 7.52502 13.1433 7.57255 13.0697 7.64205Z'
     }
   ],
   [
     'path',
     {
-      d: 'M14.3157 17.5C14.6792 17.4998 15.039 17.4347 15.3764 17.2854C16.9535 16.5881 20.3533 14.6391 21.0527 10.5805L21.9906 5.13832C22.0449 4.82308 21.8583 4.5259 21.5737 4.47456C21.4772 4.45715 21.3776 4.47065 21.2852 4.51019C19.8409 5.1281 17.9096 5.328 15.8693 4.95991C13.829 4.59181 12.0809 3.7281 10.9303 2.64205C10.8567 2.57255 10.7676 2.52502 10.6711 2.50761C10.3865 2.45627 10.1118 2.6702 10.0575 2.98545L9.1196 8.42763C9.0374 8.90465 8.99998 9.36734 9 9.81444',
-      stroke: 'currentColor',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M14.3157 17.5C14.6792 17.4998 15.039 17.4347 15.3764 17.2854C16.9535 16.5881 20.3533 14.6391 21.0527 10.5805L21.9906 5.13832C22.0449 4.82308 21.8583 4.5259 21.5737 4.47456C21.4772 4.45715 21.3776 4.47065 21.2852 4.51019C19.8409 5.1281 17.9096 5.328 15.8693 4.95991C13.829 4.59181 12.0809 3.7281 10.9303 2.64205C10.8567 2.57255 10.7676 2.52502 10.6711 2.50761C10.3865 2.45627 10.1118 2.6702 10.0575 2.98545L9.1196 8.42763C9.0374 8.90465 8.99998 9.36734 9 9.81444'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -69,27 +83,7 @@ const MaskTheater2Icon = React.forwardRef<SVGSVGElement, MaskTheater2IconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

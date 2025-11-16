@@ -2,69 +2,45 @@ import React from 'react';
 import config from '../config';
 
 interface JumpersIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name JumpersIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/jumpers)
- * @see {@link https://clicons.dev/icon/jumpers} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/jumpers}
  */
 const JumpersIcon = React.forwardRef<SVGSVGElement, JumpersIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
       d: 'M17 8V18.382C17 18.527 17 18.5995 16.9949 18.671C16.9796 18.8845 16.9301 19.0942 16.8483 19.292C16.6833 19.622 16.4761 20.0478 16.3744 20.1859C16.0683 20.6017 15.6132 20.8829 15.1044 20.9708C14.9354 21 14.7509 21 14.382 21H9.61803C9.24907 21 9.06459 21 8.89561 20.9708C8.38682 20.8829 7.93173 20.6017 7.62558 20.1859C7.5239 20.0478 7.31672 19.622 7.15171 19.292C7.06994 19.0942 7.02045 18.8845 7.00513 18.671C7 18.5995 7 18.527 7 18.382V8',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
     'path',
     {
       d: 'M9 3.00008L7.34318 3.83563C6.18862 4.4179 5.61133 4.70903 5.20998 5.19408C4.80862 5.67914 4.6279 6.30409 4.26647 7.55399L1.65002 16.602L1.52542 17.0884L1.5 17.6612C1.5 17.9517 1.5 18.4809 1.53286 18.607C1.60261 18.8746 1.7783 19.1015 2.01878 19.2347C2.13207 19.2974 2.27182 19.3327 2.5512 19.4031C2.8053 19.4672 2.93235 19.4992 3.05194 19.5001C3.30547 19.5018 3.55021 19.4064 3.73664 19.2331C3.82457 19.1513 4.21056 18.5673 4.21056 18.5673L4.4585 18.1675L4.65564 17.6271L7 10.0001',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
     'path',
     {
       d: 'M15 3.00002L16.6568 3.83557C17.8114 4.41783 18.3887 4.70897 18.79 5.19402C19.1914 5.67908 19.3721 6.30403 19.7335 7.55393L22.35 16.6019L22.4746 17.0884L22.5 17.6612C22.5 17.9517 22.5 18.4808 22.4671 18.6069C22.3974 18.8745 22.2217 19.1015 21.9812 19.2346C21.8679 19.2974 21.7282 19.3326 21.4488 19.4031C21.1947 19.4671 21.0677 19.4992 20.9481 19.5C20.6945 19.5018 20.4498 19.4063 20.2634 19.233C20.1754 19.1513 19.7894 18.5673 19.7894 18.5673L19.5415 18.1675L19.3444 17.627L17 10',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      stroke: 'currentColor'
     }
   ],
   [
@@ -75,6 +51,43 @@ const JumpersIcon = React.forwardRef<SVGSVGElement, JumpersIconProps>(
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        // Mixed styling: preserve element-specific stroke/fill
+        if (processedAttrs.stroke === 'currentColor') processedAttrs.stroke = finalColor;
+        if (processedAttrs.fill === 'currentColor') processedAttrs.fill = finalColor;
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -87,27 +100,7 @@ const JumpersIcon = React.forwardRef<SVGSVGElement, JumpersIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

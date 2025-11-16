@@ -2,72 +2,81 @@ import React from 'react';
 import config from '../config';
 
 interface ChessIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name ChessIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/chess)
- * @see {@link https://clicons.dev/icon/chess} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/chess}
  */
 const ChessIcon = React.forwardRef<SVGSVGElement, ChessIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M16.9909 22H7.00911C5.74413 22 5.84958 20.2425 6.34622 19.4962C7.19456 18.2213 8.83234 16.6274 9.07261 15.0628L10.0036 9H13.9964L14.9274 15.0628C15.1677 16.6274 16.8054 18.2213 17.6538 19.4962C18.1504 20.2425 18.2559 22 16.9909 22Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M16.9909 22H7.00911C5.74413 22 5.84958 20.2425 6.34622 19.4962C7.19456 18.2213 8.83234 16.6274 9.07261 15.0628L10.0036 9H13.9964L14.9274 15.0628C15.1677 16.6274 16.8054 18.2213 17.6538 19.4962C18.1504 20.2425 18.2559 22 16.9909 22Z'
     }
   ],
   [
     'path',
     {
-      d: 'M7.5 5.1513V2.20709C7.5 2.03185 7.69777 1.93612 7.82804 2.0483L10.2219 4.1099C10.4016 4.26468 10.6281 4.34944 10.8621 4.34944H13.1379C13.3719 4.34944 13.5984 4.26468 13.7781 4.1099L16.172 2.0483C16.3022 1.93612 16.5 2.03185 16.5 2.20709V5.1513C16.5 5.63483 16.336 6.10305 16.0364 6.4745L14.2998 8.62815C14.1099 8.86377 13.8284 9 13.5316 9H10.4684C10.1716 9 9.89015 8.86377 9.70015 8.62815L7.96356 6.47451C7.66403 6.10305 7.5 5.63483 7.5 5.1513Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M7.5 5.1513V2.20709C7.5 2.03185 7.69777 1.93612 7.82804 2.0483L10.2219 4.1099C10.4016 4.26468 10.6281 4.34944 10.8621 4.34944H13.1379C13.3719 4.34944 13.5984 4.26468 13.7781 4.1099L16.172 2.0483C16.3022 1.93612 16.5 2.03185 16.5 2.20709V5.1513C16.5 5.63483 16.336 6.10305 16.0364 6.4745L14.2998 8.62815C14.1099 8.86377 13.8284 9 13.5316 9H10.4684C10.1716 9 9.89015 8.86377 9.70015 8.62815L7.96356 6.47451C7.66403 6.10305 7.5 5.63483 7.5 5.1513Z'
     }
   ],
   [
     'path',
     {
-      d: 'M6 18H18',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M6 18H18'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -80,27 +89,7 @@ const ChessIcon = React.forwardRef<SVGSVGElement, ChessIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

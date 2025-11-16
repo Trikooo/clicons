@@ -2,62 +2,75 @@ import React from 'react';
 import config from '../config';
 
 interface Tap5IconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name Tap5Icon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/tap5)
- * @see {@link https://clicons.dev/icon/tap5} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/tap5}
  */
 const Tap5Icon = React.forwardRef<SVGSVGElement, Tap5IconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M13.9841 6.01233C13.9841 3.79746 12.2051 2.00195 10.0106 2.00195C7.81611 2.00195 6.03711 3.79746 6.03711 6.01233',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M13.9841 6.01233C13.9841 3.79746 12.2051 2.00195 10.0106 2.00195C7.81611 2.00195 6.03711 3.79746 6.03711 6.01233'
     }
   ],
   [
     'path',
     {
-      d: 'M9.37635 21.9925L9.27193 20.8967C8.78437 18.8793 8.11805 18.6134 7.03331 17.1675C6.54359 16.5147 5.5203 15.5898 4.68367 14.3404C4.12621 13.5078 4.87008 11.6153 6.56595 12.1923C6.84825 12.2883 7.08555 12.4807 7.29594 12.692L8.94241 14.3457C8.92894 12.0081 8.95893 7.24935 8.92261 5.78903C8.88628 4.32871 11.4204 3.85879 11.5697 5.85539V10.3468M11.5697 10.3468V11.2124M11.5697 10.3468C12.3984 9.24878 13.9664 9.21013 14.1946 11.0483M14.1946 11.0483C14.2317 11.3476 14.2346 11.6972 14.1946 12.1008M14.1946 11.0483C14.6133 9.7641 16.4526 10.274 16.8186 11.7687M16.8186 11.7687C16.9054 12.123 16.8186 12.533 16.8535 13.0064M16.8186 11.7687C17.0563 11.0483 19.6844 10.9951 19.4345 13.778L19.5 16.3019C19.3995 17.8089 19.1783 18.4403 18.6368 19.1687C18.3562 19.5463 17.9881 19.8788 17.8475 20.3278C17.7297 20.704 17.6555 21.2547 17.7367 22.0001',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M9.37635 21.9925L9.27193 20.8967C8.78437 18.8793 8.11805 18.6134 7.03331 17.1675C6.54359 16.5147 5.5203 15.5898 4.68367 14.3404C4.12621 13.5078 4.87008 11.6153 6.56595 12.1923C6.84825 12.2883 7.08555 12.4807 7.29594 12.692L8.94241 14.3457C8.92894 12.0081 8.95893 7.24935 8.92261 5.78903C8.88628 4.32871 11.4204 3.85879 11.5697 5.85539V10.3468M11.5697 10.3468V11.2124M11.5697 10.3468C12.3984 9.24878 13.9664 9.21013 14.1946 11.0483M14.1946 11.0483C14.2317 11.3476 14.2346 11.6972 14.1946 12.1008M14.1946 11.0483C14.6133 9.7641 16.4526 10.274 16.8186 11.7687M16.8186 11.7687C16.9054 12.123 16.8186 12.533 16.8535 13.0064M16.8186 11.7687C17.0563 11.0483 19.6844 10.9951 19.4345 13.778L19.5 16.3019C19.3995 17.8089 19.1783 18.4403 18.6368 19.1687C18.3562 19.5463 17.9881 19.8788 17.8475 20.3278C17.7297 20.704 17.6555 21.2547 17.7367 22.0001'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -70,27 +83,7 @@ const Tap5Icon = React.forwardRef<SVGSVGElement, Tap5IconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

@@ -2,59 +2,36 @@ import React from 'react';
 import config from '../config';
 
 interface HandcuffsIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name HandcuffsIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/handcuffs)
- * @see {@link https://clicons.dev/icon/handcuffs} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/handcuffs}
  */
 const HandcuffsIcon = React.forwardRef<SVGSVGElement, HandcuffsIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M2 14.1669C2 17.3885 4.68629 20.0002 8 20.0002C11.3137 20.0002 14 17.3885 14 14.1669C14 12.1875 12.986 10.4384 11.4354 9.38377C11.1261 9.1734 11 8.99821 11 8.61182C11 7.80899 11 7.40758 10.8671 7.09024C10.4148 6.01026 9.33985 6.00021 8.31377 6.00021H7.68623C6.66015 6.00021 5.58523 6.01026 5.13291 7.09024C5 7.40758 5 7.80899 5 8.61182C5 8.9796 4.88397 9.16653 4.56458 9.38377C3.01403 10.4384 2 12.1875 2 14.1669Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M2 14.1669C2 17.3885 4.68629 20.0002 8 20.0002C11.3137 20.0002 14 17.3885 14 14.1669C14 12.1875 12.986 10.4384 11.4354 9.38377C11.1261 9.1734 11 8.99821 11 8.61182C11 7.80899 11 7.40758 10.8671 7.09024C10.4148 6.01026 9.33985 6.00021 8.31377 6.00021H7.68623C6.66015 6.00021 5.58523 6.01026 5.13291 7.09024C5 7.40758 5 7.80899 5 8.61182C5 8.9796 4.88397 9.16653 4.56458 9.38377C3.01403 10.4384 2 12.1875 2 14.1669Z'
     }
   ],
   [
     'path',
     {
-      d: 'M14.5101 8.06642C14.8836 8.00151 15.289 8 15.6871 8H16.3146C17.3407 8 18.4156 8.01005 18.868 9.09003C19.0009 9.40737 19.0009 9.80878 19.0009 10.6116C19.0009 10.998 19.127 11.1732 19.4363 11.3836C20.9868 12.4382 22.0009 14.1873 22.0009 16.1667C22.0009 19.3883 19.3146 22 16.0009 22C15.0054 22 14.0666 21.7643 13.2402 21.3472',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M14.5101 8.06642C14.8836 8.00151 15.289 8 15.6871 8H16.3146C17.3407 8 18.4156 8.01005 18.868 9.09003C19.0009 9.40737 19.0009 9.80878 19.0009 10.6116C19.0009 10.998 19.127 11.1732 19.4363 11.3836C20.9868 12.4382 22.0009 14.1873 22.0009 16.1667C22.0009 19.3883 19.3146 22 16.0009 22C15.0054 22 14.0666 21.7643 13.2402 21.3472'
     }
   ],
   [
@@ -62,34 +39,58 @@ const HandcuffsIcon = React.forwardRef<SVGSVGElement, HandcuffsIconProps>(
     {
       cx: '8',
       cy: '14.0002',
-      r: '2',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      r: '2'
     }
   ],
   [
     'path',
     {
-      d: 'M16.1152 17.9971C17.166 17.9372 17.9997 17.0661 17.9997 16.0003C17.9997 15.2598 17.5973 14.6133 16.9992 14.2676',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M16.1152 17.9971C17.166 17.9372 17.9997 17.0661 17.9997 16.0003C17.9997 15.2598 17.5973 14.6133 16.9992 14.2676'
     }
   ],
   [
     'path',
     {
-      d: 'M16 9V6.93331C16 5.28173 16 4.45594 15.5764 3.85855C15.1528 3.26117 14.4253 3.06089 12.9701 2.66032L12.8507 2.62744C10.677 2.02907 9.59021 1.72989 8.83911 2.31943C8.79173 2.35662 8.74584 2.39607 8.70159 2.43766C8 3.09705 8 4.33061 8 6.79775',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M16 9V6.93331C16 5.28173 16 4.45594 15.5764 3.85855C15.1528 3.26117 14.4253 3.06089 12.9701 2.66032L12.8507 2.62744C10.677 2.02907 9.59021 1.72989 8.83911 2.31943C8.79173 2.35662 8.74584 2.39607 8.70159 2.43766C8 3.09705 8 4.33061 8 6.79775'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -102,27 +103,7 @@ const HandcuffsIcon = React.forwardRef<SVGSVGElement, HandcuffsIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

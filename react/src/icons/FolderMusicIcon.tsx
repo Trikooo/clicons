@@ -2,61 +2,75 @@ import React from 'react';
 import config from '../config';
 
 interface FolderMusicIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name FolderMusicIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/folder-music)
- * @see {@link https://clicons.dev/icon/folder-music} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/folder-music}
  */
 const FolderMusicIcon = React.forwardRef<SVGSVGElement, FolderMusicIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M12.9995 21H11.9995C7.28547 21 4.92844 21 3.46398 19.5355C1.99951 18.0711 1.99951 15.714 1.99951 11V7.94427C1.99951 6.1278 1.99951 5.21956 2.37983 4.53806C2.65093 4.05227 3.05178 3.65142 3.53757 3.38032C4.21907 3 5.12731 3 6.94378 3C8.10753 3 8.68941 3 9.19877 3.19101C10.3617 3.62712 10.8413 4.68358 11.3661 5.73313L11.9995 7M7.99951 7H16.7495C18.8562 7 19.9096 7 20.6662 7.50559C20.9938 7.72447 21.275 8.00572 21.4939 8.33329C21.9791 9.05942 21.9987 10.0588 21.9995 12',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeWidth: '1.5'
+      d: 'M12.9995 21H11.9995C7.28547 21 4.92844 21 3.46398 19.5355C1.99951 18.0711 1.99951 15.714 1.99951 11V7.94427C1.99951 6.1278 1.99951 5.21956 2.37983 4.53806C2.65093 4.05227 3.05178 3.65142 3.53757 3.38032C4.21907 3 5.12731 3 6.94378 3C8.10753 3 8.68941 3 9.19877 3.19101C10.3617 3.62712 10.8413 4.68358 11.3661 5.73313L11.9995 7M7.99951 7H16.7495C18.8562 7 19.9096 7 20.6662 7.50559C20.9938 7.72447 21.275 8.00572 21.4939 8.33329C21.9791 9.05942 21.9987 10.0588 21.9995 12'
     }
   ],
   [
     'path',
     {
-      d: 'M19.3966 18.7446C19.3966 19.9885 18.4123 20.9969 17.198 20.9969C15.9838 20.9969 14.9995 19.9885 14.9995 18.7446C14.9995 17.5007 15.9838 16.4923 17.198 16.4923C18.4123 16.4923 19.3966 17.5007 19.3966 18.7446ZM19.3966 18.7446V13C19.3966 13 20.7036 15.6999 22.0005 15.6999',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M19.3966 18.7446C19.3966 19.9885 18.4123 20.9969 17.198 20.9969C15.9838 20.9969 14.9995 19.9885 14.9995 18.7446C14.9995 17.5007 15.9838 16.4923 17.198 16.4923C18.4123 16.4923 19.3966 17.5007 19.3966 18.7446ZM19.3966 18.7446V13C19.3966 13 20.7036 15.6999 22.0005 15.6999'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -69,27 +83,7 @@ const FolderMusicIcon = React.forwardRef<SVGSVGElement, FolderMusicIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

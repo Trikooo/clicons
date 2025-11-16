@@ -2,52 +2,69 @@ import React from 'react';
 import config from '../config';
 
 interface FiverrIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name FiverrIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/fiverr)
- * @see {@link https://clicons.dev/icon/fiverr} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/fiverr}
  */
 const FiverrIcon = React.forwardRef<SVGSVGElement, FiverrIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M15.3517 3C15.3517 2.5286 15.3517 2.29289 15.2052 2.14645C15.0588 2 14.8231 2 14.3517 2H11.6173C8.89563 2 6.52177 4.50923 6.68066 8.5H5C4.5286 8.5 4.29289 8.5 4.14645 8.64645C4 8.79289 4 9.0286 4 9.5V11C4 11.4714 4 11.7071 4.14645 11.8536C4.29289 12 4.5286 12 5 12H7V21C7 21.4714 7 21.7071 7.14645 21.8536C7.29289 22 7.5286 22 8 22H10C10.4714 22 10.7071 22 10.8536 21.8536C11 21.7071 11 21.4714 11 21V12H15.5306V21C15.5306 21.4714 15.5306 21.7071 15.677 21.8536C15.8235 22 16.0592 22 16.5306 22H19C19.4714 22 19.7071 22 19.8536 21.8536C20 21.7071 20 21.4714 20 21V10.5C20 9.55719 20 9.08579 19.7071 8.79289C19.4142 8.5 18.9428 8.5 18 8.5H11V7.22923C11 6.5 11.5 5.5 12.797 5.5H14.3517C14.8231 5.5 15.0588 5.5 15.2052 5.35355C15.3517 5.20711 15.3517 4.9714 15.3517 4.5V3Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M15.3517 3C15.3517 2.5286 15.3517 2.29289 15.2052 2.14645C15.0588 2 14.8231 2 14.3517 2H11.6173C8.89563 2 6.52177 4.50923 6.68066 8.5H5C4.5286 8.5 4.29289 8.5 4.14645 8.64645C4 8.79289 4 9.0286 4 9.5V11C4 11.4714 4 11.7071 4.14645 11.8536C4.29289 12 4.5286 12 5 12H7V21C7 21.4714 7 21.7071 7.14645 21.8536C7.29289 22 7.5286 22 8 22H10C10.4714 22 10.7071 22 10.8536 21.8536C11 21.7071 11 21.4714 11 21V12H15.5306V21C15.5306 21.4714 15.5306 21.7071 15.677 21.8536C15.8235 22 16.0592 22 16.5306 22H19C19.4714 22 19.7071 22 19.8536 21.8536C20 21.7071 20 21.4714 20 21V10.5C20 9.55719 20 9.08579 19.7071 8.79289C19.4142 8.5 18.9428 8.5 18 8.5H11V7.22923C11 6.5 11.5 5.5 12.797 5.5H14.3517C14.8231 5.5 15.0588 5.5 15.2052 5.35355C15.3517 5.20711 15.3517 4.9714 15.3517 4.5V3Z'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -60,27 +77,7 @@ const FiverrIcon = React.forwardRef<SVGSVGElement, FiverrIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

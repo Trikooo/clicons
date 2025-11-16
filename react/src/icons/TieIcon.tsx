@@ -2,58 +2,73 @@ import React from 'react';
 import config from '../config';
 
 interface TieIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name TieIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/tie)
- * @see {@link https://clicons.dev/icon/tie} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/tie}
  */
 const TieIcon = React.forwardRef<SVGSVGElement, TieIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M8.72123 5.60945C8.1621 4.61908 7.88253 4.1239 8.04661 3.67371C8.21068 3.22353 8.73892 3.0364 9.7954 2.66213L10.695 2.34346C11.3413 2.11449 11.6645 2 12 2C12.3355 2 12.6587 2.11449 13.305 2.34346L14.2046 2.66213C15.2611 3.0364 15.7893 3.22353 15.9534 3.67371C16.1175 4.1239 15.8379 4.61908 15.2788 5.60945L14.7626 6.52365C14.4979 6.99256 14.3655 7.22701 14.1339 7.41087C13.9022 7.59473 13.6875 7.65614 13.2581 7.77895C12.8467 7.89659 12.3777 8 12 8C11.6223 8 11.1533 7.89659 10.7419 7.77895C10.3125 7.65614 10.0978 7.59473 9.86612 7.41087C9.63445 7.22701 9.50209 6.99256 9.23735 6.52365L8.72123 5.60945Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      d: 'M8.72123 5.60945C8.1621 4.61908 7.88253 4.1239 8.04661 3.67371C8.21068 3.22353 8.73892 3.0364 9.7954 2.66213L10.695 2.34346C11.3413 2.11449 11.6645 2 12 2C12.3355 2 12.6587 2.11449 13.305 2.34346L14.2046 2.66213C15.2611 3.0364 15.7893 3.22353 15.9534 3.67371C16.1175 4.1239 15.8379 4.61908 15.2788 5.60945L14.7626 6.52365C14.4979 6.99256 14.3655 7.22701 14.1339 7.41087C13.9022 7.59473 13.6875 7.65614 13.2581 7.77895C12.8467 7.89659 12.3777 8 12 8C11.6223 8 11.1533 7.89659 10.7419 7.77895C10.3125 7.65614 10.0978 7.59473 9.86612 7.41087C9.63445 7.22701 9.50209 6.99256 9.23735 6.52365L8.72123 5.60945Z'
     }
   ],
   [
     'path',
     {
-      d: 'M10.0793 8L8.42064 15.1438C8.06093 16.6931 7.88108 17.4677 8.08657 18.1961C8.09058 18.2103 8.09469 18.2245 8.09891 18.2386C8.31533 18.9638 8.88063 19.5172 10.0112 20.6238C10.9439 21.5368 11.4103 21.9933 11.9837 21.9999C11.9946 22 12.0054 22 12.0163 21.9999C12.5897 21.9933 13.0561 21.5368 13.9888 20.6238C15.1194 19.5172 15.6847 18.9638 15.9011 18.2386C15.9053 18.2245 15.9094 18.2103 15.9134 18.1961C16.1189 17.4677 15.9391 16.6931 15.5794 15.1438L13.9207 8',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      d: 'M10.0793 8L8.42064 15.1438C8.06093 16.6931 7.88108 17.4677 8.08657 18.1961C8.09058 18.2103 8.09469 18.2245 8.09891 18.2386C8.31533 18.9638 8.88063 19.5172 10.0112 20.6238C10.9439 21.5368 11.4103 21.9933 11.9837 21.9999C11.9946 22 12.0054 22 12.0163 21.9999C12.5897 21.9933 13.0561 21.5368 13.9888 20.6238C15.1194 19.5172 15.6847 18.9638 15.9011 18.2386C15.9053 18.2245 15.9094 18.2103 15.9134 18.1961C16.1189 17.4677 15.9391 16.6931 15.5794 15.1438L13.9207 8'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -66,27 +81,7 @@ const TieIcon = React.forwardRef<SVGSVGElement, TieIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

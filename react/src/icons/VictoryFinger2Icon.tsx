@@ -2,52 +2,69 @@ import React from 'react';
 import config from '../config';
 
 interface VictoryFinger2IconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name VictoryFinger2Icon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/victory-finger2)
- * @see {@link https://clicons.dev/icon/victory-finger2} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/victory-finger2}
  */
 const VictoryFinger2Icon = React.forwardRef<SVGSVGElement, VictoryFinger2IconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M7.33384 10.5L6.18585 11.8492C5.25059 12.9483 4.78295 13.4979 4.60625 14.1468C4.52985 14.4274 4.49431 14.7177 4.50074 15.0086C4.51561 15.6814 4.83662 16.3294 5.47865 17.6252C6.2779 19.2383 6.67752 20.0449 7.32318 20.5834C7.6028 20.8166 7.91282 21.0099 8.24455 21.158C9.01054 21.5 9.90412 21.5 11.6913 21.5H13.1498C14.3954 21.5 15.0182 21.5 15.5629 21.3393C16.434 21.0824 17.1913 20.5315 17.7083 19.7788C18.0316 19.3082 18.2285 18.7119 18.6224 17.5194L19.031 16.2824C19.2729 15.55 19.3939 15.1838 19.445 14.8763C19.7703 12.9193 18.6246 11.0174 16.7533 10.408C16.4593 10.3122 16.0814 10.252 15.3258 10.1316M14.9811 11.5L16.3803 4.62268C16.6033 3.52664 15.7736 2.5 14.6649 2.5C13.883 2.5 13.1959 3.02307 12.9811 3.78175L11.3621 9.5L9.74838 3.80011C9.5305 3.03056 8.83352 2.5 8.04045 2.5C6.93222 2.5 6.09458 3.51288 6.29282 4.61323L7.89392 13.5',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M7.33384 10.5L6.18585 11.8492C5.25059 12.9483 4.78295 13.4979 4.60625 14.1468C4.52985 14.4274 4.49431 14.7177 4.50074 15.0086C4.51561 15.6814 4.83662 16.3294 5.47865 17.6252C6.2779 19.2383 6.67752 20.0449 7.32318 20.5834C7.6028 20.8166 7.91282 21.0099 8.24455 21.158C9.01054 21.5 9.90412 21.5 11.6913 21.5H13.1498C14.3954 21.5 15.0182 21.5 15.5629 21.3393C16.434 21.0824 17.1913 20.5315 17.7083 19.7788C18.0316 19.3082 18.2285 18.7119 18.6224 17.5194L19.031 16.2824C19.2729 15.55 19.3939 15.1838 19.445 14.8763C19.7703 12.9193 18.6246 11.0174 16.7533 10.408C16.4593 10.3122 16.0814 10.252 15.3258 10.1316M14.9811 11.5L16.3803 4.62268C16.6033 3.52664 15.7736 2.5 14.6649 2.5C13.883 2.5 13.1959 3.02307 12.9811 3.78175L11.3621 9.5L9.74838 3.80011C9.5305 3.03056 8.83352 2.5 8.04045 2.5C6.93222 2.5 6.09458 3.51288 6.29282 4.61323L7.89392 13.5'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -60,27 +77,7 @@ const VictoryFinger2Icon = React.forwardRef<SVGSVGElement, VictoryFinger2IconPro
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

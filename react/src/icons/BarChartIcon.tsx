@@ -2,72 +2,81 @@ import React from 'react';
 import config from '../config';
 
 interface BarChartIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name BarChartIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/bar-chart)
- * @see {@link https://clicons.dev/icon/bar-chart} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/bar-chart}
  */
 const BarChartIcon = React.forwardRef<SVGSVGElement, BarChartIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M14 18V6C14 5.53501 14 5.30252 13.9489 5.11177C13.8102 4.59413 13.4059 4.18981 12.8882 4.05111C12.6975 4 12.465 4 12 4C11.535 4 11.3025 4 11.1118 4.05111C10.5941 4.18981 10.1898 4.59413 10.0511 5.11177C10 5.30252 10 5.53501 10 6V18C10 18.465 10 18.6975 10.0511 18.8882C10.1898 19.4059 10.5941 19.8102 11.1118 19.9489C11.3025 20 11.535 20 12 20C12.465 20 12.6975 20 12.8882 19.9489C13.4059 19.8102 13.8102 19.4059 13.9489 18.8882C14 18.6975 14 18.465 14 18Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M14 18V6C14 5.53501 14 5.30252 13.9489 5.11177C13.8102 4.59413 13.4059 4.18981 12.8882 4.05111C12.6975 4 12.465 4 12 4C11.535 4 11.3025 4 11.1118 4.05111C10.5941 4.18981 10.1898 4.59413 10.0511 5.11177C10 5.30252 10 5.53501 10 6V18C10 18.465 10 18.6975 10.0511 18.8882C10.1898 19.4059 10.5941 19.8102 11.1118 19.9489C11.3025 20 11.535 20 12 20C12.465 20 12.6975 20 12.8882 19.9489C13.4059 19.8102 13.8102 19.4059 13.9489 18.8882C14 18.6975 14 18.465 14 18Z'
     }
   ],
   [
     'path',
     {
-      d: 'M21 8V6C21 5.53501 21 5.30252 20.9489 5.11177C20.8102 4.59413 20.4059 4.18981 19.8882 4.05111C19.6975 4 19.465 4 19 4C18.535 4 18.3025 4 18.1118 4.05111C17.5941 4.18981 17.1898 4.59413 17.0511 5.11177C17 5.30252 17 5.53501 17 6V8C17 8.46499 17 8.69748 17.0511 8.88823C17.1898 9.40587 17.5941 9.81019 18.1118 9.94889C18.3025 10 18.535 10 19 10C19.465 10 19.6975 10 19.8882 9.94889C20.4059 9.81019 20.8102 9.40587 20.9489 8.88823C21 8.69748 21 8.46499 21 8Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M21 8V6C21 5.53501 21 5.30252 20.9489 5.11177C20.8102 4.59413 20.4059 4.18981 19.8882 4.05111C19.6975 4 19.465 4 19 4C18.535 4 18.3025 4 18.1118 4.05111C17.5941 4.18981 17.1898 4.59413 17.0511 5.11177C17 5.30252 17 5.53501 17 6V8C17 8.46499 17 8.69748 17.0511 8.88823C17.1898 9.40587 17.5941 9.81019 18.1118 9.94889C18.3025 10 18.535 10 19 10C19.465 10 19.6975 10 19.8882 9.94889C20.4059 9.81019 20.8102 9.40587 20.9489 8.88823C21 8.69748 21 8.46499 21 8Z'
     }
   ],
   [
     'path',
     {
-      d: 'M7 12V6C7 5.53501 7 5.30252 6.94889 5.11177C6.81019 4.59413 6.40587 4.18981 5.88823 4.05111C5.69748 4 5.46499 4 5 4C4.53501 4 4.30252 4 4.11177 4.05111C3.59413 4.18981 3.18981 4.59413 3.05111 5.11177C3 5.30252 3 5.53501 3 6V12C3 12.465 3 12.6975 3.05111 12.8882C3.18981 13.4059 3.59413 13.8102 4.11177 13.9489C4.30252 14 4.53501 14 5 14C5.46499 14 5.69748 14 5.88823 13.9489C6.40587 13.8102 6.81019 13.4059 6.94889 12.8882C7 12.6975 7 12.465 7 12Z',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M7 12V6C7 5.53501 7 5.30252 6.94889 5.11177C6.81019 4.59413 6.40587 4.18981 5.88823 4.05111C5.69748 4 5.46499 4 5 4C4.53501 4 4.30252 4 4.11177 4.05111C3.59413 4.18981 3.18981 4.59413 3.05111 5.11177C3 5.30252 3 5.53501 3 6V12C3 12.465 3 12.6975 3.05111 12.8882C3.18981 13.4059 3.59413 13.8102 4.11177 13.9489C4.30252 14 4.53501 14 5 14C5.46499 14 5.69748 14 5.88823 13.9489C6.40587 13.8102 6.81019 13.4059 6.94889 12.8882C7 12.6975 7 12.465 7 12Z'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -80,27 +89,7 @@ const BarChartIcon = React.forwardRef<SVGSVGElement, BarChartIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

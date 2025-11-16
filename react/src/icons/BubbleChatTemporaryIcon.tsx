@@ -2,52 +2,69 @@ import React from 'react';
 import config from '../config';
 
 interface BubbleChatTemporaryIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name BubbleChatTemporaryIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/bubble-chat-temporary)
- * @see {@link https://clicons.dev/icon/bubble-chat-temporary} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/bubble-chat-temporary}
  */
 const BubbleChatTemporaryIcon = React.forwardRef<SVGSVGElement, BubbleChatTemporaryIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M7.50397 20.3687C5.63574 19.362 4.37858 20.2979 3.26989 20.4658C3.10171 20.4913 2.93421 20.4302 2.81393 20.31C2.63138 20.1274 2.59663 19.8451 2.69747 19.6074C2.96149 18.9852 3.21241 18.0249 3.24724 17M13.504 2.61775C13.0154 2.54025 12.5144 2.5 12.004 2.5C11.4936 2.5 10.9926 2.54025 10.504 2.61775M17.5751 4.30418C18.3893 4.89461 19.1061 5.61108 19.6969 6.42496M21.3862 10.5C21.4637 10.9886 21.504 11.4896 21.504 12C21.504 12.5104 21.4637 13.0114 21.3862 13.5M19.697 17.575C19.1062 18.3889 18.3893 19.1053 17.5751 19.6958M13.504 21.3822C13.0154 21.4597 12.5144 21.5 12.004 21.5C11.4936 21.5 10.9926 21.4597 10.504 21.3822M2.62172 13.5C2.54422 13.0114 2.50397 12.5104 2.50397 12C2.50397 11.4896 2.54422 10.9886 2.62172 10.5M4.30819 6.42883C4.89862 5.61464 5.6151 4.89781 6.42898 4.30699',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '1.5'
+      d: 'M7.50397 20.3687C5.63574 19.362 4.37858 20.2979 3.26989 20.4658C3.10171 20.4913 2.93421 20.4302 2.81393 20.31C2.63138 20.1274 2.59663 19.8451 2.69747 19.6074C2.96149 18.9852 3.21241 18.0249 3.24724 17M13.504 2.61775C13.0154 2.54025 12.5144 2.5 12.004 2.5C11.4936 2.5 10.9926 2.54025 10.504 2.61775M17.5751 4.30418C18.3893 4.89461 19.1061 5.61108 19.6969 6.42496M21.3862 10.5C21.4637 10.9886 21.504 11.4896 21.504 12C21.504 12.5104 21.4637 13.0114 21.3862 13.5M19.697 17.575C19.1062 18.3889 18.3893 19.1053 17.5751 19.6958M13.504 21.3822C13.0154 21.4597 12.5144 21.5 12.004 21.5C11.4936 21.5 10.9926 21.4597 10.504 21.3822M2.62172 13.5C2.54422 13.0114 2.50397 12.5104 2.50397 12C2.50397 11.4896 2.54422 10.9886 2.62172 10.5M4.30819 6.42883C4.89862 5.61464 5.6151 4.89781 6.42898 4.30699'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -60,27 +77,7 @@ const BubbleChatTemporaryIcon = React.forwardRef<SVGSVGElement, BubbleChatTempor
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }

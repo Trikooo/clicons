@@ -2,69 +2,81 @@ import React from 'react';
 import config from '../config';
 
 interface CraneIconProps extends React.SVGAttributes<SVGSVGElement> {
-  /** Size of the icon in pixels */
   size?: number;
-  /** Color of the icon */
   color?: string;
-  /** Stroke width of the icon */
   strokeWidth?: number;
-  /** Use absolute stroke width, ignores scaling */
   absoluteStrokeWidth?: boolean;
 }
 
 /**
  * @name CraneIcon
- * @description SVG icon component from Clicons, renders SVG Element with children.
+ * @description SVG icon component from Clicons.
  * @preview ![img](https://clicons.dev/icon/crane)
- * @see {@link https://clicons.dev/icon/crane} - Icon preview
- * @see {@link https://clicons.dev} - Clicons documentation
+ * @see {@link https://clicons.dev/icon/crane}
  */
 const CraneIcon = React.forwardRef<SVGSVGElement, CraneIconProps>(
-  (
-    {
-      size,
-      color,
-      strokeWidth,
-      absoluteStrokeWidth,
-      className = '',
-      ...rest
-    },
-    ref
-  ) => {
-    const finalSize = size ?? config.defaultSize ?? 16;
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.8;
-    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
+    const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 2;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M15.2537 16.001H5.2509C3.59357 16.001 2.25005 17.3441 2.25005 19.001C2.25005 20.6578 3.59357 22.001 5.2509 22.001H15.2537C16.9111 22.001 18.2546 20.6578 18.2546 19.001C18.2546 17.3441 16.9111 16.001 15.2537 16.001Z',
-      stroke: 'currentColor',
-      strokeWidth: '1.5'
+      d: 'M15.2537 16.001H5.2509C3.59357 16.001 2.25005 17.3441 2.25005 19.001C2.25005 20.6578 3.59357 22.001 5.2509 22.001H15.2537C16.9111 22.001 18.2546 20.6578 18.2546 19.001C18.2546 17.3441 16.9111 16.001 15.2537 16.001Z'
     }
   ],
   [
     'path',
     {
-      d: 'M13.0764 6.6132L11.4068 5.06679C10.8383 4.54026 10.5541 4.277 10.202 4.13902C9.84997 4.00104 9.02663 4.00104 8.25167 4.00104L8.25557 4.00104C6.36942 4.00104 5.42634 4.00104 4.84039 4.58683C4.25444 5.17261 4.25444 6.11542 4.25444 8.00104V9.00104C4.25444 10.8866 4.25444 11.8294 4.84039 12.4152C5.42634 13.001 6.36942 13.001 8.25557 13.001H10.5714C12.153 13.001 12.9438 13.001 13.4858 12.579C13.6163 12.4775 13.7336 12.3602 13.8351 12.2298C14.2573 11.6879 14.2573 10.8973 14.2573 9.31623C14.2573 8.59208 14.1534 7.99229 14.0343 7.66276C13.8735 7.35142 13.6078 7.10535 13.0764 6.6132ZM13.0764 6.6132C13.0764 6.6132 16.118 3.24104 16.5741 2.82104C17.0795 2.41682 17.3543 1.99904 19.0948 2.00504C19.4258 1.99845 19.815 1.99904 20.2592 1.99904M20.2592 5.49704V6.00104M20.2111 11.497V11.941C20.2111 12.0346 20.2352 11.989 20.2352 11.989C20.3571 11.9939 20.7153 12.085 20.7153 12.085C20.7153 12.085 21.8076 12.421 21.7476 13.621C21.7146 14.281 21.1918 14.8243 20.5592 14.965C19.8612 15.1203 19.0348 14.761 18.7587 14.005M20.2592 8.50304V9.00104',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeWidth: '1.5'
+      d: 'M13.0764 6.6132L11.4068 5.06679C10.8383 4.54026 10.5541 4.277 10.202 4.13902C9.84997 4.00104 9.02663 4.00104 8.25167 4.00104L8.25557 4.00104C6.36942 4.00104 5.42634 4.00104 4.84039 4.58683C4.25444 5.17261 4.25444 6.11542 4.25444 8.00104V9.00104C4.25444 10.8866 4.25444 11.8294 4.84039 12.4152C5.42634 13.001 6.36942 13.001 8.25557 13.001H10.5714C12.153 13.001 12.9438 13.001 13.4858 12.579C13.6163 12.4775 13.7336 12.3602 13.8351 12.2298C14.2573 11.6879 14.2573 10.8973 14.2573 9.31623C14.2573 8.59208 14.1534 7.99229 14.0343 7.66276C13.8735 7.35142 13.6078 7.10535 13.0764 6.6132ZM13.0764 6.6132C13.0764 6.6132 16.118 3.24104 16.5741 2.82104C17.0795 2.41682 17.3543 1.99904 19.0948 2.00504C19.4258 1.99845 19.815 1.99904 20.2592 1.99904M20.2592 5.49704V6.00104M20.2111 11.497V11.941C20.2111 12.0346 20.2352 11.989 20.2352 11.989C20.3571 11.9939 20.7153 12.085 20.7153 12.085C20.7153 12.085 21.8076 12.421 21.7476 13.621C21.7146 14.281 21.1918 14.8243 20.5592 14.965C19.8612 15.1203 19.0348 14.761 18.7587 14.005M20.2592 8.50304V9.00104'
     }
   ],
   [
     'path',
     {
-      d: 'M10.2477 19.001H10.2567M6.25102 19.001H6.25999M14.2443 19.001H14.2533',
-      stroke: 'currentColor',
-      strokeLinecap: 'round',
-      strokeLinejoin: 'round',
-      strokeWidth: '2'
+      d: 'M10.2477 19.001H10.2567M6.25102 19.001H6.25999M14.2443 19.001H14.2533'
     }
   ]
 ];
+
+    const renderElement = (item: any, index: number): React.ReactElement => {
+      const tag = item[0];
+      const attrs = item[1];
+      const children = item[2];
+      const Element = tag as any;
+
+      const processedAttrs: any = { ...attrs };
+
+      // Apply color and stroke properties to shape elements
+      const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
+
+      if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
+        if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
+        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
+      }
+
+      // Handle nested elements
+      if (children) {
+        if (Array.isArray(children)) {
+          return <Element key={index} {...processedAttrs}>{children.map(renderElement)}</Element>;
+        } else if (typeof children === 'string') {
+          return <Element key={index} {...processedAttrs}>{children}</Element>;
+        }
+      }
+
+      return <Element key={index} {...processedAttrs} />;
+    };
 
     return (
       <svg
@@ -77,27 +89,7 @@ const CraneIcon = React.forwardRef<SVGSVGElement, CraneIconProps>(
         className={className}
         {...rest}
       >
-        {iconData.map(([tag, attrs]: any, index: number) => {
-          const { key, ...restAttrs } = attrs;
-
-          const mergedAttrs = {
-            ...restAttrs,
-            ...(tag === 'path' || tag === 'circle' || tag === 'rect' || tag === 'line' || tag === 'polyline' || tag === 'polygon'
-              ? {
-                  stroke: restAttrs.stroke ? restAttrs.stroke.replace('currentColor', finalColor) : finalColor,
-                  fill: restAttrs.fill ? restAttrs.fill.replace('currentColor', finalColor) : restAttrs.fill,
-                  strokeWidth: finalAbsoluteStrokeWidth
-                    ? finalStrokeWidth
-                    : typeof finalStrokeWidth !== 'undefined'
-                      ? finalStrokeWidth
-                      : restAttrs.strokeWidth,
-                }
-              : {}),
-          };
-
-          const Element = tag as any;
-          return <Element key={index} {...mergedAttrs} />;
-        })}
+        {iconData.map(renderElement)}
       </svg>
     );
   }
