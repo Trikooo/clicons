@@ -31,8 +31,8 @@
     "build": "pnpm generate && pnpm typecheck && tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist src/icons src/index.ts",
-    "publish:beta": "pnpm build && npm publish --tag beta --no-git-checks",
-    "publish:prod": "pnpm build && npm publish --no-git-checks"
+    "publish:beta": "pnpm version patch && pnpm build && npm publish --tag beta --no-git-checks",
+    "publish:prod": "pnpm version patch && pnpm build && npm publish --no-git-checks"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
