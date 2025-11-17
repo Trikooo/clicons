@@ -1768,6 +1768,8 @@ export { default as ChessIcon } from './icons/ChessIcon';
 export { default as Chess } from './icons/ChessIcon';
 export { default as ChessPawnIcon } from './icons/ChessPawnIcon';
 export { default as ChessPawn } from './icons/ChessPawnIcon';
+export { default as ChevronsUpDownIcon } from './icons/ChevronsUpDownIcon';
+export { default as ChevronsUpDown } from './icons/ChevronsUpDownIcon';
 export { default as ChickenThighsIcon } from './icons/ChickenThighsIcon';
 export { default as ChickenThighs } from './icons/ChickenThighsIcon';
 export { default as ChildIcon } from './icons/ChildIcon';
