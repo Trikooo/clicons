@@ -11,7 +11,7 @@ const REACT_SRC_DIR = path.join(__dirname, "src", "icons");
 const OUTPUT_INDEX = path.join(__dirname, "src", "index.ts");
 
 const DEFAULT_SIZE = 24;
-const DEFAULT_STROKE_WIDTH = 1.5;
+const DEFAULT_STROKE_WIDTH = 2;
 const DEFAULT_ABSOLUTE_STROKE_WIDTH = false;
 const DEFAULT_COLOR = "currentColor";
 
@@ -153,10 +153,11 @@ function analyzeIconCapabilities(elements, rootAttrs) {
     rootStrokeWidth = parseFloat(rootAttrs.strokeWidth);
   }
 
-  // Check root attributes - ignore stroke if strokeWidth is 0
-  if (isValidStrokeOrFill(rootAttrs.stroke) && rootStrokeWidth !== 0) {
+  // Check root attributes
+  if (isValidStrokeOrFill(rootAttrs.stroke)) {
     hasStroke = true;
     hasAnyExplicitStyling = true;
+    hasStrokeWidth = true;
   }
   if (isValidStrokeOrFill(rootAttrs.fill)) {
     hasFill = true;
@@ -180,9 +181,10 @@ function analyzeIconCapabilities(elements, rootAttrs) {
       elemStrokeWidth = parseFloat(attrs.strokeWidth);
     }
 
-    if (isValidStrokeOrFill(attrs.stroke) && elemStrokeWidth !== 0) {
+    if (isValidStrokeOrFill(attrs.stroke)) {
       hasStroke = true;
       hasAnyExplicitStyling = true;
+      hasStrokeWidth = true;
       strokeCount++;
     }
     if (isValidStrokeOrFill(attrs.fill)) {
@@ -221,7 +223,7 @@ function analyzeIconCapabilities(elements, rootAttrs) {
     hasStrokeWidth,
     strokeLinecap: detectedStrokeLinecap,
     strokeLinejoin: detectedStrokeLinejoin,
-    defaultStrokeWidth: maxStrokeWidth || DEFAULT_STROKE_WIDTH,
+    defaultStrokeWidth: DEFAULT_STROKE_WIDTH,
     hasMixedStyling,
   };
 }
@@ -247,9 +249,12 @@ function shouldPreserveAttribute(attrName, attrValue, capabilities) {
     return true;
   }
 
-  // For stroke and fill, only preserve if they're NOT currentColor (keep custom colors)
-  if (attrName === "stroke" || attrName === "fill") {
-    return attrValue !== "currentColor";
+  // For non-mixed styling, always remove stroke/fill to let component apply finalColor
+  if (
+    !capabilities.hasMixedStyling &&
+    (attrName === "stroke" || attrName === "fill")
+  ) {
+    return false;
   }
 
   return false;

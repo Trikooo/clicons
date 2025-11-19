@@ -4,6 +4,8 @@ import config from '../config';
 interface VisaLogoIconProps extends React.SVGAttributes<SVGSVGElement> {
   size?: number;
   color?: string;
+  strokeWidth?: number;
+  absoluteStrokeWidth?: boolean;
 }
 
 /**
@@ -13,9 +15,11 @@ interface VisaLogoIconProps extends React.SVGAttributes<SVGSVGElement> {
  * @see {@link https://clicons.dev/icon/visa-logo}
  */
 const VisaLogoIcon = React.forwardRef<SVGSVGElement, VisaLogoIconProps>(
-  ({ size, color, className = '', ...rest }, ref) => {
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
     const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 2;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
@@ -38,7 +42,14 @@ const VisaLogoIcon = React.forwardRef<SVGSVGElement, VisaLogoIconProps>(
       const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
 
       if (isShapeElement) {
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
         if (!processedAttrs.fill) processedAttrs.fill = finalColor;
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
       }
 
       // Handle nested elements

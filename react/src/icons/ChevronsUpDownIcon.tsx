@@ -4,6 +4,8 @@ import config from '../config';
 interface ChevronsUpDownIconProps extends React.SVGAttributes<SVGSVGElement> {
   size?: number;
   color?: string;
+  strokeWidth?: number;
+  absoluteStrokeWidth?: boolean;
 }
 
 /**
@@ -13,23 +15,23 @@ interface ChevronsUpDownIconProps extends React.SVGAttributes<SVGSVGElement> {
  * @see {@link https://clicons.dev/icon/chevrons-up-down}
  */
 const ChevronsUpDownIcon = React.forwardRef<SVGSVGElement, ChevronsUpDownIconProps>(
-  ({ size, color, className = '', ...rest }, ref) => {
+  ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
     const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 2;
+    const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
   [
     'path',
     {
-      d: 'M18 10C18 10 13.581 4.00001 11.9999 4C10.4188 3.99999 6 10 6 10',
-      stroke: 'black'
+      d: 'M18 10C18 10 13.581 4.00001 11.9999 4C10.4188 3.99999 6 10 6 10'
     }
   ],
   [
     'path',
     {
-      d: 'M6.00005 14C6.00005 14 10.419 20 12.0001 20C13.5812 20 18 14 18 14',
-      stroke: 'black'
+      d: 'M6.00005 14C6.00005 14 10.419 20 12.0001 20C13.5812 20 18 14 18 14'
     }
   ]
 ];
@@ -46,7 +48,14 @@ const ChevronsUpDownIcon = React.forwardRef<SVGSVGElement, ChevronsUpDownIconPro
       const isShapeElement = ['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse'].includes(tag);
 
       if (isShapeElement) {
-        if (!processedAttrs.fill) processedAttrs.fill = finalColor;
+        if (!processedAttrs.stroke) processedAttrs.stroke = finalColor;
+        if (!processedAttrs.fill) processedAttrs.fill = 'none';
+
+        if (!processedAttrs.strokeWidth) {
+          processedAttrs.strokeWidth = finalAbsoluteStrokeWidth
+            ? finalStrokeWidth
+            : finalStrokeWidth * (finalSize / 24);
+        }
       }
 
       // Handle nested elements

@@ -18,7 +18,7 @@ const FilePoundIcon = React.forwardRef<SVGSVGElement, FilePoundIconProps>(
   ({ size, color, strokeWidth, absoluteStrokeWidth, className = '', ...rest }, ref) => {
     const finalSize = size ?? config.defaultSize ?? 24;
     const finalColor = color ?? config.defaultColor ?? 'currentColor';
-    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 1.5;
+    const finalStrokeWidth = strokeWidth ?? config.defaultStrokeWidth ?? 2;
     const finalAbsoluteStrokeWidth = absoluteStrokeWidth ?? config.defaultAbsoluteStrokeWidth ?? false;
 
     const iconData = [
