@@ -31,7 +31,7 @@ const SidebarRightIcon = React.forwardRef<SVGSVGElement, SidebarRightIconProps>(
   [
     'path',
     {
-      d: 'M14.5 3.5L14.5 20.5'
+      d: 'M15 3.5V20.5'
     }
   ],
   [
@@ -43,13 +43,13 @@ const SidebarRightIcon = React.forwardRef<SVGSVGElement, SidebarRightIconProps>(
   [
     'path',
     {
-      d: 'M19 11H17.5'
+      d: 'M19 10H17.5'
     }
   ],
   [
     'path',
     {
-      d: 'M8 10L9.22654 11.0572C9.74218 11.5016 10 11.7239 10 12C10 12.2761 9.74218 12.4984 9.22654 12.9428L8 14'
+      d: 'M19 13H17.5'
     }
   ]
 ];
@@ -75,7 +75,6 @@ const SidebarRightIcon = React.forwardRef<SVGSVGElement, SidebarRightIconProps>(
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

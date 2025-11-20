@@ -23,12 +23,9 @@ const Database2Icon = React.forwardRef<SVGSVGElement, Database2IconProps>(
 
     const iconData = [
   [
-    'ellipse',
+    'path',
     {
-      cx: '12',
-      cy: '5',
-      rx: '8',
-      ry: '3'
+      d: 'M12 8C16.4183 8 20 6.65685 20 5C20 3.34315 16.4183 2 12 2C7.58172 2 4 3.34315 4 5C4 6.65685 7.58172 8 12 8Z'
     }
   ],
   [
@@ -46,13 +43,13 @@ const Database2Icon = React.forwardRef<SVGSVGElement, Database2IconProps>(
   [
     'path',
     {
-      d: 'M8 8V10'
+      d: 'M7 10.8411C7.60158 11.0219 8.27434 11.1709 9 11.281'
     }
   ],
   [
     'path',
     {
-      d: 'M8 15V17'
+      d: 'M7 17.8411C7.60158 18.0219 8.27434 18.1709 9 18.281'
     }
   ]
 ];

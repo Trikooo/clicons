@@ -25,13 +25,13 @@ const ArrowReloadVerticalIcon = React.forwardRef<SVGSVGElement, ArrowReloadVerti
   [
     'path',
     {
-      d: 'M5.5 3.5L5.5 14.5C5.5 18.2133 8.18503 21 12 21'
+      d: 'M5.5 3.5V14.5C5.5 18.2133 8.18503 21 12 21'
     }
   ],
   [
     'path',
     {
-      d: 'M18.5 20.5L18.5 9.5C18.5 5.78672 15.815 3 12 3'
+      d: 'M18.5 20.5V9.5C18.5 5.78672 15.815 3 12 3'
     }
   ],
   [
@@ -69,7 +69,6 @@ const ArrowReloadVerticalIcon = React.forwardRef<SVGSVGElement, ArrowReloadVerti
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

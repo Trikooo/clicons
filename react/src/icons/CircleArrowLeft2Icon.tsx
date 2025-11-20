@@ -31,7 +31,7 @@ const CircleArrowLeft2Icon = React.forwardRef<SVGSVGElement, CircleArrowLeft2Ico
   [
     'path',
     {
-      d: 'M9.00009 12.0002L16.0001 12.0002M11.4999 8.50012C11.4999 8.50012 7.99996 11.0778 7.99995 12.0001C7.99994 12.9225 11.5 15.5001 11.5 15.5001'
+      d: 'M9.00008 12.0002H16.0001M11.4999 8.50012C11.4999 8.50012 7.99995 11.0778 7.99994 12.0001C7.99993 12.9225 11.5 15.5001 11.5 15.5001'
     }
   ]
 ];
@@ -57,7 +57,6 @@ const CircleArrowLeft2Icon = React.forwardRef<SVGSVGElement, CircleArrowLeft2Ico
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

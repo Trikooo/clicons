@@ -31,13 +31,13 @@ const SquareArrowDataTransferVerticalIcon = React.forwardRef<SVGSVGElement, Squa
   [
     'path',
     {
-      d: 'M8 14.0844L9.31716 15.9429C9.60777 16.3529 9.75307 16.5579 9.87654 16.4857C10 16.4136 10 16.1237 10 15.5438L10 7.5'
+      d: 'M8 14.0844L9.31716 15.9429C9.60777 16.3529 9.75307 16.5579 9.87654 16.4857C10 16.4136 10 16.1237 10 15.5438V7.5'
     }
   ],
   [
     'path',
     {
-      d: 'M16 9.91559L14.6828 8.05715C14.3922 7.64711 14.2469 7.4421 14.1235 7.51425C14 7.58641 14 7.87635 14 8.45623L14 16.5'
+      d: 'M16 9.91559L14.6828 8.05715C14.3922 7.64711 14.2469 7.4421 14.1235 7.51425C14 7.58641 14 7.87635 14 8.45623V16.5'
     }
   ]
 ];
@@ -63,7 +63,6 @@ const SquareArrowDataTransferVerticalIcon = React.forwardRef<SVGSVGElement, Squa
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

@@ -23,17 +23,15 @@ const CircleArrowReloadIcon = React.forwardRef<SVGSVGElement, CircleArrowReloadI
 
     const iconData = [
   [
-    'circle',
+    'path',
     {
-      cx: '12',
-      cy: '12',
-      r: '10'
+      d: 'M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z'
     }
   ],
   [
     'path',
     {
-      d: 'M14.4 7.5L15.3153 8.67019C15.8415 9.34278 15.7447 9.54545 14.8973 9.54545L9.6 9.54545C8.13846 9.54545 8 10.3125 8 11.5909M9.6 16.5L8.68465 15.3298C8.15854 14.6572 8.25535 14.4545 9.10274 14.4545H14.4C15.8615 14.4545 16 13.6875 16 12.4091'
+      d: 'M14.4 7.5L15.3153 8.67019C15.8415 9.34278 15.7447 9.54545 14.8973 9.54545H9.6C8.13846 9.54545 8 10.3125 8 11.5909M9.6 16.5L8.68465 15.3298C8.15854 14.6572 8.25535 14.4545 9.10274 14.4545H14.4C15.8615 14.4545 16 13.6875 16 12.4091'
     }
   ]
 ];
@@ -59,7 +57,6 @@ const CircleArrowReloadIcon = React.forwardRef<SVGSVGElement, CircleArrowReloadI
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

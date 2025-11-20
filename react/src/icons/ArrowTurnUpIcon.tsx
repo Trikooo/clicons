@@ -25,7 +25,7 @@ const ArrowTurnUpIcon = React.forwardRef<SVGSVGElement, ArrowTurnUpIconProps>(
   [
     'path',
     {
-      d: 'M6 11L6 15.5C6 17.9853 8.01472 20 10.5 20C12.9853 20 15 17.9853 15 15.5V4'
+      d: 'M6 11V15.5C6 17.9853 8.01472 20 10.5 20C12.9853 20 15 17.9853 15 15.5V4'
     }
   ],
   [
@@ -57,7 +57,6 @@ const ArrowTurnUpIcon = React.forwardRef<SVGSVGElement, ArrowTurnUpIconProps>(
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

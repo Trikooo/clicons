@@ -25,7 +25,13 @@ const ArrowDownIcon = React.forwardRef<SVGSVGElement, ArrowDownIconProps>(
   [
     'path',
     {
-      d: 'M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9'
+      d: 'M12 18.502V5.00195'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M18 13.002C18 13.002 13.5811 19.0019 12 19.002C10.4188 19.002 6 13.002 6 13.002'
     }
   ]
 ];
@@ -51,7 +57,6 @@ const ArrowDownIcon = React.forwardRef<SVGSVGElement, ArrowDownIconProps>(
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

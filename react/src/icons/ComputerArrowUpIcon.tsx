@@ -31,7 +31,7 @@ const ComputerArrowUpIcon = React.forwardRef<SVGSVGElement, ComputerArrowUpIconP
   [
     'path',
     {
-      d: 'M14.25 21H16M14.25 21C13.4216 21 12.75 20.3284 12.75 19.5V17H12M14.25 21H9.75M9.75 21H8M9.75 21C10.5784 21 11.25 20.3284 11.25 19.5V17H12M12 17V21'
+      d: 'M14.25 21H16M14.25 21C13.4216 21 12.75 20.3284 12.75 19.5V17H12M14.25 21H9.75M12 17H11.25V19.5C11.25 20.3284 10.5784 21 9.75 21M12 17V21M9.75 21H8'
     }
   ],
   [
@@ -63,7 +63,6 @@ const ComputerArrowUpIcon = React.forwardRef<SVGSVGElement, ComputerArrowUpIconP
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

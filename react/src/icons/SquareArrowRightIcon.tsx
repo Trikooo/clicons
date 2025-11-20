@@ -31,7 +31,7 @@ const SquareArrowRightIcon = React.forwardRef<SVGSVGElement, SquareArrowRightIco
   [
     'path',
     {
-      d: 'M10 7C10 7 14 10.6824 14 12C14 13.3176 10 17 10 17'
+      d: 'M16.0001 12.0001H7.99996M16.0001 12.0001C16.0001 12.9224 12.5002 15.5001 12.5002 15.5001M16.0001 12.0001C16.0001 11.0778 12.5002 8.50008 12.5002 8.50008'
     }
   ]
 ];
@@ -57,7 +57,6 @@ const SquareArrowRightIcon = React.forwardRef<SVGSVGElement, SquareArrowRightIco
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

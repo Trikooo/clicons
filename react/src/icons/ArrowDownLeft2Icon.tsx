@@ -25,7 +25,7 @@ const ArrowDownLeft2Icon = React.forwardRef<SVGSVGElement, ArrowDownLeft2IconPro
   [
     'path',
     {
-      d: 'M10.9999 13L17.9999 6'
+      d: 'M10.5 13.5L17.9999 6'
     }
   ],
   [
@@ -57,7 +57,6 @@ const ArrowDownLeft2Icon = React.forwardRef<SVGSVGElement, ArrowDownLeft2IconPro
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

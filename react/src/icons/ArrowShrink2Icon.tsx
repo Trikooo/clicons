@@ -25,7 +25,7 @@ const ArrowShrink2Icon = React.forwardRef<SVGSVGElement, ArrowShrink2IconProps>(
   [
     'path',
     {
-      d: 'M6.50232 13.2635C7.34673 13.2515 10.1432 12.6706 10.7361 13.2635C11.329 13.8564 10.7481 16.6529 10.7361 17.4973M13.2685 6.49733C13.2565 7.34173 12.6756 10.1382 13.2685 10.7311C13.8614 11.324 16.6579 10.7431 17.5023 10.7311M20.9991 2.99902L13.6103 10.3812M10.3691 13.6237L3 21.001'
+      d: 'M6.50232 13.2635C7.34673 13.2515 10.1432 12.6706 10.7361 13.2635M10.7361 13.2635C11.329 13.8564 10.7481 16.6529 10.7361 17.4973M10.7361 13.2635L3 21.001M13.2685 6.49733C13.2565 7.34173 12.6756 10.1382 13.2685 10.7311M13.2685 10.7311C13.8614 11.324 16.6579 10.7431 17.5023 10.7311M13.2685 10.7311L20.9991 2.99902'
     }
   ]
 ];
@@ -51,7 +51,6 @@ const ArrowShrink2Icon = React.forwardRef<SVGSVGElement, ArrowShrink2IconProps>(
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

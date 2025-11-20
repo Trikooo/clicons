@@ -25,7 +25,7 @@ const SquareArrowVerticalIcon = React.forwardRef<SVGSVGElement, SquareArrowVerti
   [
     'path',
     {
-      d: 'M12 18L12 6M12 18C12.7002 18 14.0085 16.0057 14.5 15.5M12 18C11.2998 18 9.99153 16.0057 9.5 15.5M12 6C12.7002 6 14.0085 7.9943 14.5 8.5M12 6C11.2998 6 9.99153 7.9943 9.5 8.5'
+      d: 'M12 18V6M12 18C12.7002 18 14.0085 16.0057 14.5 15.5M12 18C11.2998 18 9.99153 16.0057 9.5 15.5M12 6C12.7002 6 14.0085 7.9943 14.5 8.5M12 6C11.2998 6 9.99153 7.9943 9.5 8.5'
     }
   ],
   [
@@ -57,7 +57,6 @@ const SquareArrowVerticalIcon = React.forwardRef<SVGSVGElement, SquareArrowVerti
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

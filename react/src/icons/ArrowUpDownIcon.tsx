@@ -31,7 +31,7 @@ const ArrowUpDownIcon = React.forwardRef<SVGSVGElement, ArrowUpDownIconProps>(
   [
     'path',
     {
-      d: 'M17 19L17 4'
+      d: 'M17 20V4'
     }
   ],
   [
@@ -69,7 +69,6 @@ const ArrowUpDownIcon = React.forwardRef<SVGSVGElement, ArrowUpDownIconProps>(
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

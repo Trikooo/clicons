@@ -31,7 +31,7 @@ const SquareArrowDown2Icon = React.forwardRef<SVGSVGElement, SquareArrowDown2Ico
   [
     'path',
     {
-      d: 'M12 15V8M15.5 12.5002C15.5 12.5002 12.9223 16.0002 12 16.0002C11.0777 16.0002 8.50003 12.5002 8.50003 12.5002'
+      d: 'M12 16.0002V8M12 16.0002C12.9223 16.0002 15.5 12.5002 15.5 12.5002M12 16.0002C11.0777 16.0002 8.5 12.5002 8.5 12.5002'
     }
   ]
 ];
@@ -57,7 +57,6 @@ const SquareArrowDown2Icon = React.forwardRef<SVGSVGElement, SquareArrowDown2Ico
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

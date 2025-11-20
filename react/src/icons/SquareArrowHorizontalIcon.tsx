@@ -57,7 +57,6 @@ const SquareArrowHorizontalIcon = React.forwardRef<SVGSVGElement, SquareArrowHor
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

@@ -49,13 +49,13 @@ const ArrowAllDirectionIcon = React.forwardRef<SVGSVGElement, ArrowAllDirectionI
   [
     'path',
     {
-      d: 'M14.9999 5.99998C14.9999 5.99998 12.7904 3.00001 11.9999 3C11.2093 2.99999 8.99995 6 8.99995 6'
+      d: 'M14.9999 5.99998C14.9999 5.99998 12.7904 3.00001 11.9999 3C11.2093 2.99999 8.99994 6 8.99994 6'
     }
   ],
   [
     'path',
     {
-      d: 'M5.99993 15C5.99993 15 2.99996 12.7905 2.99995 12C2.99994 11.2094 5.99995 9 5.99995 9'
+      d: 'M5.99992 15C5.99992 15 2.99995 12.7905 2.99994 12C2.99993 11.2094 5.99994 9 5.99994 9'
     }
   ],
   [
@@ -67,7 +67,7 @@ const ArrowAllDirectionIcon = React.forwardRef<SVGSVGElement, ArrowAllDirectionI
   [
     'path',
     {
-      d: 'M8.99995 18C8.99995 18 11.2094 21 11.9999 21C12.7905 21 14.9999 18 14.9999 18'
+      d: 'M8.99994 18C8.99994 18 11.2094 21 11.9999 21C12.7905 21 14.9999 18 14.9999 18'
     }
   ]
 ];
@@ -93,7 +93,6 @@ const ArrowAllDirectionIcon = React.forwardRef<SVGSVGElement, ArrowAllDirectionI
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

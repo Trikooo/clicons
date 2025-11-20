@@ -31,13 +31,13 @@ const ArrowDiagonalIcon = React.forwardRef<SVGSVGElement, ArrowDiagonalIconProps
   [
     'path',
     {
-      d: 'M3.26631 16.5C3.25431 17.3444 2.67338 20.1409 3.26631 20.7338C3.85923 21.3267 6.65569 20.7458 7.5001 20.7338'
+      d: 'M3.26633 16.5C3.25433 17.3444 2.6734 20.1409 3.26633 20.7338C3.85925 21.3267 6.65571 20.7458 7.50012 20.7338'
     }
   ],
   [
     'path',
     {
-      d: 'M3.89561 20.0577L20.1047 3.94238'
+      d: 'M3 21L21 3'
     }
   ]
 ];
@@ -63,7 +63,6 @@ const ArrowDiagonalIcon = React.forwardRef<SVGSVGElement, ArrowDiagonalIconProps
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

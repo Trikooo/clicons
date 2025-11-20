@@ -31,7 +31,7 @@ const CircleArrowMoveLeftDownIcon = React.forwardRef<SVGSVGElement, CircleArrowM
   [
     'path',
     {
-      d: 'M9.51204 11.638C8.98182 11.0262 7.91022 10.1593 8.01948 9.79956M8.01948 9.79956C8.01948 9.38054 9.07053 8.58147 9.51204 7.99561M8.01948 9.79956C9.93839 9.92155 12.4115 9.54648 13.419 10.3459C14.4795 11.233 14.0925 13.7555 14.1988 15.9882M14.1988 15.9882C13.6637 16.035 12.9727 15.003 12.3644 14.4687M14.1988 15.9882C14.5543 16.0858 15.4634 14.9805 15.9963 14.471'
+      d: 'M9.51204 11.638C8.98182 11.0262 7.91022 10.1593 8.01948 9.79955M8.01948 9.79955C8.01948 9.38053 9.07053 8.58147 9.51204 7.99561M8.01948 9.79955C9.93839 9.92154 12.4115 9.54647 13.419 10.3459C14.4795 11.233 14.0925 13.7555 14.1988 15.9882M14.1988 15.9882C13.6637 16.035 12.9727 15.003 12.3644 14.4687M14.1988 15.9882C14.5543 16.0858 15.4634 14.9805 15.9963 14.471'
     }
   ]
 ];
@@ -57,7 +57,6 @@ const CircleArrowMoveLeftDownIcon = React.forwardRef<SVGSVGElement, CircleArrowM
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

@@ -57,7 +57,6 @@ const SquareArrowShrink2Icon = React.forwardRef<SVGSVGElement, SquareArrowShrink
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

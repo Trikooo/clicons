@@ -57,7 +57,6 @@ const SquareArrowMoveRightDownIcon = React.forwardRef<SVGSVGElement, SquareArrow
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

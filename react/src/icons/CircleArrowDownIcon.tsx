@@ -23,17 +23,15 @@ const CircleArrowDownIcon = React.forwardRef<SVGSVGElement, CircleArrowDownIconP
 
     const iconData = [
   [
-    'circle',
+    'path',
     {
-      cx: '12',
-      cy: '12',
-      r: '10'
+      d: 'M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z'
     }
   ],
   [
     'path',
     {
-      d: 'M16 10.5C16 10.5 13.054 13.5 12 13.5C10.9459 13.5 8 10.5 8 10.5'
+      d: 'M12 16L12 8M12 16C12.9223 16 15.5 12.5002 15.5 12.5002M12 16C11.0777 16 8.50003 12.5002 8.50003 12.5002'
     }
   ]
 ];
@@ -59,7 +57,6 @@ const CircleArrowDownIcon = React.forwardRef<SVGSVGElement, CircleArrowDownIconP
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

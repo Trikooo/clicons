@@ -25,7 +25,7 @@ const ArrowMoveRightDownIcon = React.forwardRef<SVGSVGElement, ArrowMoveRightDow
   [
     'path',
     {
-      d: 'M20 5H19.0667C12.907 5 9.82714 5 7.91357 7.12067C6 9.24133 6 12.6545 6 19.4808V21'
+      d: 'M21 5H19.0667C12.907 5 9.82714 5 7.91357 7.12067C6 9.24133 6 12.6545 6 19.4808V22'
     }
   ],
   [
@@ -63,7 +63,6 @@ const ArrowMoveRightDownIcon = React.forwardRef<SVGSVGElement, ArrowMoveRightDow
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

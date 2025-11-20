@@ -25,7 +25,7 @@ const ArrowTurnDownIcon = React.forwardRef<SVGSVGElement, ArrowTurnDownIconProps
   [
     'path',
     {
-      d: 'M5.99994 13L5.99994 8.5C5.99994 6.01472 8.01466 4 10.4999 4C12.9852 4 14.9999 6.01472 14.9999 8.5V20'
+      d: 'M5.99994 13V8.5C5.99994 6.01472 8.01466 4 10.4999 4C12.9852 4 14.9999 6.01472 14.9999 8.5V20'
     }
   ],
   [
@@ -57,7 +57,6 @@ const ArrowTurnDownIcon = React.forwardRef<SVGSVGElement, ArrowTurnDownIconProps
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

@@ -57,7 +57,6 @@ const SquareArrowDown3Icon = React.forwardRef<SVGSVGElement, SquareArrowDown3Ico
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements

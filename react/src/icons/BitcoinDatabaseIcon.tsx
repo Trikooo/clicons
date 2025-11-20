@@ -23,12 +23,9 @@ const BitcoinDatabaseIcon = React.forwardRef<SVGSVGElement, BitcoinDatabaseIconP
 
     const iconData = [
   [
-    'ellipse',
+    'path',
     {
-      cx: '12',
-      cy: '5',
-      rx: '8',
-      ry: '3'
+      d: 'M12 8C16.4183 8 20 6.65685 20 5C20 3.34315 16.4183 2 12 2C7.58172 2 4 3.34315 4 5C4 6.65685 7.58172 8 12 8Z'
     }
   ],
   [
@@ -40,13 +37,25 @@ const BitcoinDatabaseIcon = React.forwardRef<SVGSVGElement, BitcoinDatabaseIconP
   [
     'path',
     {
-      d: 'M15.9375 20.6667L15.9375 15.3333M17.5 15.3333V14M17.5 22V20.6667M15.9375 18H19.0625M19.0625 18C19.5803 18 20 18.4477 20 19V19.6667C20 20.219 19.5803 20.6667 19.0625 20.6667H15M19.0625 18C19.5803 18 20 17.5523 20 17V16.3333C20 15.781 19.5803 15.3333 19.0625 15.3333H15'
+      d: 'M15.9375 20.6667V15.3333M17.5 15.3333V14M17.5 22V20.6667M15.9375 18H19.0625M19.0625 18C19.5803 18 20 18.4477 20 19V19.6667C20 20.219 19.5803 20.6667 19.0625 20.6667H15M19.0625 18C19.5803 18 20 17.5523 20 17V16.3333C20 15.781 19.5803 15.3333 19.0625 15.3333H15'
     }
   ],
   [
     'path',
     {
       d: 'M20 12V5M12 22C7.58172 22 4 20.6569 4 19V5'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M7 10.8411C7.60158 11.0219 8.27434 11.1709 9 11.281'
+    }
+  ],
+  [
+    'path',
+    {
+      d: 'M7 17.8411C7.60158 18.0219 8.27434 18.1709 9 18.281'
     }
   ]
 ];
@@ -72,7 +81,6 @@ const BitcoinDatabaseIcon = React.forwardRef<SVGSVGElement, BitcoinDatabaseIconP
             : finalStrokeWidth * (finalSize / 24);
         }
         if (!processedAttrs.strokeLinecap) processedAttrs.strokeLinecap = 'round';
-        if (!processedAttrs.strokeLinejoin) processedAttrs.strokeLinejoin = 'round';
       }
 
       // Handle nested elements
